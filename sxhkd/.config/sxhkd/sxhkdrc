@@ -1,0 +1,40 @@
+# включить англо-русскую раскладку
+ctrl+shift+1
+    setxkbmap -layout us,ru -option "" && \
+    xmodmap ~/.xmodmaprc && \
+    dwmstatus.sh
+
+# включить испано-русскую раскладку
+ctrl+shift+2
+    setxkbmap -layout es,ru -option "" && \
+    xmodmap ~/.xmodmaprc && \
+    dwmstatus.sh
+
+# раскладка для ввода глифов APL
+ctrl+shift+3
+    setxkbmap -layout us,apl -option "" && \
+    xmodmap ~/.xmodmaprc && \
+    dwmstatus.sh
+
+ctrl+alt+l
+    xtrlock
+
+# вставить текст из буфера
+shift+Insert
+    clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -
+
+# уменьшить громкость
+@XF86AudioLowerVolume
+    mixer pcm -5:-5 > /dev/null && \
+    dwmstatus.sh
+
+# увеличить громкость
+@XF86AudioRaiseVolume
+    mixer pcm +5:+5 > /dev/null && \
+    dwmstatus.sh
+
+# замьютить
+@XF86AudioMute
+    toggle-volume.sh && \
+    dwmstatus.sh
+
