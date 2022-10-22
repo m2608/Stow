@@ -48,13 +48,15 @@ fi
 pidfile=/tmp/nchttp-$port.pid
 logfile=/var/log/nchttp.log
 
-echo Serving $file at $host:$port, pid: $$
+mimetype=`mimetype --output-format "%m" -L "$file"`
+
+echo Serving $file at $host:$port, mimetype: $mimetype, pid: $$
 echo $$ > $pidfile
 
 while true; do 
     length=`wc -c $file | cut -w -f 2`
     filename=`basename $file`
-    printf "HTTP/1.0 200 OK\r\nContent-Length: %d\r\nContent-Disposition: inline; filename=\"%s\"\r\n\r\n" $length $filename \
+    printf "HTTP/1.0 200 OK\r\nContent-Length: %d\r\nContent-Type: $mimetype\r\nContent-Disposition: inline; filename=\"%s\"\r\n\r\n" $length $filename \
         | cat - $file \
         | nc -v -l $host $port \
         >> $logfile 
