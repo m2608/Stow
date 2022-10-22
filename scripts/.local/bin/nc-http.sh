@@ -1,7 +1,7 @@
 #!/bin/sh
 
 self=`basename "$0"`
-help="Usage: $self [--bind <ip address>] [--port <port>] <file>"
+help="Usage: $self [-b|--bind <ip address>] [-p|--port <port>] [-l|--log-file <log file>] <file>"
 
 while test $# -gt 0; do
     case "$1" in
@@ -12,6 +12,11 @@ while test $# -gt 0; do
             ;;
         -p|--port)
             port="$2"
+            shift
+            shift
+            ;;
+        -l|--log-file)
+            logfile="$2"
             shift
             shift
             ;;
@@ -40,13 +45,16 @@ if test "$file" = "" ; then
     exit 1
 fi
 
+if test "$logfile" = ""; then
+    logfile="/dev/stdout"
+fi
+
 if ! test -f "$file"; then
     echo "File \"$file\" not found."
     exit 1
 fi
 
 pidfile=/tmp/nchttp-$port.pid
-logfile=/var/log/nchttp.log
 
 mimetype=`mimetype --output-format "%m" -L "$file"`
 
