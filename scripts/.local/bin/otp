@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# каталог со скриптами для генерации OTP
+folder="$HOME/OTP"
+
+otp_script=`find -s $folder -type f | sed -E "s/^.*\///" | fzf`
+if test $? -eq 0; then
+    /bin/sh $folder/$otp_script
+fi
+

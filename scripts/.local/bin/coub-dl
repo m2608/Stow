@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# Формат, в котором youtube-dl будет качать аудио и видео
+frm=`youtube-dl -F $1`
+# удаляем все до строки, начинающейся с "format" (заголовок), а затем берем последние по
+# списку форматы для аудио и видео
+a_format=`echo "$frm" | sed '0,/^format/d' | grep audio | tail -n 1 | cut -d ' ' -f 1`
+v_format=`echo "$frm" | sed '0,/^format/d' | grep video | tail -n 1 | cut -d ' ' -f 1`
+
+# Определяем имя выходного файла
+out=`youtube-dl -e $1`.mp4
+
+# Определяем имя аудио и видео файла
+a_file=`youtube-dl --get-filename -f $a_format $1`
+v_file=`youtube-dl --get-filename -f $v_format $1`
+# Генерируем имя текстового файла для конкатенации видеофрагментов
+t_file=`echo $a_file | sed "s/\..*//"`.txt
+
+# Качаем аудио и видео
+youtube-dl -f $a_format $1
+youtube-dl -f $v_format $1
+
+# Заменяем первые два байта в видеофайле нулями (без этого формат файла определяется некорректно)
+dd if=/dev/zero of="$v_file" bs=1 count=2 conv=notrunc
+
+# Получаем длительность аудио и видео
+a_duration=`ffmpeg -i "$a_file" 2>&1 | grep Duration | sed -E "s/^[^:]*:[ ]+//;s/\..*//"`
+v_duration=`ffmpeg -i "$v_file" 2>&1 | grep Duration | sed -E "s/^[^:]*:[ ]+//;s/\..*//"`
+
+# Разбиваем на часы, минуты, секунды
+a_hh=`echo $a_duration | cut -d ':' -f 1`
+a_mm=`echo $a_duration | cut -d ':' -f 2`
+a_ss=`echo $a_duration | cut -d ':' -f 3`
+v_hh=`echo $v_duration | cut -d ':' -f 1`
+v_mm=`echo $v_duration | cut -d ':' -f 2`
+v_ss=`echo $v_duration | cut -d ':' -f 3`
+
+# Определяем, сколько раз нужно повторить видео, чтобы аудио проигралось полностью
+count=`echo "(($a_hh*60+$a_mm)*60+$a_ss)/(($v_hh*60+$v_mm)*60+$v_ss)+1" | bc`
+
+# Записываем имя видеофайла для конкатенации
+truncate -s 0 "$t_file"
+for i in `seq 1 $count`; do 
+    echo "$v_file" | sed "s/\([']\)/\\\\\1/g;s/^/file '/;s/\$/'/" >> "$t_file"
+done
+
+# Генерируем конечный видеофайл из аудиофайла и многочисленных повторов исходного видеофайла
+ffmpeg -hide_banner -f concat -safe 0 -i "$t_file" -i "$a_file" -c copy -shortest -movflags faststart "$out"
+
+# Удаляем исходные файлы
+rm "$a_file" "$v_file" "$t_file"
+
