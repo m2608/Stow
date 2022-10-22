@@ -68,6 +68,6 @@ echo "st.font: $spec" > "$tmpfile"
 xrdb -merge "$tmpfile"
 
 # send USR1 signal to change font
-pkill -SIGUSR1 -ax st
+pkill -USR1 -ax st
 
 echo "Font set: \"$spec\""
