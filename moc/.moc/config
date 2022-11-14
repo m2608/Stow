@@ -1,0 +1,7 @@
+SoundDriver = OSS
+#OSSDevice=/dev/dsp1
+Theme = black_theme
+ExecCommand8 = "rm %f"
+PlaylistFullPaths = no
+Keymap=keymap
+ShowFormat = no
