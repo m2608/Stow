@@ -1,0 +1,16 @@
+// Should be used with xcape:
+// xcape -de 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright;ISO_Level3_Shift=ISO_Level3_Shift|ISO_Next_Group'
+
+xkb_keymap {
+    xkb_keycodes  { include "evdev+aliases(qwerty)"	};
+    xkb_types     { include "complete"	};
+    xkb_compat    { include "complete"	};
+    xkb_geometry  { include "pc(pc105)"	};
+    xkb_symbols {
+        include "pc+us+ru:2+inet(evdev)"	
+        include "compose(menu)"
+
+        key <CAPS> { [ ISO_Level3_Shift ] };
+        key <NMLK> { [ ISO_Next_Group ] };
+    };
+};

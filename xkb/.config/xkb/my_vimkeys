@@ -22,6 +22,21 @@ xkb_keymap {
         //   actions[Group1] = [ LatchGroup(group=3) ]
         // };
 
+        key <AE01> { 
+            symbols[Group1] = [ 1, exclam, F1, F1 ]
+        };
+        key <AE02> { [ 2, at, F2, F2 ] };
+        key <AE03> { [ 3, numbersign, F3, F3 ] };
+        key <AE04> { [ 4, dollar, F4, F4 ] };
+        key <AE05> { [ 5, percent, F5, F5 ] };
+        key <AE06> { [ 6, asciicircum, F6, F6 ] };
+        key <AE07> { [ 7, ampersand, F7, F7 ] };
+        key <AE08> { [ 8, asterisk, F8, F8 ] };
+        key <AE09> { [ 9, parenleft, F9, F9 ] };
+        key <AE10> { [ 0, parenright, F10, F10 ] };
+        key <AE11> { [ minus, underscore, F11, F11 ] };
+        key <AE12> { [ equal, plus, F12, F12 ] };
+
         key <AC06> {
           symbols[Group1] = [ h, H, Left, Left ],
           symbols[Group2] = [ Cyrillic_er, Cyrillic_ER, Left, Left ]
@@ -66,5 +81,7 @@ xkb_keymap {
           symbols[Group1] = [ comma, less, XF86AudioMute, XF86AudioMute ],
           symbols[Group2] = [ Cyrillic_be, Cyrillic_BE, XF86AudioMute, XF86AudioMute ]
         };
+        key <BKSP> { [ BackSpace, BackSpace, Delete, Delete ] };
+        key <BKSL> { [ backslash, bar, Insert, Insert ]	};
     };
 };

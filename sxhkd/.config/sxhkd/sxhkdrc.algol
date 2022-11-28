@@ -1,6 +1,3 @@
-ctrl+alt+l
-    xtrlock
-
 # вставить текст из буфера
 shift+Insert
     clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -
