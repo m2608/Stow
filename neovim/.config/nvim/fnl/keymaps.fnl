@@ -68,8 +68,6 @@
    ["n" "<Leader>s" "<Plug>SlimeParagraphSend" {:noremap false :silent true}]
    ;; выход из режима вставки в терминале по Esc
    ["t" "<Esc>" "<C-\\><C-n>"]
-   ;; просто лямбда
-   ["i" "<Leader>l" "<c-v>u03bb"]
    ])
 
 (each [_ mapping (ipairs mappings)]

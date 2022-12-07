@@ -105,7 +105,7 @@ keymap = [
     { keys = [ "g", "h" ],      	 command = "cd ~/" },
     { keys = [ "?" ],           	 command = "help" },
     { keys = [ "e" ],           	 command = "shell nvim %s" },
-    { keys = [ "o" ],           	 command = "open" }
+    { keys = [ "o" ],           	 command = "shell xdg-open %s" }
 ]
 
 [task_view]
