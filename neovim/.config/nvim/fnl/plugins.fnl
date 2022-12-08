@@ -67,6 +67,10 @@
 (core.assoc nvim.g "tagbar_ctags_bin" "/usr/local/bin/uctags")
 
 (core.assoc nvim.g "conjure#mapping#prefix" ",")
+;; Показываем документацию по prefix+k, на ["K"] (без префикса)
+;; уже показывает документацию lsp-сервер. А короткую сигнатуру
+;; показывает он же по space+k, если что.
+(core.assoc nvim.g "conjure#mapping#doc_word" "k")
 
 ;; Настройки Conjure для fennel (используем aniseed).
 (core.assoc nvim.g "conjure#client#fennel#aniseed#aniseed_module_prefix" "aniseed.")
