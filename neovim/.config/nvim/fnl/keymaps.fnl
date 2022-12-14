@@ -8,10 +8,12 @@
     (nvim.set_keymap mode from to opts)))
 
 (def- mappings 
-  [;; вызов окна для навигации по коду (плагин tagbar)
-   ["n" "<F8>" ":TagbarToggle<CR>"]
+  [;; сохранить файл
+   ["n" "<F2" ":<c-u>udpate<CR>"]
+   ;; вызов окна для навигации по коду (плагин tagbar)
+   ["n" "<F8>" ":<c-u>TagbarToggle<CR>"]
    ;; вызов файлового браузера
-   ["n" "<F2>" ":NvimTreeToggle<CR>"]
+   ["n" "<F9>" ":<c-u>NvimTreeToggle<CR>"]
    ;; забой убирает подсветку найденных фраз
    ["n" "<BS>" ":nohlsearch<CR>"]
    ;; комбинация выключает предупреждения линтера

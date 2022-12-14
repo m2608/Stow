@@ -1,5 +1,5 @@
 SoundDriver = OSS
-#OSSDevice=/dev/dsp1
+OSSDevice=/dev/dsp1
 Theme = black_theme
 ExecCommand8 = "rm %f"
 PlaylistFullPaths = no
