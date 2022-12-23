@@ -243,16 +243,16 @@
 
 		# You can reproduce the bindings of Norton Commander
 		# on copying or moving to the other panel:
-		# {
-		# 	key: F5
-		# 	external: "cp -r {file} {other-panel-directory}"
-		# 	leave_broot: false
-		# }
-		# {
-		# 	key: F6
-		# 	external: "mv {file} {other-panel-directory}"
-		# 	leave_broot: false
-		# }
+		{
+			key: F5
+			external: "cp -r {file} {other-panel-directory}"
+			leave_broot: false
+		}
+		{
+			key: F6
+			external: "mv {file} {other-panel-directory}"
+			leave_broot: false
+		}
 
         {
             invocation: "open_leave"
@@ -274,6 +274,18 @@
         {
             key: "insert"
             cmd: ":toggle_stage;:line_down"
+        }
+
+        {
+            invocation: "cd {subpath}"
+            execution: ":focus {subpath}"
+            leave_broot: false
+        }
+
+        {
+            invocation: "mpv"
+            execution: "mpv --shuffle {directory}"
+            leave_broot: false
         }
 	]
 

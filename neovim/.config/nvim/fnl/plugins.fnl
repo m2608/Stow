@@ -24,7 +24,14 @@
 (load-plugins
   [
    ;; плагин для удобного изменения тегов, кавычек
-   "tpope/vim-surround"
+   ["tpope/vim-surround"
+    {:requires ["tpope/vim-repeat"]}]
+   ;; Работа с s-выражениями.
+   ["guns/vim-sexp"
+    {:requires ["tpope/vim-repeat"]}]
+   ;; Маппинги для vim-sexp.
+   ["tpope/vim-sexp-mappings-for-regular-people"
+    {:requires ["guns/vim-sexp" "tpope/vim-repeat"]}]
    ;; выравнивание текста по разделителю
    "godlygeek/tabular"
    ;; lsp
@@ -43,10 +50,6 @@
    "jpalardy/vim-slime"
    ;; работа с Clojure REPL
    "Olical/conjure"
-   ;; запуск Clojure REPL в терминале vim
-   ["clojure-vim/vim-jack-in"
-    {:requires ["tpope/vim-dispatch"
-                "radenling/vim-dispatch-neovim"]}]
    ;; радужные скобки
    "kien/rainbow_parentheses.vim"
    ;; подсветка синтаксиса Fennel
@@ -79,6 +82,8 @@
 (core.assoc nvim.g "conjure#client#scheme#stdio#command" "petite")
 (core.assoc nvim.g "conjure#client#scheme#stdio#prompt_pattern" "> $?")
 (core.assoc nvim.g "conjure#client#scheme#stdio#value_prefix_pattern" false)
+
+(core.assoc nvim.g "sexp_enable_insert_mode_mappings" false)
 
 (let [nvim-tree (require "nvim-tree")]
   ((. nvim-tree "setup")
