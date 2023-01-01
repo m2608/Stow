@@ -47,4 +47,3 @@
 (each [_ server (ipairs local-servers)]
   ((. lsp server :setup) {:on_attach on-attach
                           :flags {:debounce_text_changes 150}}))
-

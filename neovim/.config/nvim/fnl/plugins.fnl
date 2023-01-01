@@ -48,6 +48,10 @@
    "preservim/tagbar"
    ;; универсальный REPL через tmux
    "jpalardy/vim-slime"
+   ;; универсальный REPL внутри nvim
+   "hkupty/iron.nvim"
+   ;; Интеграция fennel.
+   "Olical/aniseed"
    ;; работа с Clojure REPL
    "Olical/conjure"
    ;; радужные скобки
@@ -74,9 +78,6 @@
 ;; уже показывает документацию lsp-сервер. А короткую сигнатуру
 ;; показывает он же по space+k, если что.
 (core.assoc nvim.g "conjure#mapping#doc_word" "k")
-
-;; Настройки Conjure для fennel (используем aniseed).
-(core.assoc nvim.g "conjure#client#fennel#aniseed#aniseed_module_prefix" "aniseed.")
 
 ;; Настройки Conjure для chez-scheme.
 (core.assoc nvim.g "conjure#client#scheme#stdio#command" "petite")

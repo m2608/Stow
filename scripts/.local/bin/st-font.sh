@@ -68,6 +68,14 @@ echo "st.font: $spec" > "$tmpfile"
 xrdb -merge "$tmpfile"
 
 # send USR1 signal to change font
-pkill -USR1 -x st
+if test $(uname) = "FreeBSD"; then
+    # In FreeBSD you should pass "-a" key to ps to include
+    # current process ancestors.
+    pkill -USR1 -xa st
+else
+    # Linux ps does not have "-a" key, but it includes current
+    # process ancestors by default.
+    pkill -USR1 -x st
+fi
 
 echo "Font set: \"$spec\""

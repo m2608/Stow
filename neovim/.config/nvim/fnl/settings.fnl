@@ -34,6 +34,8 @@
                [:signcolumn "yes"]
                ;; вертикальный сплит открывает окно справа
                [:splitright true]
+               ;; горизонтальный split открывает окно снизу
+               [:splitbelow true]
                ;; добавить русскую раскладку (переключение по ctrl+^)
                [:keymap "russian-jcukenwin2"]
                ;; при запуске vim по умолчанию будем все-таки использовать стандартный keymap (английский)
@@ -83,7 +85,7 @@
        ;; language of messages
        "language en_US.UTF-8"
        ;; показываем диагностическое сообщение при задержке курсора на строке
-       "autocmd CursorHold * lua vim.diagnostic.open_float()"
+       ;; "autocmd CursorHold * lua vim.diagnostic.open_float()"
        ;; отключаем линтер для REPL Conjure (баг в nvim https://github.com/Olical/conjure/pull/420)
        "autocmd BufNewFile conjure-log-* lua vim.diagnostic.disable(0)"]]
   (each [_ cmd (ipairs commands)]
@@ -104,8 +106,17 @@
    :signs true
    :float {:source "always" :border "single"}})
 
+;; Настройки firenvim.
 (when (core.get nvim.g :started_by_firenvim nil)
   (core.assoc nvim.o :laststatus 0)
   (core.assoc nvim.o :guifont "Iosevka:h12")
   (nvim.command "colorscheme morning"))
 
+;; Настройки nvim-gtk.
+(when (core.get nvim.g :GtkGuiLoaded nil)
+  (let [gui-options [["Font" "PragmataPro Liga 16"]
+                     ["Option" "Popupmenu" 1]
+                     ["Option" "Tabline" 1]
+                     ["Option" "Cmdline" 1]]]
+    (each [_ option (ipairs gui-options)]
+      (vim.rpcnotify 1 "Gui" (unpack option)))))
