@@ -1,4 +1,4 @@
-#!/usr/bin/env nbb
+#!/usr/bin/env -S NODE_PATH=${HOME}/.local/lib/node_modules nbb
 
 (ns nbb-tw
   "Веб-сервер для сохранения TiddlyWiki."
@@ -9,26 +9,29 @@
             ["path" :as path]
             ["child_process" :as cp]))
 
-(defn file-exists [filename]
+(defn file-exists
   "Проверяет, существует ли файл. Если нет, выбрасывает исключение."
+  [filename]
   (try
     (.accessSync fs filename)
-    (catch js/Error e
+    (catch js/Error _
       (throw (js/Error. (str "File does not exists: " filename))))))
 
-(defn file-save [filename data]
+(defn file-save
   "Сохраняет файл. Если сохранить не удалось, выбрасывает исключение."
+  [filename data]
   (try
     (.writeFileSync fs filename data)
-    (catch js/Error e
+    (catch js/Error _
       (throw (js/Error. (str "Could not save file: " filename))))))
 
-(defn commit-changes []
+(defn commit-changes
   "Коммитит в fossil-репозиторий изменения. В случае ошибки выбрасывает исключение."
+  []
   (try
     (.spawnSync cp "fossil" (clj->js ["addremove"]))
     (.spawnSync cp "fossil" (clj->js ["commit" "--no-warnings" "-m" "Autocommit"]))
-    (catch js/Error e
+    (catch js/Error _
       (throw (js/Error. (str "Could not commit to repository."))))))
 
 ;; Парсер аргументов командной строки.
@@ -53,18 +56,18 @@
                ;; открытии вики из разных браузеров (иначе может сохраниться старая
                ;; закешированная версия).
                (clj->js {:setHeaders
-                         (fn [res path stat]
+                         (fn [res _ _]
                            (.set res "Cache-Control" "no-store, must-revalidate"))})))
 
 ;; Сохраняем тело запроса в req.body.
 (.use app
-      (fn [req res next]
+      (fn [req _ next-chunk]
         (let [body (atom [])]
           ;; Читаем чанки и конвертируем их в строки.
           (.on req "data" #(swap! body conj (.toString %)))
           ;; Объединяем чанки и сохраняем результат в body.req.
           (.on req "end" #(do (set! (.-body req) (str/join @body))
-                              (next))))))
+                              (next-chunk))))))
 
 ;; Обрабатываем запросы от TiddlyWiki.
 (.use app
