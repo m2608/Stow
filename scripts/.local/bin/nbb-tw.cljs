@@ -38,11 +38,13 @@
 (def parser (ArgumentParser #js {:prog "nbb-tw.cljs"
                                  :description "HTTP server for saving TiddlyWiki."}))
 
+(.add_argument parser "-b" "--bind" #js {:help "ip address to bind" :default "127.0.0.1"})
 (.add_argument parser "-p" "--port" #js {:help "port to listen" :default 8008})
 (.add_argument parser "-c" "--commit" #js {:help "commit changes to fossil" :action "store_true"})
 
 (def args (.parse_args parser (clj->js (vec *command-line-args*))))
 
+(def bind (.-bind args))
 (def port (.-port args))
 (def commit (.-commit args))
 (def app (express))
@@ -103,10 +105,11 @@
                     (.send res (.-message e))))))
           (next))))
 
-(def server (.listen app port (fn []
-                                (println "Root directory:" (.cwd js/process))
-                                (println "Commit changes:" (if commit "yes" "no"))
-                                (println "Server running on port" port))))
+(def server (.listen app port bind
+                     (fn []
+                       (println "Root directory:" (.cwd js/process))
+                       (println "Commit changes:" (if commit "yes" "no"))
+                       (println "Server running on port" port))))
 
 (comment
   (.close server))
