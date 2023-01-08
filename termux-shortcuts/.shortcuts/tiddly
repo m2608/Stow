@@ -1,0 +1,23 @@
+#!/bin/sh
+
+PORT=8008
+
+open_url() {
+
+    # Ждем открытия нужного порта.
+    while test $(ss -OHtln "sport = $PORT" 2> /dev/null | wc -c) -eq 0; do
+        sleep 1
+    done
+
+    # Открываем URL в Firefox.
+    am start --user 0 -a android.intent.action.VIEW -n org.mozilla.fenix/.IntentReceiverActivity -d "http://localhost:$PORT/wiki.html"
+}
+
+# Выполняем функцию в фоне.
+open_url &
+
+cd /sdcard/Wiki
+
+export NODE_PATH=$HOME/.local/lib/node_modules
+
+node $HOME/.local/bin/nbb $HOME/.local/bin/nbb-tw.cljs --port $PORT --commit

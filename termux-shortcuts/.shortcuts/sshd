@@ -1,0 +1,5 @@
+#!/bin/sh
+
+trap "pkill sshd ; exit 0" INT
+
+sshd -De
