@@ -17,7 +17,7 @@
    [default default default italic underline success warning error])
  '(custom-enabled-themes '(tango-dark))
  '(package-selected-packages
-   '(emms-player-simple-mpv telega language-detection emms ecb w3m evil-nerd-commenter evil-surround evil))
+   '(restclient-jq restclient slime emms-player-simple-mpv telega language-detection emms ecb w3m evil-nerd-commenter evil-surround evil))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces

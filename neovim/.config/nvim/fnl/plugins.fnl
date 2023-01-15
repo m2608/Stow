@@ -69,6 +69,7 @@
    ;; запуск neovim в firefox
    ["glacambre/firenvim"
     {:run (fn [] ((. nvim.fn "firenvim#install")))}]
+   "bounceme/restclient.vim"
    ])
 
 (core.assoc nvim.g "tagbar_ctags_bin" "/usr/local/bin/uctags")
