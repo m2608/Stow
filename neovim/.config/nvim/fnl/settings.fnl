@@ -114,7 +114,13 @@
 
 ;; Настройки nvim-gtk.
 (when (core.get nvim.g :GtkGuiLoaded nil)
-  (let [gui-options [["Font" "PragmataPro Liga 16"]
+  (let [hostname (vim.fn.hostname)
+        gui-options [["Font" (if
+                               (= hostname "algol")
+                               "PragmataPro Liga 16"
+                               (= hostname "usd-mazonix1")
+                               "Iosevka 16"
+                               "")]
                      ["Option" "Popupmenu" 1]
                      ["Option" "Tabline" 1]
                      ["Option" "Cmdline" 1]]]
