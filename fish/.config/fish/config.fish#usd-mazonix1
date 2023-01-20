@@ -1,0 +1,18 @@
+setenv EDITOR nvim
+setenv PAGER nvimpager
+
+set PATH $HOME/.local/bin $HOME/.cargo/bin $HOME/.local/go/bin $HOME/go/bin $HOME/perl5/bin /opt/sbis3plugin /opt/metasploit-framework/bin $PATH
+
+alias less 'less -r'
+alias curl7.78 'LD_LIBRARY_PATH=$HOME/.local/lib $HOME/.local/bin/curl7.78'
+alias ls lsd
+alias mvi='mpv --config-dir=$HOME/.config/mvi'
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
+alias alacritty "MESA_GL_VERSION_OVERRIDE=3.3 $HOME/.cargo/bin/alacritty"
+
+bind \cz fg
+
+set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
+
+source $HOME/.config/grc/grc.fish
