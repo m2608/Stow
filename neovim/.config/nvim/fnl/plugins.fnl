@@ -70,6 +70,8 @@
    ["glacambre/firenvim"
     {:run (fn [] ((. nvim.fn "firenvim#install")))}]
    "bounceme/restclient.vim"
+   ;; автоматический режим шестнадцатиричного редактора
+   "RaafatTurki/hex.nvim"
    ])
 
 (core.assoc nvim.g "tagbar_ctags_bin" "/usr/local/bin/uctags")
@@ -87,19 +89,18 @@
 
 (core.assoc nvim.g "sexp_enable_insert_mode_mappings" false)
 
-(let [nvim-tree (require "nvim-tree")]
-  ((. nvim-tree "setup")
-   ;; Будем открывать дерево в каталоге текущего файла.
-   {:update_focused_file
-    {:enable true
-     :update_cwd true}
-    :renderer
-    {:icons
-     {:show
-      {:git false
-       :folder true
-       :file false
-       :folder_arrow false}}}}))
+((. (require "nvim-tree") "setup")
+ ;; Будем открывать дерево в каталоге текущего файла.
+ {:update_focused_file
+  {:enable true
+   :update_cwd true}
+  :renderer
+  {:icons
+   {:show
+    {:git false
+     :folder true
+     :file false
+     :folder_arrow false}}}})
 
 ;; используем tmux для vim-slime
 (core.assoc nvim.g "slime_target" "tmux")
@@ -114,33 +115,34 @@
 ;; помощью :SlimeConfig
 (core.assoc nvim.g "slime_dont_ask_default" 1)
 
-(let [iron (require "iron.core")]
-  ((. iron "setup")
-   {:config
-    {:scratch_repl true
-     :repl_definition
-     {:sh
-      {:command ["sh"]}
-      :python
-      {:command ["python3"]}
-      :cljs
-      {:command ["nbb" "nrepl-server"]}}
-     :repl_open_cmd
-     ((. (require "iron.view") "bottom") 20)}
-    :keymaps
-    {:send_motion "<space>sc"
-     :visual_send "<space>sc"
-     :send_file "<space>sf"
-     :send_line "<space>sl"
-     :send_mark "<space>sm"
-     :mark_motion "<space>mc"
-     :mark_visual "<space>mc"
-     :remove_mark "<space>md"
-     :cr "<space>s<cr>"
-     :interrupt "<space>s<space>"
-     :exit "<space>sq"
-     :clear "<space>cl"}}))
+;; настройка iron, универсального repl'а
+((. (require "iron.core") "setup")
+ {:config
+  {:scratch_repl true
+   :repl_definition
+   {:sh
+    {:command ["sh"]}
+    :python
+    {:command ["python3"]}
+    :cljs
+    {:command ["nbb" "nrepl-server"]}}
+   :repl_open_cmd
+   ((. (require "iron.view") "bottom") 20)}
+  :keymaps
+  {:send_motion "<space>sc"
+   :visual_send "<space>sc"
+   :send_file "<space>sf"
+   :send_line "<space>sl"
+   :send_mark "<space>sm"
+   :mark_motion "<space>mc"
+   :mark_visual "<space>mc"
+   :remove_mark "<space>md"
+   :cr "<space>s<cr>"
+   :interrupt "<space>s<space>"
+   :exit "<space>sq"
+   :clear "<space>cl"}})
 
+;; настройка firenvim
 (core.assoc nvim.g "firenvim_config"
             {:globalSettings
              {:alt "all"}
@@ -151,3 +153,7 @@
                :priority 0
                :selector "textarea"
                :takeover "never"}}})
+
+;; инициализируем плагин hex для автоматического отрытия двоичных файлов
+;; в hex-редакторе
+((. (require "hex") "setup"))
