@@ -118,8 +118,8 @@
         gui-options [["Font" (if
                                (= hostname "algol")
                                "PragmataPro Liga 16"
-                               (= hostname "usd-mazonix1")
-                               "Iosevka 16"
+                               (string.find hostname "usd[-]mazonix1")
+                               "Iosevka 14"
                                "")]
                      ["Option" "Popupmenu" 1]
                      ["Option" "Tabline" 1]
