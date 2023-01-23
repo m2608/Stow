@@ -60,6 +60,8 @@
    "bakpakin/fennel.vim"
    ;; подсветка для hurl
    "fourjay/vim-hurl"
+   ;; подсветка для vue
+   "posva/vim-vue"
    ;; работа с git
    "tpope/vim-fugitive"
    ;; асинхронный запуск команд

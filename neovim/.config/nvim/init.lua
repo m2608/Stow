@@ -1,7 +1,6 @@
 -- Если vim запущен из vscode, не загружаем конфиг.
 if vim.g['vscode'] then
-    local os = require('os')
-    os.exit()
+    return
 end
 
 local execute = vim.api.nvim_command
