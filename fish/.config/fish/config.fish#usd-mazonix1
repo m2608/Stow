@@ -1,7 +1,17 @@
 setenv EDITOR nvim
 setenv PAGER nvimpager
+setenv NNN_PLUG "f:finder;c:fzcd;p:preview-tui;z:autojump"
+setenv NNN_OPTS "aACdu"
 
-set PATH $HOME/.local/bin $HOME/.cargo/bin $HOME/.local/go/bin $HOME/go/bin $HOME/perl5/bin /opt/sbis3plugin /opt/metasploit-framework/bin $PATH
+set PATH 
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    $HOME/.local/go/bin \
+    $HOME/go/bin \
+    $HOME/perl5/bin \
+    /opt/sbis3plugin \
+    /opt/metasploit-framework/bin \
+    $PATH
 
 alias less 'less -r'
 alias curl7.78 'LD_LIBRARY_PATH=$HOME/.local/lib $HOME/.local/bin/curl7.78'

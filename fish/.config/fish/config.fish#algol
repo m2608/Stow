@@ -1,11 +1,12 @@
-setenv LEIN_ROOT 1
 setenv EDITOR nvim
-setenv GOPATH $HOME/.gocode
-setenv SVDIR $HOME/.runit/service
-setenv WORKON_HOME $HOME/.virtualenvs
 setenv PAGER nvimpager
 setenv NNN_PLUG "f:finder;c:fzcd;p:preview-tui;z:autojump"
 setenv NNN_OPTS "aACdu"
+
+setenv LEIN_ROOT 1
+setenv GOPATH $HOME/.gocode
+setenv SVDIR $HOME/.runit/service
+setenv WORKON_HOME $HOME/.virtualenvs
 
 set PATH \
     $HOME/Bin \
