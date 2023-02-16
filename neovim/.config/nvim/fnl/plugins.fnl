@@ -36,6 +36,10 @@
    "godlygeek/tabular"
    ;; lsp
    "neovim/nvim-lspconfig"
+   ;; treesitter
+   ["nvim-treesitter/nvim-treesitter"
+    {:run (fn [] (let [ts-update ((. (require "nvim-treesitter.install") "update") {:with_sync true})]
+                   (ts-update)))}]
    ;; навигация по файлам
    "kyazdani42/nvim-tree.lua"
    ;; fuzzy search
@@ -155,6 +159,18 @@
                :priority 0
                :selector "textarea"
                :takeover "never"}}})
+
+;; настройка treesitter
+((. (require "nvim-treesitter.configs") "setup")
+ {:ensure_installed ["c" "clojure" "commonlisp" "cpp" "css" "diff" "dot"
+                     "dockerfile" "lua" "fennel" "fish" "html" "ini"
+                     "javascript" "jq" "json" "lua" "make" "markdown"
+                     "python" "scheme" "sql" "toml" "typescript" "vim"
+                     "vue" "yaml"]
+  :sync_install true
+  :auto_install true
+  :highlight
+  {:enable true}})
 
 ;; инициализируем плагин hex для автоматического отрытия двоичных файлов
 ;; в hex-редакторе
