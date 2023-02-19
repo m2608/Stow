@@ -160,7 +160,13 @@
                :selector "textarea"
                :takeover "never"}}})
 
-;; настройка treesitter
+;; настройка treesitter, для автоматической компиляции нужно установить tree-sitter-cli
+;; gcc в CentOS очень старые, есть проблемы с компиляцией некоторых парсеров, поэтому
+
+;; будем использовать clang
+(tset (require "nvim-treesitter.install") "compilers"
+      ["clang"])
+
 ((. (require "nvim-treesitter.configs") "setup")
  {:ensure_installed ["c" "clojure" "commonlisp" "cpp" "css" "diff" "dot"
                      "dockerfile" "lua" "fennel" "fish" "html" "ini"
@@ -169,8 +175,8 @@
                      "vue" "yaml"]
   :sync_install true
   :auto_install true
-  :highlight
-  {:enable true}})
+  :highlight {:enable true}
+  :indent {:enable true}})
 
 ;; инициализируем плагин hex для автоматического отрытия двоичных файлов
 ;; в hex-редакторе
