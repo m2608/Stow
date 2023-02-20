@@ -176,7 +176,7 @@
   :sync_install true
   :auto_install true
   :highlight {:enable true}
-  :indent {:enable true}})
+  :indent {:enable false}})
 
 ;; инициализируем плагин hex для автоматического отрытия двоичных файлов
 ;; в hex-редакторе
