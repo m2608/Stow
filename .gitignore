@@ -1,1 +1,3 @@
 neovim/.config/nvim/lua/
+.clj-kondo/
+.lsp/

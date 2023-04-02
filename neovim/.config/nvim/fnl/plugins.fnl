@@ -108,6 +108,10 @@
      :file false
      :folder_arrow false}}}})
 
+((. (require "telescope") "setup")
+ {:defaults {:preview {:check_mime_type false}
+             :mappings {:n {"d" (. (require "telescope.actions") "delete_buffer")}}}})
+
 ;; используем tmux для vim-slime
 (core.assoc nvim.g "slime_target" "tmux")
 (core.assoc nvim.g "slime_paste_file" "$HOME/.slime_paste")

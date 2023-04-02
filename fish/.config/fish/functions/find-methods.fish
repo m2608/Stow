@@ -8,7 +8,7 @@ function find-methods -d "Find methods from file."
 
         rg -g '*.orx' --json -F -f \
             (for method in (cat methods.txt); echo "name=\"$method\""; echo "alias=\"$method\""; end | psub) \
-            | jq -c '
+            | jq '
                 select(.type=="match") 
                 | {
                     file: .data.path.text,
@@ -16,6 +16,7 @@ function find-methods -d "Find methods from file."
                     meth: (.data.submatches[0].match.text | sub("^(name|alias)=\""; "") | sub("\"$"; ""))
                 }
             ' \
+            | jq -s -c 'sort_by(.meth) | .[]' \
             | while read match
                 set file (echo "$match" | jq -r '.file')
                 set line (echo "$match" | jq -r '.line')
