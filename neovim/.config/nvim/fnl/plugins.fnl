@@ -162,22 +162,24 @@
 
 ;; настройка treesitter, для автоматической компиляции нужно установить tree-sitter-cli
 ;; gcc в CentOS очень старые, есть проблемы с компиляцией некоторых парсеров, поэтому
+(when (and (= 1 (nvim.fn.executable "clang"))
+           (= 1 (nvim.fn.executable "tree-sitter")))
+  ;; будем использовать clang
+  (tset (require "nvim-treesitter.install") "compilers"
+        ["clang"])
 
-;; будем использовать clang
-(tset (require "nvim-treesitter.install") "compilers"
-      ["clang"])
-
-((. (require "nvim-treesitter.configs") "setup")
- {:ensure_installed ["c" "clojure" "commonlisp" "cpp" "css" "diff" "dot"
-                     "dockerfile" "lua" "fennel" "fish" "html" "ini"
-                     "javascript" "jq" "json" "lua" "make" "markdown"
-                     "python" "scheme" "sql" "toml" "typescript" "vim"
-                     "vue" "yaml"]
-  :sync_install true
-  :auto_install true
-  :highlight {:enable true}
-  :indent {:enable false}})
+  ((. (require "nvim-treesitter.configs") "setup")
+   {:ensure_installed ["c" "clojure" "commonlisp" "cpp" "css" "diff" "dot"
+                       "dockerfile" "lua" "fennel" "fish" "html" "ini"
+                       "javascript" "jq" "json" "lua" "make" "markdown"
+                       "python" "scheme" "sql" "toml" "typescript" "vim"
+                       "vue" "yaml"]
+    :sync_install true
+    :auto_install true
+    :highlight {:enable true}
+    :indent {:enable false}}))
 
 ;; инициализируем плагин hex для автоматического отрытия двоичных файлов
-;; в hex-редакторе
-((. (require "hex") "setup"))
+;; в hex-редакторе (не включаю по-умолчанию, т.к. функционал плохо работает
+;; на файлах с 8-бинтыми кодировками (cp866, cp1251 etc)
+;; ((. (require "hex") "setup"))

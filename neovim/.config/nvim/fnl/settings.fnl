@@ -87,7 +87,9 @@
        ;; показываем диагностическое сообщение при задержке курсора на строке
        ;; "autocmd CursorHold * lua vim.diagnostic.open_float()"
        ;; отключаем линтер для REPL Conjure (баг в nvim https://github.com/Olical/conjure/pull/420)
-       "autocmd BufNewFile conjure-log-* lua vim.diagnostic.disable(0)"]]
+       "autocmd BufNewFile conjure-log-* lua vim.diagnostic.disable(0)"
+       ;; отключаем сворачивание для файлов hurl
+       "autocmd Syntax hurl setlocal foldmethod=manual"]]
   (each [_ cmd (ipairs commands)]
     (nvim.command cmd)))
 
