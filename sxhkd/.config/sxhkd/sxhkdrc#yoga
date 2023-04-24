@@ -1,0 +1,28 @@
+# вставить текст из буфера
+shift+Insert
+    clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -
+
+@XF86MonBrightnessUp
+    xbacklight -inc 5
+
+@XF86MonBrightnessDown
+    xbacklight -dec 5
+
+# уменьшить громкость
+@XF86AudioLowerVolume
+    sndioctl -q output.level=-0.0625 && \
+    dwmstatus.sh
+
+# увеличить громкость
+@XF86AudioRaiseVolume
+    sndioctl -q output.level=+0.0625 && \
+    dwmstatus.sh
+
+# замьютить
+@XF86AudioMute
+    sndioctl -q output.mute=! && \
+    dwmstatus.sh
+
+# скриншот
+Print
+    flameshot gui 1> /dev/null 2> /dev/null
