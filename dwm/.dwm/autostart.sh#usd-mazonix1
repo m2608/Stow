@@ -1,0 +1,42 @@
+#!/bin/sh 
+
+# Раскладки
+setxkbmap -layout us,ru -option ""
+
+# xmodmap $HOME/.xmodmaprc
+
+# Настраиваем нужно положение мониторов.
+xrandr --output HDMI-2 --left-of HDMI-1 &
+
+# Композитный менеджер (прозрачность окон и т.п.)
+# Конфликтует со СБИС плагином (не отображается интерфейс плагина для редактирования скриношотов).
+#xcompmgr &
+
+# Устанавливаем обои
+hsetroot -solid black &
+
+# Чтобы приложения на java нормально отображались в dwm
+wmname LG3D &
+
+# Синхронизация SELECTION и PRIMARY буферов
+#autocutsel -fork -selection CLIPBOARD
+#autocutsel -fork -selection PRIMARY
+
+xrdb -merge ~/.Xresources
+
+dwmstatus.sh loop &
+
+if test "$DISPLAY" = ":0"; then
+    xkbcomp ~/.config/xkb/my_vimkeys $DISPLAY
+    xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright;ISO_Level3_Shift=ISO_Level3_Shift|ISO_Next_Group'
+else
+    xkbcomp ~/.config/xkb/my_caps_rdp $DISPLAY
+fi
+
+clipmenud &
+sxhkd -c "$HOME/.config/sxhkd/sxhkdrc#"$(hostname | cut -d '.' -f 1) &
+
+runsvdir $HOME/.runsvdir &
+
+# СБИС Плагин
+# /opt/sbis3plugin/sbis3plugin &

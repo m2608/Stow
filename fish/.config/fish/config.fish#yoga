@@ -9,7 +9,7 @@ set PATH \
     $PATH
 
 alias ls lsd
-alias nnn "PAGER='nvimpager -p' /bin/nnn"
+alias nnn "PAGER='nvimpager -p' "(which nnn)
 alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
 
 zoxide init fish | source

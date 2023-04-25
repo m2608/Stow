@@ -1,0 +1,21 @@
+#!/bin/sh
+
+xsetroot -solid black
+
+xset fp+ $HOME/.fonts
+xset fp rehash
+xset -dpms
+xset s off
+
+xinput set-prop "Elan Touchpad" "Device Enabled" 0
+
+setxkbmap -layout us,ru
+xkbcomp $HOME/.config/xkb/my_vimkeys $DISPLAY
+xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright;ISO_Level3_Shift=ISO_Level3_Shift|ISO_Next_Group'
+sxhkd -c "$HOME/.config/sxhkd/sxhkdrc#$(hostname | cut -d '.' -f 1)" &
+
+xrdb -merge ~/.Xresources
+
+$HOME/.local/bin/dwmstatus.sh loop &
+
+runsvdir $HOME/.runsvdir/ &

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+pkill -u $(whoami) runsv
+pkill xcape
+pkill sxhkd
+pkill dwmstatus.sh
