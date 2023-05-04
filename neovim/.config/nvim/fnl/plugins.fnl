@@ -58,6 +58,8 @@
    "Olical/aniseed"
    ;; работа с Clojure REPL
    "Olical/conjure"
+   ["clojure-vim/vim-jack-in"
+    {:requires ["tpope/vim-dispatch" "radenling/vim-dispatch-neovim"]}]
    ;; радужные скобки
    "kien/rainbow_parentheses.vim"
    ;; подсветка синтаксиса Fennel
@@ -78,6 +80,8 @@
    "bounceme/restclient.vim"
    ;; автоматический режим шестнадцатиричного редактора
    "RaafatTurki/hex.nvim"
+   ;; хелп по хоткеям
+   "folke/which-key.nvim"
    ])
 
 (core.assoc nvim.g "tagbar_ctags_bin" "/usr/local/bin/uctags")
@@ -88,10 +92,14 @@
 ;; показывает он же по space+k, если что.
 (core.assoc nvim.g "conjure#mapping#doc_word" "k")
 
-;; Настройки Conjure для chez-scheme.
+;; Настройки для Chez Scheme.
 (core.assoc nvim.g "conjure#client#scheme#stdio#command" "petite")
 (core.assoc nvim.g "conjure#client#scheme#stdio#prompt_pattern" "> $?")
 (core.assoc nvim.g "conjure#client#scheme#stdio#value_prefix_pattern" false)
+
+;; Настройки для Clojure.
+; (core.assoc nvim.g "conjure#client#clojure#nrepl#eval#auto_require" false)
+; (core.assoc nvim.g "conjure#client#clojure#nrepl#connection#auto_repl#enabled" false)
 
 (core.assoc nvim.g "sexp_enable_insert_mode_mappings" false)
 
@@ -178,8 +186,6 @@
                        "javascript" "jq" "json" "lua" "make" "markdown"
                        "python" "scheme" "sql" "toml" "typescript" "vim"
                        "vue" "yaml"]
-    :sync_install true
-    :auto_install true
     :highlight {:enable true}
     :indent {:enable false}}))
 
@@ -187,3 +193,12 @@
 ;; в hex-редакторе (не включаю по-умолчанию, т.к. функционал плохо работает
 ;; на файлах с 8-бинтыми кодировками (cp866, cp1251 etc)
 ;; ((. (require "hex") "setup"))
+
+;; настройки плагина, показывающего хоткеи
+((. (require "which-key") "setup")
+                {})
+
+;; необходимо для which-keys
+(core.assoc nvim.o :timeout true)
+(core.assoc nvim.o :timeoutlen 300)
+

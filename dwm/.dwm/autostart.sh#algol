@@ -1,0 +1,44 @@
+#!/bin/sh
+
+xsetroot -solid black
+
+# добавляем каталоги шрифтов
+find /usr/local/share/fonts -type d -mindepth 1 -maxdepth 1 -exec xset fp+ {}\;
+xset fp+ $HOME/.fonts
+xset fp rehash
+
+# отключаем хранитель экрана
+xset -dpms
+xset s off
+
+# уменьшаем задержку клавиатуры (repeat rate, autorepeat rate)
+#xset r rate 250 80
+
+# OBSOLETE: исползовалось на ноутбуке
+# если подключен hdmi-монитор, выводим звук на него
+#hdmi=`xrandr | grep "HDMI[0-9]\+[ ]\+connected"`
+#if [ "$hdmi" != "" ]; then
+#    sysctl hw.snd.default_unit=2
+#fi
+xrandr --output HDMI-0 --auto
+xrandr --output VGA-0 --auto --right-of HDMI-0
+
+# прозрачность окон
+#xcompmgr &
+#picom --no-fading-openclose -b &
+
+# Вывод звука по умолчанию через HDMI.
+sysctl hw.snd.default_unit=1
+
+xkbcomp $HOME/.config/xkb/my_caps $DISPLAY
+
+#xrandr --output HDMI1 --auto --right-of LVDS1 ; xrandr --output LVDS1 --auto --left-of HDMI1
+
+xrdb -merge ~/.Xresources
+
+# Объединяем SELECTION и PRIMARY
+#autocutsel -s PRIMARY -fork
+#autocutsel -s SELECTION -fork
+
+runsvdir $HOME/.runsvdir &
+
