@@ -1,4 +1,8 @@
-#!/usr/bin/env -S NODE_PATH=${HOME}/.local/lib/node_modules nbb
+#!/bin/sh
+
+#_xxx (comment
+  exec env NODE_PATH="$HOME/.local/lib/node_modules" nbb "$0" "$@"
+#_xxx )
 
 (ns nbb-tw
   "Веб-сервер для сохранения TiddlyWiki."
@@ -109,7 +113,7 @@
                      (fn []
                        (println "Root directory:" (.cwd js/process))
                        (println "Commit changes:" (if commit "yes" "no"))
-                       (println "Server running on port" port))))
+                       (println (str "Server running on " bind ":" port)))))
 
 (comment
   (.close server))
