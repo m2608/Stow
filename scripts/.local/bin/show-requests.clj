@@ -10,7 +10,10 @@
             [org.httpkit.server :as server]
             [hiccup2.core :as html]
             [cheshire.core :as json])
-  (:import [java.net URLDecoder URLEncoder]))
+  (:import [java.net URLDecoder URLEncoder]
+           [java.time LocalDateTime]
+           [java.time.format DateTimeFormatter]
+           ))
 
 (def cli-options
   [["-p" "--port PORT" "Port for HTTP server" :default 8000 :parse-fn #(Integer/parseInt %)]
@@ -52,12 +55,17 @@
               "font-src * data: blob: 'unsafe-inline';"
               "frame-ancestors * data: blob: 'unsafe-inline';"))
 
+(defn now
+  []
+  (let [date (LocalDateTime/now)]
+    (.format date (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss"))))
+
 (server/run-server
   (fn [{:keys [uri remote-addr request-method headers]
         request-body :body
         :or {request-body nil}}]
     (let [origin (-> (filter (fn [h] (= (first h) "origin")) headers) first second)
-          request-text (str "[" remote-addr "] " (str/upper-case (name request-method)) " " uri "\n"
+          request-text (str "--> " (now) " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri "\n"
                             (str/join "\n" (map (fn [h] (str (first h) ": " (second h))) headers)) "\n"
                             (if request-body (str "\n" (slurp request-body) "\n") ""))
           request-json (json/generate-string
