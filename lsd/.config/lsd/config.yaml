@@ -3,3 +3,5 @@ icons:
 sorting:
   dir-grouping: first
 date: '+%F %T'
+color:
+  theme: my
