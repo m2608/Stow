@@ -1,11 +1,6 @@
-setenv EDITOR nvim
 setenv PAGER nvimpager
-setenv NNN_PLUG "f:finder;c:fzcd;p:preview-tui;z:autojump"
-setenv NNN_OPTS "aACdu"
 
 set PATH \
-    $HOME/.local/bin \
-    $HOME/.cargo/bin \
     $HOME/.local/go/bin \
     $PATH
 

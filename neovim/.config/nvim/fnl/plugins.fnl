@@ -46,6 +46,8 @@
    ["nvim-telescope/telescope.nvim"
     {:branch "0.1.x"
      :requires ["nvim-lua/plenary.nvim"]}]
+   ;; дерево undo
+   "mbbill/undotree"
    ;; комментирование кода
    "tomtom/tcomment_vim"
    ;; навигация по коду
@@ -60,6 +62,13 @@
    "Olical/conjure"
    ["clojure-vim/vim-jack-in"
     {:requires ["tpope/vim-dispatch" "radenling/vim-dispatch-neovim"]}]
+   ;; документация по clojure
+   ["kkharji/lispdocs.nvim"
+    {:requires ["kkharji/sqlite.lua"]}]
+   ;; редактирование s-выражений
+   ["vim-sexp-mappings-for-regular-people"
+    {:requires ["guns/vim-sexp" "tpope/vim-repeat" "tpope/vim-surround"]}]
+
    ;; радужные скобки
    "kien/rainbow_parentheses.vim"
    ;; подсветка синтаксиса Fennel
@@ -122,7 +131,7 @@
 
 ;; используем tmux для vim-slime
 (core.assoc nvim.g "slime_target" "tmux")
-(core.assoc nvim.g "slime_paste_file" "$HOME/.slime_paste")
+; (core.assoc nvim.g "slime_paste_file" "$HOME/.slime_paste")
 ;; по умолчанию текст будет отправляться в последнюю панель текущего окна
 ;; это удобно, когда окно tmux разделено на два, и в одном запущен REPL
 (core.assoc nvim.g "slime_default_config" 
