@@ -14,6 +14,7 @@ set PATH \
     $PATH
 
 alias ls lsd
+alias bat "PAGER=less $HOME/.cargo/bin/bat"
 alias aumix "env LANG=C aumix"
 alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
 alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
