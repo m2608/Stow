@@ -108,12 +108,6 @@
    :signs true
    :float {:source "always" :border "single"}})
 
-;; Настройки firenvim.
-(when (core.get nvim.g :started_by_firenvim nil)
-  (core.assoc nvim.o :laststatus 0)
-  (core.assoc nvim.o :guifont "Iosevka:h12")
-  (nvim.command "colorscheme morning"))
-
 ;; Настройки nvim-gtk.
 (when (core.get nvim.g :GtkGuiLoaded nil)
   (let [hostname (vim.fn.hostname)
@@ -128,3 +122,7 @@
                      ["Option" "Cmdline" 1]]]
     (each [_ option (ipairs gui-options)]
       (vim.rpcnotify 1 "Gui" (unpack option)))))
+
+;; На рабочем компе меняем путь к python.
+(when (string.find (nvim.fn.hostname) "usd[-]mazonix1")
+  (core.assoc nvim.g :python3_host_prog (.. (nvim.fn.getenv "HOME") "/.local/bin/python3.11")))

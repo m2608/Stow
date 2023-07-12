@@ -15,7 +15,8 @@ xkb_keymap {
 
         key <ESC> { [ Escape, asciitilde, grave, asciitilde] };
         key <AE01> { 
-            symbols[Group1] = [ 1, exclam, F1, F1 ]
+            symbols[Group1] = [ 1, exclam, F1, F1 ],
+            symbols[Group2] = [ 1, exclam, F1, F1 ]
         };
         key <AE02> { [ 2, at, F2, F2 ] };
         key <AE03> { 

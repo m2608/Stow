@@ -3,4 +3,5 @@
                   plugins
                   lsp
                   keymaps
-                  commands]})
+                  commands
+                  firenvim]})
