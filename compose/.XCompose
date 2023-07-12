@@ -2,6 +2,8 @@ include "%L"
 
 <Multi_key> <equal> <minus>    : "✘"   U2718      # HEAVY BALLOT X
 <Multi_key> <equal> <plus>     : "✔"   U2714      # HEAVY CHECK MARK
+<Multi_key> <equal> <.> <r>    : "🔴 "   U1F534      # HEAVY CHECK MARK
+<Multi_key> <equal> <.> <g>    : "🟢 "   U1F7E2      # HEAVY CHECK MARK
 
 <Multi_key> <g> <a>            : "α"              # GREEK SMALL LETTER ALPHA
 <Multi_key> <g> <b>            : "β"              # GREEK SMALL LETTER BETA
