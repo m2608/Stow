@@ -31,7 +31,7 @@
     {:requires ["tpope/vim-repeat"]}]
    ;; Маппинги для vim-sexp.
    ["tpope/vim-sexp-mappings-for-regular-people"
-    {:requires ["guns/vim-sexp" "tpope/vim-repeat"]}]
+    {:requires ["guns/vim-sexp" "tpope/vim-repeat" "tpope/vim-surround"]}]
    ;; выравнивание текста по разделителю
    "godlygeek/tabular"
    ;; lsp
@@ -65,12 +65,6 @@
    ;; документация по clojure
    ["kkharji/lispdocs.nvim"
     {:requires ["kkharji/sqlite.lua"]}]
-   ;; редактирование s-выражений
-   ["vim-sexp-mappings-for-regular-people"
-    {:requires ["guns/vim-sexp" "tpope/vim-repeat" "tpope/vim-surround"]}]
-
-   ;; радужные скобки
-   "kien/rainbow_parentheses.vim"
    ;; подсветка синтаксиса Fennel
    "bakpakin/fennel.vim"
    ;; подсветка для hurl
@@ -87,7 +81,7 @@
    ["glacambre/firenvim"
     {:run (fn [] ((. nvim.fn "firenvim#install")))}]
    "bounceme/restclient.vim"
-   ;; автоматический режим шестнадцатиричного редактора
+   ;; режим шестнадцатиричного редактора
    "RaafatTurki/hex.nvim"
    ;; хелп по хоткеям
    "folke/which-key.nvim"

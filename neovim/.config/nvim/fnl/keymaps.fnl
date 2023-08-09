@@ -1,6 +1,6 @@
 (module settings
-        {autoload {core aniseed.core
-                   nvim aniseed.nvim}})
+  {autoload {core aniseed.core
+             nvim aniseed.nvim}})
 
 (defn- set-mapping [mode from to ...]
   (let [opts (if (= (length [...]) 0) {:noremap true :silent true}
@@ -38,7 +38,7 @@
    ;; чтобы, если открыто всплывающее меню, он посылал Ctrl+Y
    ["i" "<cr>" "pumvisible() ? \"<c-y>\" : \"<cr>\"" {:noremap true :silent true :expr true}]
    ;; копирует в буфер обмена от положения курсора до конца строки (по аналогии с
-   ;; командами С и D]
+   ;; командами С и D)
    ["n" "Y" "y$"]
    ;; сочетания клавиш для режима вставки
    ["i" "<c-e>" "<c-o>$"]
@@ -70,7 +70,10 @@
    ["n" "<Leader>s" "<Plug>SlimeParagraphSend" {:noremap false :silent true}]
    ;; выход из режима вставки в терминале по Esc
    ["t" "<Esc>" "<C-\\><C-n>"]
-   ])
+   ;; OSCYank
+   ["n" "<leader>y" "<Plug>OSCYankOperator" {:noremap false :silent true}]
+   ["n" "<leader>yy" "<leader>y_" {:noremap false :silent true}]
+   ["v" "<leader>y" "<Plug>OSCYankVisual" {:noremap false :silent true}]])
 
 (each [_ mapping (ipairs mappings)]
   (set-mapping (unpack mapping)))
