@@ -17,5 +17,4 @@ sysctl hw.snd.default_unit=1
 
 xrdb -merge ~/.Xresources
 
-xkbcomp $HOME/.config/xkb/my_caps $DISPLAY
-xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright;ISO_Level3_Shift=ISO_Level3_Shift|ISO_Next_Group'
+setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
