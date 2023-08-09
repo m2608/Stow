@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if test -z "$1" -o -z "$2"; then
-    echo 'QMK reflash utility. Usage: '`basename $0`' <port> <firmware>'
+    echo 'QMK reflash script. Usage: '`basename $0`' <port> <firmware>'
     exit 1
 fi
 
@@ -13,7 +13,7 @@ i=1
 
 while true; do
     printf "\rWaiting for port %s, reset the keyboard please%-3s" "$port" `echo -n $chars | cut -d ' ' -f $i`
-    i=`bc --expression="$i % 3 + 1"`
+    i=$((i%3+1))
     if test -c "$port"; then
         avrdude -p m32u4 -c avr109 -P "$port" -U flash:w:"$file"
         sleep 1
