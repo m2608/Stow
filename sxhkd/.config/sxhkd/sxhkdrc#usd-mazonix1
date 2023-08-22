@@ -29,8 +29,8 @@ alt + Down
 @XF86Forward
     mpvipc.sh next
 
-Print:
-    docker exec -it flameshot flameshot gui 1> /dev/null 2> /dev/null
+# Print:
+#     docker exec -it flameshot flameshot gui 1> /dev/null 2> /dev/null
 
 super + e:
     set fn (xclip -o) ; if test -f "$fn" ; alacritty -e fish -i -c "nvim \"$fn\"" ; else ; alacritty -e fish -i -c nvim; end
