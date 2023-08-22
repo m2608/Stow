@@ -1,7 +1,7 @@
 #!/bin/sh 
 
 # Раскладки
-setxkbmap -layout us,ru -option ""
+setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 
 # xmodmap $HOME/.xmodmaprc
 
@@ -26,14 +26,6 @@ xrdb -merge ~/.Xresources
 
 dwmstatus.sh loop &
 
-if test "$DISPLAY" = ":0"; then
-    xkbcomp ~/.config/xkb/my_vimkeys $DISPLAY
-    xcape -e 'Shift_L=Shift_L|parenleft;Shift_R=Shift_R|parenright;ISO_Level3_Shift=ISO_Level3_Shift|ISO_Next_Group'
-else
-    xkbcomp ~/.config/xkb/my_caps_rdp $DISPLAY
-fi
-
-clipmenud &
 sxhkd -c "$HOME/.config/sxhkd/sxhkdrc#"$(hostname | cut -d '.' -f 1) &
 
 runsvdir $HOME/.runsvdir &

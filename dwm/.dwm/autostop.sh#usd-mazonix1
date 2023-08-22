@@ -1,7 +1,5 @@
 #!/bin/sh
 
 pkill dwmstatus.sh
-pkill xcape
-pkill clipmenud
 pkill sxhkd
 pkill -u $(whoami) runsv
