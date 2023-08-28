@@ -17,7 +17,7 @@
    [default default default italic underline success warning error])
  '(custom-enabled-themes '(tango-dark))
  '(package-selected-packages
-   '(restclient-jq restclient slime emms-player-simple-mpv telega language-detection emms ecb w3m evil-nerd-commenter evil-surround evil))
+   '(restclient-jq restclient slime telega language-detection ecb w3m evil-nerd-commenter evil-surround evil))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -39,19 +39,7 @@
 (menu-bar-mode 0)
 (line-number-mode 1)
 
-(require 'emms-player-simple)
-(require 'emms-source-file)
-(require 'emms-source-playlist)
-(require 'emms-player-mpv)
-(setq emms-player-list '(emms-player-mpv))
-
 (define-key global-map (kbd "C-c t") telega-prefix-map)
-
-;(require 'telega-mnz)
-;(require 'telega-alert)
-;(add-hook 'telega-load-hook 'global-telega-mnz-mode)
-;(global-telega-mnz-mode 1)
-;(telega-alert-mode 1)
 
 (add-hook
  'telega-chat-mode-hook
