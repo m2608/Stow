@@ -92,7 +92,7 @@ function base16-cupertino -d "Cupertino"
         put_template_var 708 $colorbg # internal border (rxvt)
       end
     end
-    put_template_custom 12 ";7" # cursor (reverse video)
+    put_template_custom 12 ";rgb:$colorfg" # cursor (reverse video)
   end
 
   # set syntax highlighting colors

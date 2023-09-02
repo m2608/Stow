@@ -92,7 +92,7 @@ function base16-tomorrow-night -d "Tomorrow Night"
         put_template_var 708 $colorbg # internal border (rxvt)
       end
     end
-    put_template_custom 12 ";7" # cursor (reverse video)
+    put_template_custom 12 ";rgb:$colorfg" # cursor (reverse video)
   end
 
   # set syntax highlighting colors
