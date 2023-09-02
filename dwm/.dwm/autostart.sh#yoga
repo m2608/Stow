@@ -9,10 +9,11 @@ xset s off
 
 xinput set-prop "Elan Touchpad" "Device Enabled" 0
 
+xrdb -merge ~/.Xresources
+
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 sxhkd -c "$HOME/.config/sxhkd/sxhkdrc#$(hostname | cut -d '.' -f 1)" &
-
-xrdb -merge ~/.Xresources
+wmname LG3D
 
 sndioctl -q output.level=0.5
 
