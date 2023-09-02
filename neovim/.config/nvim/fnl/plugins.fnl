@@ -1,51 +1,54 @@
 (module plugins
-  {autoload {nvim aniseed.nvim
-             core aniseed.core
-             packer packer}})
+        {autoload {nvim aniseed.nvim
+                   core aniseed.core}})
 
 (defn load-plugins [plugins]
   "Загружает плагины из списка"
-  (packer.startup
-    (fn [use]
-      (each [_ plugin (ipairs plugins)]
-        (let [value-type (type plugin)]
-          (use (if
-                 ;; Если передана строка, просто загружаем плагин по его названию.
-                 (= value-type "string")
-                 plugin
-                 ;; Если передана таблица, формируем аргумент для функции загрузки:
-                 ;; элемент с ключом "1" - название плагина;
-                 ;; остальные элементы берем из таблицы опций.
-                 (= value-type "table")
-                 (let [name (. plugin 1)
-                       opts (. plugin 2)]
-                   (core.assoc opts 1 name)))))))))
- 
+  (->
+    (icollect [_ plugin (ipairs plugins)]
+      (let [value-type (type plugin)]
+        (if
+          ;; Если передана строка, просто загружаем плагин по его названию.
+          (= value-type "string")
+          plugin
+          ;; Если передана таблица, формируем аргумент для функции загрузки:
+          ;; элемент с ключом "1" - название плагина;
+          ;; остальные элементы берем из таблицы опций.
+          (= value-type "table")
+          (let [name (. plugin 1)
+                opts (. plugin 2)]
+            (core.assoc opts 1 name)))))
+    ((. (require "lazy") :setup))))
+
 (load-plugins
   [
+   ;; Плагин для менеджмента плагинов.
+   ["folke/lazy.nvim" {:version "*"}]
+   ;; Интеграция fennel.
+   "Olical/aniseed"
    ;; плагин для удобного изменения тегов, кавычек
    ["tpope/vim-surround"
-    {:requires ["tpope/vim-repeat"]}]
+    {:dependencies ["tpope/vim-repeat"]}]
    ;; Работа с s-выражениями.
    ["guns/vim-sexp"
-    {:requires ["tpope/vim-repeat"]}]
+    {:dependencies ["tpope/vim-repeat"]}]
    ;; Маппинги для vim-sexp.
    ["tpope/vim-sexp-mappings-for-regular-people"
-    {:requires ["guns/vim-sexp" "tpope/vim-repeat" "tpope/vim-surround"]}]
+    {:dependencies ["guns/vim-sexp" "tpope/vim-repeat" "tpope/vim-surround"]}]
    ;; выравнивание текста по разделителю
    "godlygeek/tabular"
    ;; lsp
    "neovim/nvim-lspconfig"
    ;; treesitter
    ["nvim-treesitter/nvim-treesitter"
-    {:run (fn [] (let [ts-update ((. (require "nvim-treesitter.install") "update") {:with_sync true})]
-                   (ts-update)))}]
+    {:build (fn [] (let [ts-update ((. (require "nvim-treesitter.install") "update") {:with_sync true})]
+                     (ts-update)))}]
    ;; навигация по файлам
    "kyazdani42/nvim-tree.lua"
    ;; fuzzy search
    ["nvim-telescope/telescope.nvim"
     {:branch "0.1.x"
-     :requires ["nvim-lua/plenary.nvim"]}]
+     :dependencies ["nvim-lua/plenary.nvim"]}]
    ;; дерево undo
    "mbbill/undotree"
    ;; комментирование кода
@@ -56,15 +59,13 @@
    "jpalardy/vim-slime"
    ;; универсальный REPL внутри nvim
    "hkupty/iron.nvim"
-   ;; Интеграция fennel.
-   "Olical/aniseed"
    ;; работа с Clojure REPL
    "Olical/conjure"
    ["clojure-vim/vim-jack-in"
-    {:requires ["tpope/vim-dispatch" "radenling/vim-dispatch-neovim"]}]
+    {:dependencies ["tpope/vim-dispatch" "radenling/vim-dispatch-neovim"]}]
    ;; документация по clojure
    ["kkharji/lispdocs.nvim"
-    {:requires ["kkharji/sqlite.lua"]}]
+    {:dependencies ["kkharji/sqlite.lua"]}]
    ;; подсветка синтаксиса Fennel
    "bakpakin/fennel.vim"
    ;; подсветка для hurl
@@ -79,7 +80,21 @@
    "ojroques/vim-oscyank"
    ;; запуск neovim в firefox
    ["glacambre/firenvim"
-    {:run (fn [] ((. nvim.fn "firenvim#install")))}]
+    {:lazy false
+     :build (fn []
+              ((. nvim.fn "firenvim#install") 0))
+     :config (fn []
+               (core.assoc nvim.g "firenvim_config"
+                           {:globalSettings
+                            {:alt "all"}
+                            :localSettings
+                            {".*"
+                             {:cmdline "neovim"
+                              :content "text"
+                              :priority 0
+                              :selector "textarea"
+                              :takeover "never"}}}))
+     }]
    "bounceme/restclient.vim"
    ;; режим шестнадцатиричного редактора
    "RaafatTurki/hex.nvim"
@@ -163,17 +178,17 @@
    :exit "<space>sq"
    :clear "<space>cl"}})
 
-;; настройка firenvim
-(core.assoc nvim.g "firenvim_config"
-            {:globalSettings
-             {:alt "all"}
-             :localSettings
-             {".*"
-              {:cmdline "neovim"
-               :content "text"
-               :priority 0
-               :selector "textarea"
-               :takeover "never"}}})
+; настройка firenvim
+; (core.assoc nvim.g "firenvim_config"
+;             {:globalSettings
+;              {:alt "all"}
+;              :localSettings
+;              {".*"
+;               {:cmdline "neovim"
+;                :content "text"
+;                :priority 0
+;                :selector "textarea"
+;                :takeover "never"}}})
 
 ;; настройка treesitter, для автоматической компиляции нужно установить tree-sitter-cli
 ;; gcc в CentOS очень старые, есть проблемы с компиляцией некоторых парсеров, поэтому

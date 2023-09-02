@@ -4,4 +4,4 @@
                   lsp
                   keymaps
                   commands
-                  firenvim]})
+                  autocmds]})
