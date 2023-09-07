@@ -2,8 +2,6 @@
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
-(require :swank)
-
 (in-package :stumpwm)
 (setf *default-package* :stumpwm)
 
@@ -29,6 +27,8 @@
                 (message (format nil "VOLUME: ~d" volume)))))
 
 ;; Команда для запуска SWANK REPL.
+(require :swank)
+
 (let ((server-running nil))
   (defcommand swank () ()
               "Toggle the swank server on/off."
@@ -63,7 +63,7 @@
           ("s-S-DEL" . "delete")
           ("s-TAB"   . "fother")
           ("s-RET"   . "fullscreen")
-          ("s-`"     . "exec alacritty")
+          ("s-ESC"   . "exec alacritty")
           ("Print"   . "exec flameshot gui")
           ("XF86AudioRaiseVolume" . "change-volume +5")
           ("XF86AudioLowerVolume" . "change-volume -5")
@@ -73,19 +73,22 @@
         do (stumpwm:define-key stumpwm:*top-map* (stumpwm:kbd (car shortcut)) (cdr shortcut))))
 
 ;; Промежутки между окнами.
-(load-module "swm-gaps")
-(setf swm-gaps:*head-gaps-size*  0
-      swm-gaps:*inner-gaps-size* 0
-      swm-gaps:*outer-gaps-size* 0)
-
-(when *initializing*
-  (swm-gaps:toggle-gaps))
+; (load-module "swm-gaps")
+; (setf swm-gaps:*head-gaps-size*  0
+;       swm-gaps:*inner-gaps-size* 0
+;       swm-gaps:*outer-gaps-size* 0)
+;
+; (when *initializing*
+;   (swm-gaps:toggle-gaps))
 
 (defun autostart (&rest rest)
   ;; Запускаем демонов.
-  (run-shell-command "runsvdir ~/.runsvdir")
+  (stumpwm:run-shell-command "runsvdir ~/.runsvdir")
   ;; Запускаем скрипт синхронно, т.к. нужно добавить шрифты.
-  (run-shell-command "~/.stumpwm.d/autostart.sh" t)
+  (stumpwm:run-shell-command "~/.stumpwm.d/autostart.sh" t)
+  ;; Добавляем переключение окон на доп. кнопки мыши.
+  (stumpwm:run-shell-command "xbmouse -b 8 xkev -u -e u")
+  (stumpwm:run-shell-command "xbmouse -b 9 xkev -u -e i")
   ; (stumpwm:set-font "-misc-spleen-*-*-*-*-24-*")
   (stumpwm:set-font (make-instance 'xft:font :family "Iosevka" :subfamily "Regular" :size 14)))
 
