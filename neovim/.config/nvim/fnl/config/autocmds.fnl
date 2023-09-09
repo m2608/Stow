@@ -11,7 +11,7 @@
        (when (and client (= client.name "Firenvim"))
          (each [_ option (ipairs [[:laststatus 0]
                                   [:guifont "Iosevka:h14"]
-                                  [:lines 25]
+                                  [:lines 100]
                                   [:columns 200]
                                   ])]
            (let [name (. option 1)
