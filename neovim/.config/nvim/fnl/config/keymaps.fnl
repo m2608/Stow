@@ -73,7 +73,9 @@
    ;; OSCYank
    ["n" "<leader>y" "<Plug>OSCYankOperator" {:noremap false :silent true}]
    ["n" "<leader>yy" "<leader>y_" {:noremap false :silent true}]
-   ["v" "<leader>y" "<Plug>OSCYankVisual" {:noremap false :silent true}]])
+   ["v" "<leader>y" "<Plug>OSCYankVisual" {:noremap false :silent true}]
+   ;; lispdocs
+   ["n" ",h" ":lua require('lispdocs').float({ fill = 0.8, win = { winblend = 0, cursorline = false }})<CR>"]])
 
 (each [_ mapping (ipairs mappings)]
   (set-mapping (unpack mapping)))
