@@ -1,15 +1,15 @@
-(module settings
-  {autoload {core aniseed.core
-             nvim aniseed.nvim}})
+(local {: autoload} (require "nfnl.module"))
+(local core (autoload "nfnl.core"))
+(local nvim (autoload "nvim"))
 
-(defn- set-mapping [mode from to ...]
+(fn set-mapping [mode from to ...]
   (let [opts (if (= (length [...]) 0) {:noremap true :silent true}
                (. [...] 1))]
     (nvim.set_keymap mode from to opts)))
 
-(def- mappings 
+(local mappings 
   [;; сохранить файл
-   ["n" "<F2" ":<c-u>udpate<CR>"]
+   ["n" "<F2>" ":<c-u>update<CR>"]
    ;; вызов окна для навигации по коду (плагин tagbar)
    ["n" "<F8>" ":<c-u>TagbarToggle<CR>"]
    ;; вызов файлового браузера
@@ -38,7 +38,7 @@
    ;; чтобы, если открыто всплывающее меню, он посылал Ctrl+Y
    ["i" "<cr>" "pumvisible() ? \"<c-y>\" : \"<cr>\"" {:noremap true :silent true :expr true}]
    ;; копирует в буфер обмена от положения курсора до конца строки (по аналогии с
-   ;; командами С и D)
+                                                                      ;; командами С и D)
    ["n" "Y" "y$"]
    ;; сочетания клавиш для режима вставки
    ["i" "<c-e>" "<c-o>$"]

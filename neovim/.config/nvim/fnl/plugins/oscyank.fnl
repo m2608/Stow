@@ -1,0 +1,1 @@
+["ojroques/vim-oscyank"]

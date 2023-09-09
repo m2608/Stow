@@ -1,8 +1,8 @@
-(module settings
-        {autoload {core aniseed.core
-                   nvim aniseed.nvim}})
+(local {: autoload} (require "nfnl.module"))
+(local core (autoload "nfnl.core"))
+(local nvim (autoload "nvim"))
 
-(defn file-exists? [filename]
+(fn file-exists? [filename]
   "Проверяет, существует ли файл."
   (let [file (io.open filename)
         exists (~= file nil)]
@@ -30,7 +30,7 @@
                ;; показывать номер текущей строки
                [:number true]
                ;; показывать колонку с метками (иначе она будет показываться только когда
-               ;; есть метки, например, предупреждения или ошибки)
+                                                     ;; есть метки, например, предупреждения или ошибки)
                [:signcolumn "yes"]
                ;; вертикальный сплит открывает окно справа
                [:splitright true]
@@ -96,8 +96,8 @@
 ;; Настройка цветовой схемы в соответствие со схемой терминала.
 (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
   (when (file-exists? colorscheme-filename)
-      (core.assoc nvim.g :base16colorspace 256)
-      (nvim.command (.. "source" colorscheme-filename))))
+    (core.assoc nvim.g :base16colorspace 256)
+    (nvim.command (.. "source" colorscheme-filename))))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,

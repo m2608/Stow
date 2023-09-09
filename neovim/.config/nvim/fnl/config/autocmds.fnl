@@ -1,10 +1,9 @@
-(module autocmds
-        {autoload {nvim aniseed.nvim
-                   core aniseed.core}
-        import-macros [[ac :aniseed.macros.autocmds]]})
+(local {: autoload} (require "nfnl.module"))
+(local core (autoload "nfnl.core"))
+(local nvim (autoload "nvim"))
 
 ;; Настройка Firenvim.
-(ac.autocmd
+(vim.api.nvim_create_autocmd
   ["UIEnter"]
   {:callback
    (fn [event]
