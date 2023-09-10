@@ -38,19 +38,23 @@
    ;; чтобы, если открыто всплывающее меню, он посылал Ctrl+Y
    ["i" "<cr>" "pumvisible() ? \"<c-y>\" : \"<cr>\"" {:noremap true :silent true :expr true}]
    ;; копирует в буфер обмена от положения курсора до конца строки (по аналогии с
-                                                                      ;; командами С и D)
+   ;; командами С и D)
    ["n" "Y" "y$"]
+   ;; Перемещение между окнами по Ctrl+Tab и Ctrl+Shift+Tab. Для того, чтобы это работало,
+   ;; нужно сделать биндинги в терминале (например, alacrirry поддерживает это).
+   ["n" "<C-Tab>"   ":wincmd w<CR>"]
+   ["n" "<C-S-Tab>" ":wincmd W<CR>"]
    ;; сочетания клавиш для режима вставки
    ["i" "<c-e>" "<c-o>$"]
    ["i" "<c-a>" "<c-o>^"]
    ;; сочетания клавиш для режима команд
-   ["c" "<c-a>" "<home>" {:noremap true}]
-   ["c" "<c-e>" "<end>" {:noremap true}]
-   ["c" "<c-p>" "<up>" {:noremap true}]
-   ["c" "<c-n>" "<down>" {:noremap true}]
-   ["c" "<c-b>" "<left>" {:noremap true}]
-   ["c" "<c-f>" "<right>" {:noremap true}]
-   ["c" "<m-b>" "<s-left>" {:noremap true}]
+   ["c" "<c-a>" "<home>"    {:noremap true}]
+   ["c" "<c-e>" "<end>"     {:noremap true}]
+   ["c" "<c-p>" "<up>"      {:noremap true}]
+   ["c" "<c-n>" "<down>"    {:noremap true}]
+   ["c" "<c-b>" "<left>"    {:noremap true}]
+   ["c" "<c-f>" "<right>"   {:noremap true}]
+   ["c" "<m-b>" "<s-left>"  {:noremap true}]
    ["c" "<m-f>" "<s-right>" {:noremap true}]
    ;; навигация по ошибкам
    ["n" "<c-j>" ":cn<CR>"]
