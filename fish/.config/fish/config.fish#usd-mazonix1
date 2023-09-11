@@ -28,6 +28,5 @@ bind \cz fg
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
 
 zoxide init fish | source
-starship init fish | source
 
 source $HOME/.config/grc/grc.fish
