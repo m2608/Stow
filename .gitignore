@@ -1,4 +1,5 @@
-neovim/.config/nvim/lua/
+neovim/.config/nvim/lua/*
+!neovim/.config/nvim/lua/plugins.lua
 .clj-kondo/
 .lsp/
 emacs/.emacs~
