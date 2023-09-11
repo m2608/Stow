@@ -794,7 +794,7 @@ key_bindings:
   #- { key: F,              mods: Command, mode: ~Search,     action: SearchForward    }
   #- { key: B,              mods: Command, mode: ~Search,     action: SearchBackward   }
 
-  - {key: Tab,                      chars: "\x1b[9;1u"}
+  #- {key: Tab,                      chars: "\x1b[9;1u"}
   - {key: Tab, mods: Control,       chars: "\x1b[9;5u"}
   - {key: Tab, mods: Control|Shift, chars: "\x1b[9;6u"}
 
