@@ -68,9 +68,12 @@
           ("XF86AudioRaiseVolume" . "change-volume +5")
           ("XF86AudioLowerVolume" . "change-volume -5")
           ("XF86AudioMute"        . "exec toggle-volume.sh")
-          ("s-p" . "exec dmenu_run -fn \"Iosevka:size=14\" -nb \"#000000\" -nf \"#f0f0f0\" -sb \"#6f006f\""))))
+          ("s-p" . "exec dmenu_run -fn \"Iosevka:size=14\" -nb \"#000000\" -nf \"#f0f0f0\" -sb \"#6f006f\"")
+          ("S-Insert" . "exec clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -"))))
   (loop for shortcut in shortcuts
         do (stumpwm:define-key stumpwm:*top-map* (stumpwm:kbd (car shortcut)) (cdr shortcut))))
+
+;(stumpwm:define-key stumpwm:*top-map* (stumpwm:kbd "s-ESC") "exec st")
 
 ;; Промежутки между окнами.
 ; (load-module "swm-gaps")
@@ -81,11 +84,12 @@
 ; (when *initializing*
 ;   (swm-gaps:toggle-gaps))
 
+;; Запускаем скрипт синхронно, т.к. нужно добавить шрифты.
+(stumpwm:run-shell-command "~/.stumpwm.d/autostart.sh" t)
+
 (defun autostart (&rest rest)
   ;; Запускаем демонов.
   (stumpwm:run-shell-command "runsvdir ~/.runsvdir")
-  ;; Запускаем скрипт синхронно, т.к. нужно добавить шрифты.
-  (stumpwm:run-shell-command "~/.stumpwm.d/autostart.sh" t)
   ;; Добавляем переключение окон на доп. кнопки мыши.
   (stumpwm:run-shell-command "xbmouse -b 8 xkev -u -e u")
   (stumpwm:run-shell-command "xbmouse -b 9 xkev -u -e i")
