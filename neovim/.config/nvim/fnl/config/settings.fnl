@@ -93,11 +93,19 @@
   (each [_ cmd (ipairs commands)]
     (nvim.command cmd)))
 
-;; Настройка цветовой схемы в соответствие со схемой терминала.
-(let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
-  (when (file-exists? colorscheme-filename)
-    (core.assoc nvim.g :base16colorspace 256)
-    (nvim.command (.. "source" colorscheme-filename))))
+(if (= (os.getenv "COOL_RETRO_TERM") "1")
+  ;; Для Cool Retro Term выбираем какую-нибудь простую схему и устанавливаем
+  ;; режим 16 цветов. Чтобы это работало, нужно при запуске CRT установить
+  ;; переменную COOL_RETRO_TERM=1.
+  (let [ffi (require "ffi")]
+    (ffi.cdef "int t_colors")
+    (core.assoc ffi.C :t_colors 16)
+    (nvim.command "colorscheme illyria"))
+  ;; Настройка цветовой схемы в соответствие со схемой терминала.
+  (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
+    (when (file-exists? colorscheme-filename)
+      (core.assoc nvim.g :base16colorspace 256)
+      (nvim.command (.. "source" colorscheme-filename)))))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,
