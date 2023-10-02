@@ -12,11 +12,6 @@
 ;; Фокус перемещается за мышью.
 (setf *mouse-focus-policy* :sloppy)
 
-;; Пример использования TrueType шрифтов. Недостаток: меньшая производительность, заметная
-;; на глаз при отрисовке сообщений и диалогов.
-(ql:quickload :clx-truetype)
-(load-module "ttf-fonts")
-
 (defcommand change-volume (change) ((:number nil))
             "Change current audio volume."
             (run-shell-command (format nil "mixer pcm ~@d" change) t)
@@ -68,7 +63,7 @@
           ("XF86AudioRaiseVolume" . "change-volume +5")
           ("XF86AudioLowerVolume" . "change-volume -5")
           ("XF86AudioMute"        . "exec toggle-volume.sh")
-          ("s-p" . "exec dmenu_run -fn \"Iosevka:size=14\" -nb \"#000000\" -nf \"#f0f0f0\" -sb \"#6f006f\"")
+          ("s-p" . "exec dmenu_run -fn \"Terminus:size=16\" -nb \"#000000\" -nf \"#f0f0f0\" -sb \"#6f6f6f\"")
           ("S-Insert" . "exec clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -"))))
   (loop for shortcut in shortcuts
         do (stumpwm:define-key stumpwm:*top-map* (stumpwm:kbd (car shortcut)) (cdr shortcut))))
@@ -86,15 +81,14 @@
 
 ;; Запускаем скрипт синхронно, т.к. нужно добавить шрифты.
 (stumpwm:run-shell-command "~/.stumpwm.d/autostart.sh" t)
+(stumpwm:set-font "-*-terminus-medium-*-*-*-24-*-*-*-*-*-*-*")
 
 (defun autostart (&rest rest)
   ;; Запускаем демонов.
   (stumpwm:run-shell-command "runsvdir ~/.runsvdir")
   ;; Добавляем переключение окон на доп. кнопки мыши.
   (stumpwm:run-shell-command "xbmouse -b 8 xkev -u -e u")
-  (stumpwm:run-shell-command "xbmouse -b 9 xkev -u -e i")
-  ; (stumpwm:set-font "-misc-spleen-*-*-*-*-24-*")
-  (stumpwm:set-font (make-instance 'xft:font :family "Iosevka" :subfamily "Regular" :size 14)))
+  (stumpwm:run-shell-command "xbmouse -b 9 xkev -u -e i"))
 
 (defun autostop (&rest rest)
   ;; Останавливаем демонов.

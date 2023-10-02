@@ -3,8 +3,7 @@
 xsetroot -solid black
 xsetroot -cursor_name left_ptr
 
-# добавляем каталоги шрифтов
-find /usr/local/share/fonts -type d -mindepth 1 -maxdepth 1 -exec xset fp+ {} \;
+# добавляем каталог шрифтов
 xset fp+ $HOME/.fonts
 xset fp rehash
 
