@@ -1,0 +1,19 @@
+# запуск терминала
+super + Escape
+	alacritty
+
+# запуск редактора
+super + e
+    alacritty -e fish -i -c nvim
+
+# запуск dmenu
+super + p
+    dmenu_run -fn "Iosevka:size=13"
+
+# вставить текст из буфера
+shift+Insert
+    clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -
+
+# вставить текст из сниппета
+alt + Down
+    snip load

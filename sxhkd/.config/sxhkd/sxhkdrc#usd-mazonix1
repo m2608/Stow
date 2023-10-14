@@ -1,24 +1,22 @@
-# ctrl+alt+l
-#     i3lock -c 000000 -b
-
-# вставить текст из буфера
-shift+Insert
-    clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -
-
-alt + Down
-    snip load
+#
+# управление громкостью
+#
 
 # уменьшить громкость
 @XF86AudioLowerVolume
-    pactl set-sink-volume $(pactl list short sinks | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1) -5% && dwmstatus.sh
+    $HOME/.config/bspwm/bspwm-volume.sh down
 
 # увеличить громкость
 @XF86AudioRaiseVolume
-    pactl set-sink-volume $(pactl list short sinks | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1) +5% && dwmstatus.sh
+    $HOME/.config/bspwm/bspwm-volume.sh up
 
 # замьютить
 @XF86AudioMute
-    pactl set-sink-mute $(pactl list short sinks | grep RUNNING | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' | head -n 1) $(LC_ALL=C pactl list sinks | grep Mute | head -n 1 | cut -d ' ' -f 2 | sed 's/yes/0/;s/no/1/') && dwmstatus.sh
+    $HOME/.config/bspwm/bspwm-volume.sh mute
+
+#
+# управление плеером
+#
 
 @XF86HomePage
     mpvipc.sh pause
@@ -29,8 +27,3 @@ alt + Down
 @XF86Forward
     mpvipc.sh next
 
-# Print:
-#     docker exec -it flameshot flameshot gui 1> /dev/null 2> /dev/null
-
-super + e:
-    set fn (xclip -o) ; if test -f "$fn" ; alacritty -e fish -i -c "nvim \"$fn\"" ; else ; alacritty -e fish -i -c nvim; end

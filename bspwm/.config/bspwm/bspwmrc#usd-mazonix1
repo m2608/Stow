@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Список подключенных мониторов.
+monitors=$(xrandr --query | grep "[ ]connected[ ]" | cut -d " " -f 1)
+
+if echo "$monitors" | grep -q "HDMI-1" && echo "$monitors" | grep -q "HDMI-2"; then
+    # Вариант с двумя мониторами.
+    xrandr --output HDMI-2 --left-of HDMI-1 &
+
+    bspc wm -O HDMI-2 HDMI-1
+
+    bspc monitor HDMI-2 -d 1 2 3 4 5
+    bspc monitor HDMI-1 -d 6 7 8 9 0
+else
+    # Вариант с одним монитором.
+    bspc monitor -d 1 2 3 4 5
+fi
+
+# bspc rule -a Gimp desktop='^8' state=floating follow=on
+# bspc rule -a Chromium desktop='^2'
+# bspc rule -a mplayer2 state=floating
+# bspc rule -a Kupfer.py focus=on
+# bspc rule -a Screenkey manage=off
+
+# Раскладка.
+setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+
+# Устанавливаем обои и курсор.
+xsetroot -solid black
+xsetroot -cursor_name left_ptr
+
+# Добавляем шрифты из домашней папки.
+xset fp+ $HOME/.fonts
+xset fp rehash
+
+# Чтобы приложения на java нормально отображались.
+wmname LG3D
+
+# Загружаем ресурсы.
+xrdb -merge ~/.Xresources
+
+# Запускаем системный трей.
+stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
+
+# Запускаем службы, если они еще не запущены.
+pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
