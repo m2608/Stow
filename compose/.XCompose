@@ -1,9 +1,17 @@
 include "%L"
 
-<Multi_key> <equal> <minus>    : "✘"   U2718      # HEAVY BALLOT X
-<Multi_key> <equal> <plus>     : "✔"   U2714      # HEAVY CHECK MARK
-<Multi_key> <equal> <o> <r>    : "🔴 "   U1F534      # HEAVY CHECK MARK
-<Multi_key> <equal> <o> <g>    : "🟢 "   U1F7E2      # HEAVY CHECK MARK
+<Multi_key> <equal> <minus>         : "✘"       U2718   # HEAVY BALLOT X
+<Multi_key> <equal> <plus>          : "✔"       U2714   # HEAVY CHECK MARK
+<Multi_key> <equal> <o> <r>         : "🔴 "     U1F534  # HEAVY CHECK MARK
+<Multi_key> <equal> <o> <g>         : "🟢 "     U1F7E2  # HEAVY CHECK MARK
+
+<Multi_key> <equal> <t>             : "⊤"       U22A4   # TRUE
+<Multi_key> <equal> <T>             : "■"       U22A0   # TRUE
+<Multi_key> <equal> <f>             : "⊥"       U22A5   # FALSE
+<Multi_key> <equal> <F>             : "□"       U22A1   # FALSE
+
+<Multi_key> <dead_tilde> <equal>    : "≈"       U2248   # ALMOST EQUAL TO
+<Multi_key> <equal> <dead_tilde>    : "≈"       U2248   # ALMOST EQUAL TO
 
 <Multi_key> <g> <a>            : "α"              # GREEK SMALL LETTER ALPHA
 <Multi_key> <g> <b>            : "β"              # GREEK SMALL LETTER BETA
