@@ -29,6 +29,3 @@ dwmstatus.sh loop &
 sxhkd -c "$HOME/.config/sxhkd/sxhkdrc#"$(hostname | cut -d '.' -f 1) &
 
 runsvdir $HOME/.runsvdir &
-
-# СБИС Плагин
-# /opt/sbis3plugin/sbis3plugin &
