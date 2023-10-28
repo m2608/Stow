@@ -6,33 +6,26 @@
 super + shift + q
 	bspc quit
 
-# close and kill
-super + shift + {c,k}
-    bspc node -{c,k}
+# close
+super + shift + c
+    bspc node -c
 
 # alternate between the tiled and monocle layout
 super + m
 	bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
-
-# swap the current node and the biggest window
-super + g
-	bspc node -s biggest.window
-
-#
-# state/flags
-#
-
 # set the window state
-super + {t,shift + t,f,shift + f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+super + s
+    printf "%s\n%s\n%s\n%s" "tiled" "pseudo_tiled" "floating" "fullscreen" \
+    | dmenu \
+    | xargs -r bspc node -t
+
 
 # set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
+super + f
+    printf "%s\n%s\n%s\n%s" "marked" "locked" "sticky" "private" \
+    | dmenu \
+    | xargs -r bspc node -g
 
 #
 # focus/swap
@@ -42,16 +35,9 @@ super + ctrl + {m,x,y,z}
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
+# focus next (previous) window in the current desktop
 super + {u,i}
     bspc node -f {next,prev}.local.!sticky.!hidden.window
-
-# # focus the node for the given path jump
-# super + {p,b,comma,period}
-# 	bspc node -f @{parent,brother,first,second}
-
-# # focus the next/previous window in the current desktop
-# super + {_,shift + }c
-# 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -64,15 +50,14 @@ super + Tab
 	bspc desktop -f last
 
 # focus or send to the given desktop
-super + {1-5}
-    $HOME/.config/bspwm/bspwm-desktop.sh {1-5} 5
+super + {_, shift +}{1-5}
+    $HOME/.config/bspwm/bspwm-desktop.sh {focus, send} {1-5} 5
 
-# super + shift + {1-5}
-#     set n {1-5}; \
-#     set mon_id (bscp query -M -m focused); \
-#     set mon_n (bspc query -M | sed -n "/$mon_id/{=;q}"); \
-#     set desktop_n (math "($n-1)*($mon_n-1)+1"); \
-# 	bspc {desktop -f,node -d} '^{1-9,10}' \
+super + period
+    bspc monitor -f last
+
+super + shift + period
+    bspc node -m $(bspc query -M -m .!focused | head -n 1)
 
 #
 # move/resize
@@ -99,5 +84,5 @@ super + n
     exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad" --command "alacritty --class scratchpad"
 
 # показать или скрыть системный трей
-super + s
+super + t
     exec $HOME/.config/bspwm/bspwm-showhide.sh "stalonetray"
