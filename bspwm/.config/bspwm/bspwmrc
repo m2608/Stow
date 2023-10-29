@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 hostname=$(hostname | cut -d '.' -f 1)
 
