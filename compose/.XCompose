@@ -13,6 +13,41 @@ include "%L"
 <Multi_key> <dead_tilde> <equal>    : "≈"       U2248   # ALMOST EQUAL TO
 <Multi_key> <equal> <dead_tilde>    : "≈"       U2248   # ALMOST EQUAL TO
 
+<Multi_key> <plus> <plus>								: "∑"	U2211 # N-ARY SUMMATION
+<Multi_key> <asterisk> <asterisk>						: "∏"	U220F # N-ARY PRODUCT
+
+<Multi_key> <braceleft> <i> <n>							: "∈"	# ELEMENT OF
+<Multi_key> <braceleft> <n> <i>							: "∋"	# CONTAINS AS MEMBER
+<Multi_key> <braceleft> <slash> <i> <n>					: "∉"	# NOT ELEMENT OF
+<Multi_key> <braceleft> <slash> <n> <i>					: "∌"	# NOT CONTAINS AS MEMBER
+
+<Multi_key> <braceleft> <plus>							: "∪"	# UNION
+<Multi_key> <braceleft> <minus>							: "∖"	# MINUS
+<Multi_key> <braceleft> <asterisk>						: "∩"	# INTERSECTION
+
+<Multi_key> <braceleft> <parenleft>						: "⊂"	# SUBSET OF
+<Multi_key> <braceleft>	<parenright>					: "⊃"	# SUPERSET OF
+<Multi_key> <braceleft> <equal> <parenleft>				: "⊆"	# SUBSET OF OR EQUAL
+<Multi_key> <braceleft>	<equal> <parenright>			: "⊇"	# SUPERSET OF OR EQUAL
+
+<Multi_key> <braceleft> <slash> <parenleft>				: "⊄"	# NOT SUBSET OF
+<Multi_key> <braceleft>	<slash> <parenright>			: "⊅"	# NOT SUPERSET OF
+<Multi_key> <braceleft> <slash> <equal> <parenleft>		: "⊈"	# NOT SUBSET OF AND EQUAL
+<Multi_key> <braceleft>	<slash> <equal> <parenright>	: "⊉"	# NOT SUPERSET OF AND EQUAL
+
+<Multi_key> <E> <E>										: "∃"	# THERE EXISTS
+<Multi_key> <exclam> <E> <E>							: "∄"	# THERE DOES NOT EXIST
+<Multi_key> <A> <A>										: "∀"	# FOR ALL
+<Multi_key> <less> <parenright>							: "∢"	# LET'S SEE
+
+<Multi_key> <exclam> <exclam>							: "¬"	# LOGICAL NOT
+<Multi_key> <ampersand> <ampersand>						: "∧"	# LOGICAL AND
+<Multi_key> <bar> <bar>									: "∨"	# LOGICAL OR
+
+<Multi_key> <d> <f>										: "∂"	U2202 # PARTIAL DIFFERENTIAL
+<Multi_key> <d> <x>										: "∆"	U2206 # INCREMENT
+<Multi_key> <S>											: "∫"	U222B # INTEGRAL
+
 <Multi_key> <g> <a>            : "α"              # GREEK SMALL LETTER ALPHA
 <Multi_key> <g> <b>            : "β"              # GREEK SMALL LETTER BETA
 <Multi_key> <g> <g>            : "γ"              # GREEK SMALL LETTER GAMMA
@@ -189,3 +224,56 @@ include "%L"
 <Multi_key> <a> <slash>        : "⌿"   U233F      # APL Slash Bar
 <Multi_key> <a> <question>     : "⍠"   U2360      # APL Quad Colon
 
+<Multi_key> <bar> <A> "𝔸" U1D538 # Mathematical Double-Struck Capital A
+<Multi_key> <bar> <B> "𝔹" U1D539 # Mathematical Double-Struck Capital B
+<Multi_key> <bar> <C> "ℂ" U2102  # Mathematical Double-Struck Capital C
+<Multi_key> <bar> <D> "𝔻" U1D53B # Mathematical Double-Struck Capital D
+<Multi_key> <bar> <E> "𝔼" U1D53C # Mathematical Double-Struck Capital E
+<Multi_key> <bar> <F> "𝔽" U1D53D # Mathematical Double-Struck Capital F
+<Multi_key> <bar> <G> "𝔾" U1D53E # Mathematical Double-Struck Capital G
+<Multi_key> <bar> <H> "ℍ" U210D  # Mathematical Double-Struck Capital H
+<Multi_key> <bar> <I> "𝕀" U1D540 # Mathematical Double-Struck Capital I
+<Multi_key> <bar> <J> "𝕁" U1D541 # Mathematical Double-Struck Capital J
+<Multi_key> <bar> <K> "𝕂" U1D542 # Mathematical Double-Struck Capital K
+<Multi_key> <bar> <L> "𝕃" U1D543 # Mathematical Double-Struck Capital L
+<Multi_key> <bar> <M> "𝕄" U1D544 # Mathematical Double-Struck Capital M
+<Multi_key> <bar> <N> "ℕ" U2115  # Mathematical Double-Struck Capital N
+<Multi_key> <bar> <O> "𝕆" U1D546 # Mathematical Double-Struck Capital O
+<Multi_key> <bar> <P> "ℙ" U2119  # Mathematical Double-Struck Capital P
+<Multi_key> <bar> <Q> "ℚ" U211A  # Mathematical Double-Struck Capital Q
+<Multi_key> <bar> <R> "ℝ" U211D  # Mathematical Double-Struck Capital R
+<Multi_key> <bar> <S> "𝕊" U1D54A # Mathematical Double-Struck Capital S
+<Multi_key> <bar> <T> "𝕋" U1D54B # Mathematical Double-Struck Capital T
+<Multi_key> <bar> <U> "𝕌" U1D54C # Mathematical Double-Struck Capital U
+<Multi_key> <bar> <V> "𝕍" U1D54D # Mathematical Double-Struck Capital V
+<Multi_key> <bar> <W> "𝕎" U1D54E # Mathematical Double-Struck Capital W
+<Multi_key> <bar> <X> "𝕏" U1D54F # Mathematical Double-Struck Capital X
+<Multi_key> <bar> <Y> "𝕐" U1D550 # Mathematical Double-Struck Capital Y
+<Multi_key> <bar> <Z> "ℤ" U2124  # Mathematical Double-Struck Capital Z
+
+<Multy_key> <bar> <a> "𝕒" U1D552 # Mathematical Double-Struck Small A
+<Multy_key> <bar> <b> "𝕓" U1D553 # Mathematical Double-Struck Small B
+<Multy_key> <bar> <c> "𝕔" U1D554 # Mathematical Double-Struck Small C
+<Multy_key> <bar> <d> "𝕕" U1D555 # Mathematical Double-Struck Small D
+<Multy_key> <bar> <e> "𝕖" U1D556 # Mathematical Double-Struck Small E
+<Multy_key> <bar> <f> "𝕗" U1D557 # Mathematical Double-Struck Small F
+<Multy_key> <bar> <g> "𝕘" U1D558 # Mathematical Double-Struck Small G
+<Multy_key> <bar> <h> "𝕙" U1D559 # Mathematical Double-Struck Small H
+<Multy_key> <bar> <i> "𝕚" U1D55A # Mathematical Double-Struck Small I
+<Multy_key> <bar> <j> "𝕛" U1D55B # Mathematical Double-Struck Small J
+<Multy_key> <bar> <k> "𝕜" U1D55C # Mathematical Double-Struck Small K
+<Multy_key> <bar> <l> "𝕝" U1D55D # Mathematical Double-Struck Small L
+<Multy_key> <bar> <m> "𝕞" U1D55E # Mathematical Double-Struck Small M
+<Multy_key> <bar> <n> "𝕟" U1D55F # Mathematical Double-Struck Small N
+<Multy_key> <bar> <o> "𝕠" U1D560 # Mathematical Double-Struck Small O
+<Multy_key> <bar> <p> "𝕡" U1D561 # Mathematical Double-Struck Small P
+<Multy_key> <bar> <q> "𝕢" U1D562 # Mathematical Double-Struck Small Q
+<Multy_key> <bar> <r> "𝕣" U1D563 # Mathematical Double-Struck Small R
+<Multy_key> <bar> <s> "𝕤" U1D564 # Mathematical Double-Struck Small S
+<Multy_key> <bar> <t> "𝕥" U1D565 # Mathematical Double-Struck Small T
+<Multy_key> <bar> <u> "𝕦" U1D566 # Mathematical Double-Struck Small U
+<Multy_key> <bar> <v> "𝕧" U1D567 # Mathematical Double-Struck Small V
+<Multy_key> <bar> <w> "𝕨" U1D568 # Mathematical Double-Struck Small W
+<Multy_key> <bar> <x> "𝕩" U1D569 # Mathematical Double-Struck Small X
+<Multy_key> <bar> <y> "𝕪" U1D56A # Mathematical Double-Struck Small Y
+<Multy_key> <bar> <z> "𝕫" U1D56B # Mathematical Double-Struck Small Z
