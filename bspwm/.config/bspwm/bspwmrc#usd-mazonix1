@@ -43,7 +43,7 @@ xrdb -merge ~/.Xresources
 stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
 
 # Индикатор языка.
-xkb-switch -p ; while true; xkb-switch --wait -p | tr 'a-z' 'A-Z'; end |  osd_cat -d 0 --pos top --align right -c green --outline 2 -f "*-terminus-*-*-*-*-24-*" -l 1 &
+$HOME/.local/bin/layout.sh &
 
 # Запускаем службы, если они еще не запущены.
 pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
