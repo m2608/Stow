@@ -43,7 +43,7 @@ xrdb -merge ~/.Xresources
 stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
 
 # Индикатор языка.
-$HOME/.local/bin/layout.sh &
+pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
 
 # Запускаем службы, если они еще не запущены.
 pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
