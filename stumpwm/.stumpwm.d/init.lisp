@@ -2,6 +2,8 @@
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
+(ql:quickload "parse-float")
+
 (in-package :stumpwm)
 (setf *default-package* :stumpwm)
 
@@ -12,20 +14,21 @@
 ;; Фокус перемещается за мышью.
 (setf *mouse-focus-policy* :sloppy)
 
-(defcommand change-volume (change) ((:number nil))
-            "Change current audio volume."
-            (run-shell-command (format nil "mixer pcm ~@d" change) t)
-            (multiple-value-bind (_ matches)
-              (cl-ppcre:scan-to-strings ".*set to\\s+(\\d+):(\\d+)"
-                                        (run-shell-command "exec mixer pcm" t))
-              (let ((volume (/ (apply '+ (map 'list 'parse-integer matches)) 2)))
-                (message (format nil "VOLUME: ~d" volume)))))
+(stumpwm:defcommand
+  change-volume (change) ((:number nil))
+  "Change current audio volume."
+  (stumpwm:run-shell-command (format nil "mixer pcm.volume=~,2@f" (/ change 100)) t)
+  (multiple-value-bind (_ matches)
+    (cl-ppcre:scan-to-strings ".*volume=(\\d+[.]\\d+):(\\d+[.]\\d+)"
+                              (stumpwm:run-shell-command "exec mixer pcm" t))
+    (let ((volume (round (* 50 (apply '+ (map 'list 'parse-float:parse-float matches))))))
+      (stumpwm:message (format nil "VOLUME: ~d" volume)))))
 
 ;; Команда для запуска SWANK REPL.
 (require :swank)
 
 (let ((server-running nil))
-  (defcommand swank () ()
+  (stumpwm:defcommand swank () ()
               "Toggle the swank server on/off."
               (if server-running
                 (progn
