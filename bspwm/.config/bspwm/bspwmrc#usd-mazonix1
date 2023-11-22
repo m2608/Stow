@@ -25,6 +25,9 @@ fi
 # Раскладка.
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 
+xbmouse -b 8 xkev -u -e u &
+xbmouse -b 9 xkev -u -e i &
+
 # Устанавливаем обои и курсор.
 xsetroot -solid black
 xsetroot -cursor_name left_ptr
