@@ -16,4 +16,3 @@ sh -c '
     while true; do 
         xkb-switch --wait -p | tr a-z A-Z
     done' | dzen2 -p 0 -bg "$bg" -fg "$fg" -fn "$font" -x $((sw-iw)) -w $iw -h $iw
-
