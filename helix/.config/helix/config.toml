@@ -1,5 +1,9 @@
 theme = "adwaita-dark"
 
+[editor]
+
+auto-pairs=false
+
 [keys.select."\\"]
 
 "s" = ":pipe-to tmux load-buffer - ; tmux paste-buffer -t $(tmux display-message -p '#{session_name}:#{window_index}').$(($(tmux display-message -p '#{pane_index}')+1))"
