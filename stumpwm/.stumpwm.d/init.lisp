@@ -17,12 +17,16 @@
 (stumpwm:defcommand
   change-volume (change) ((:number nil))
   "Change current audio volume."
-  (stumpwm:run-shell-command (format nil "mixer pcm.volume=~,2@f" (/ change 100)) t)
   (multiple-value-bind (_ matches)
     (cl-ppcre:scan-to-strings ".*volume=(\\d+[.]\\d+):(\\d+[.]\\d+)"
                               (stumpwm:run-shell-command "exec mixer pcm" t))
-    (let ((volume (round (* 50 (apply '+ (map 'list 'parse-float:parse-float matches))))))
-      (stumpwm:message (format nil "VOLUME: ~d" volume)))))
+    ;; Определяем среднее значение громкости для двух каналов в процентах, округляем до 5.
+    (let* ((volume (* 5 (round (* 10 (apply '+ (map 'list 'parse-float:parse-float matches))))))
+           (prb-volume (+ volume change))
+           ;; Проверяем, что новое значение громкости находится в диапахоне [0; 100]
+           (new-volume (min (max 0 prb-volume) 100)))
+      (stumpwm:run-shell-command (format nil "mixer pcm.volume=~,2f" (/ new-volume 100)) t)
+      (stumpwm:message (format nil "VOLUME: ~d" new-volume)))))
 
 ;; Команда для запуска SWANK REPL.
 (require :swank)
