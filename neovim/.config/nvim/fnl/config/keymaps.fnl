@@ -7,6 +7,15 @@
                (. [...] 1))]
     (nvim.set_keymap mode from to opts)))
 
+(fn yank-for-quickfix
+  []
+  "Копирует ссылку на текущую позицию в виде строки для quickfix буфера."
+  (let [filename (vim.fn.expand "%:.")
+        [_ row column _ _] (vim.fn.getcurpos)]
+    (vim.fn.setreg "" (.. filename ":" row ":" column ":" (vim.api.nvim_get_current_line)))))
+
+(vim.keymap.set "n" "yq" yank-for-quickfix {:silent true :desc "Link for quickfix"})
+
 (local mappings 
   [;; сохранить файл
    ["n" "<F2>" ":<c-u>update<CR>"]
