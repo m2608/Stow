@@ -3,6 +3,7 @@ theme = "adwaita-dark"
 [editor]
 
 auto-pairs=false
+bufferline = "multiple"
 
 [keys.select."\\"]
 
