@@ -78,6 +78,10 @@
    ["n" "<Leader>fb" ":Telescope buffers<CR>"]
    ["n" "<Leader>fg" ":Telescope live_grep<CR>"]
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
+   ["n" "<Leader>fe" ":Telescope diagnostics<CR>"]
+   ["n" "<Leader>fs" ":Telescope lsp_document_symbols<CR>"]
+   ["n" "<Leader>fr" ":Telescope lsp_references<CR>"]
+   ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
    ;; горячие клавиши для Slime
    ["x" "<Leader>s" "<Plug>SlimeRegionSend" {:noremap false :silent true}]
    ["n" "<Leader>s" "<Plug>SlimeParagraphSend" {:noremap false :silent true}]
