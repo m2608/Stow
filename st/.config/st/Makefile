@@ -1,13 +1,12 @@
-# Created by: Matthew Donovan <kitchetech@gmail.com>
-
 PORTNAME=	sterm
-DISTVERSION=	0.8.5
+DISTVERSION=	0.9
 CATEGORIES=	x11
 MASTER_SITES=	http://dl.suckless.org/st/
 DISTNAME=	st-${PORTVERSION}
 
 MAINTAINER=	pkubaj@FreeBSD.org
 COMMENT=	Simple X terminal
+WWW=		https://st.suckless.org/
 
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
@@ -26,10 +25,21 @@ BINARY_ALIAS=	tic=true
 PORTDATA=	config.def.h st.info
 PORTDOCS=	FAQ LEGACY README TODO
 
-OPTIONS_DEFINE=	DOCS MY_PATCH
-MY_PATCH_DESC=	Blinking cursor and any size patches
+OPTIONS_DEFINE=	DOCS SCROLLBACK XRESOURCES ANY_SIZE
+SCROLLBACK_DESC=	Scroll back through terminal output
+XRESOURCES_DESC=	Allow to handle settings from Xresources
 
-MY_PATCH_EXTRA_PATCHES=	${PATCHDIR}/my-patch-config.def.h ${PATCHDIR}/my-patch-x.c
+SCROLLBACK_PATCH_SITES=	https://st.suckless.org/patches/scrollback/
+SCROLLBACK_PATCHFILES=	st-scrollback-0.8.5.diff:-p1 \
+			st-scrollback-mouse-20220127-2c5edf2.diff:-p1
+
+XRESOURCES_PATCH_SITES=	https://st.suckless.org/patches/xresources/
+XRESOURCES_PATCHFILES=	st-xresources-20200604-9ba7ecf.diff:-p1
+
+ANY_SIZE_DESC=	Bettery geometry for tiling WM
+
+ANY_SIZE_PATCH_SITES= https://st.suckless.org/patches/anysize/
+ANY_SIZE_PATCHFILES= st-anysize-20220718-baa9357.diff:-p1
 
 pre-everything::
 	@${ECHO_MSG} "You can build st with your own config.h using the ST_CONF knob:"
