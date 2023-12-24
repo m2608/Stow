@@ -57,7 +57,7 @@ if test -n "$sp_data"; then
     fi
 else
     # если окна с указанным классом нет - создаем новую ноду
-    bspc rule -a '*' -o                    \
+    bspc rule -a "$class" -o               \
         state=floating                     \
         sticky=on                          \
         center=on                          \
