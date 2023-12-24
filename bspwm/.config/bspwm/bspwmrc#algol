@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Рабочие столы.
+bspc monitor HDMI-0 -d 1 2 3 4 5
+
+# Раскладка.
+setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+
+xbmouse -b 8 xkev -u -e u &
+xbmouse -b 9 xkev -u -e i &
+
+# Устанавливаем обои и курсор.
+xsetroot -solid black
+xsetroot -cursor_name left_ptr
+
+# Добавляем шрифты из домашней папки.
+xset +fp $HOME/.fonts
+xset fp rehash
+
+# Чтобы приложения на java нормально отображались.
+wmname LG3D
+
+# Загружаем ресурсы.
+xrdb -merge ~/.Xresources
+
+# Вывод звука по умолчанию через HDMI.
+sysctl hw.snd.default_unit=1
+
+# Индикатор языка.
+pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
+
+# Запускаем службы, если они еще не запущены.
+pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
