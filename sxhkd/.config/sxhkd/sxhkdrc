@@ -8,7 +8,7 @@ super + e
 
 # запуск dmenu
 super + p
-    dmenu_run -fn "Iosevka:size=13"
+    dmenu_run -fn "Terminus:size=16"
 
 # вставить текст из буфера
 shift+Insert
