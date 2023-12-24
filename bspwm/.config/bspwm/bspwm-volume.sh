@@ -40,4 +40,4 @@ else
         pactl get-sink-volume 1 | head -n 1 | cut -d '/' -f 2 | tr -d ' ')"
 fi
 
-./bspwm-message.sh "$message"
+$(dirname $0)/bspwm-message.sh "$message"

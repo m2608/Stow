@@ -23,7 +23,7 @@ if test "$action" = "focus"; then
 
     bspc desktop -f "$desktop_n"
 
-    ./bspwm-message.sh "Workspace: $(bspc query -D -d focused --names)"
+    $(dirname $0)/bspwm-message.sh "Workspace: $(bspc query -D -d focused --names)"
 
 elif test "$action" = "send"; then
     bspc node -d "$desktop_n"
