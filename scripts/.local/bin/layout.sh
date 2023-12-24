@@ -5,7 +5,7 @@ sw=$(xwininfo -root | grep Width | cut -d ':' -f 2)
 # icon width
 iw=28
 # font
-font="Terminus:size=16:style=bold"
+font="Terminus:size=16:style=medium"
 # background
 bg="#432d59"
 # foreground
