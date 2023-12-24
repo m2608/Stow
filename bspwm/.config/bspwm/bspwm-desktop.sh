@@ -14,14 +14,20 @@ target_n="$2"
 total_n="$3"
 
 # номер текущего монитора
-mon_n=$(bspc query -M | sed -n "/$(bspc query -M -m focused)/{=;q}")
+mon_n=$(bspc query -M | sed -n "/$(bspc query -M -m focused)/{=;q;}")
 
 # номер десктопа в терминах bspwm
 desktop_n=$(((mon_n-1)*total_n+target_n))
 
-font="*-terminus-*-*-*-*-32-*"
+font="*-terminus-medium-*-*-*-32-*"
 
-width=$(echo "$message" | dzen2-textwidth "$font" "$message")
+if command -v "textwidth" >/dev/null; then
+    textwidth="textwidth"
+elif command -v "dzen2-textwidth" >/dev/null; then
+    textwidth="dzen2-textwidth"
+fi
+
+width=$(echo "$message" | "$textwidth" "$font" "$message")
 
 if test "$action" = "focus"; then
     bspc desktop -f "$desktop_n" && \
