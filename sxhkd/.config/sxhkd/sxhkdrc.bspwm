@@ -27,6 +27,10 @@ super + f
     | dmenu \
     | xargs -r bspc node -g
 
+# rotate
+super + r
+	bspc node @parent -R 90
+
 #
 # focus/swap
 #
