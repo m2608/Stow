@@ -37,7 +37,7 @@ if test $(pactl get-sink-mute $sink | cut -d ':' -f 2 | tr -d ' ') = "yes"; then
     message="Volume: mute"
 else
     message="Volume: $( \
-        pactl get-sink-volume 1 | head -n 1 | cut -d '/' -f 2 | tr -d ' ')"
+        pactl get-sink-volume $sink | head -n 1 | cut -d '/' -f 2 | tr -d ' ')"
 fi
 
 $(dirname $0)/bspwm-message.sh "$message"
