@@ -1,5 +1,5 @@
 nvim:
-	cd ${HOME}/.config/nvim && nvim '+lua require("nfnl")["compile-all-files"]()'
+	cd ${HOME}/.config/nvim && nvim '+lua require("nfnl.api")["compile-all-files"]()'
 
 symlinks:
 	stow --target=$$HOME --restow */
