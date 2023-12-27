@@ -13,6 +13,10 @@ xbmouse -b 9 xkev -u -e i &
 xsetroot -solid black
 xsetroot -cursor_name left_ptr
 
+# отключаем хранитель экрана
+xset -dpms
+xset s off
+
 # Добавляем шрифты из домашней папки.
 xset +fp $HOME/.fonts
 xset fp rehash
