@@ -1,0 +1,16 @@
+#
+# управление громкостью
+#
+
+# уменьшить громкость
+@XF86AudioLowerVolume
+    $HOME/.config/bspwm/bspwm-volume.sh down
+
+# увеличить громкость
+@XF86AudioRaiseVolume
+    $HOME/.config/bspwm/bspwm-volume.sh up
+
+# замьютить
+@XF86AudioMute
+    $HOME/.config/bspwm/bspwm-volume.sh mute
+
