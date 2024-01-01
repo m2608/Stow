@@ -75,6 +75,7 @@
    ["v" "gx" "y | :silent execute '!xdg-open ' . shellescape(expand(@\"), 1)<CR>"]
    ;; горячие клавиши для некоторых команд fzf
    ["n" "<Leader>ff" ":Telescope find_files<CR>"]
+   ["n" "<Leader>fF" ":Telescope file_browser<CR>"]
    ["n" "<Leader>fb" ":Telescope buffers<CR>"]
    ["n" "<Leader>fg" ":Telescope live_grep<CR>"]
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
@@ -82,6 +83,7 @@
    ["n" "<Leader>fs" ":Telescope lsp_document_symbols<CR>"]
    ["n" "<Leader>fr" ":Telescope lsp_references<CR>"]
    ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
+   ["n" "<Leader>fG" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
    ;; горячие клавиши для Slime
    ["x" "<Leader>s" "<Plug>SlimeRegionSend" {:noremap false :silent true}]
    ["n" "<Leader>s" "<Plug>SlimeParagraphSend" {:noremap false :silent true}]
