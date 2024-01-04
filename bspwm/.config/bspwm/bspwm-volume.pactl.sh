@@ -10,7 +10,7 @@ sink=$(pactl list short sinks                 \
     | head -n 1)
 
 
-if test "$action" = "up"; then
+if test    "$action" = "up" ; then
 
     # увеличить громкость
     pactl set-sink-mute $sink 0

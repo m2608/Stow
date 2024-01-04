@@ -4,13 +4,13 @@
 
 # уменьшить громкость
 @XF86AudioLowerVolume
-    $HOME/.config/bspwm/bspwm-volume.sh down
+    $HOME/.config/bspwm/bspwm-volume.mixer.sh down
 
 # увеличить громкость
 @XF86AudioRaiseVolume
-    $HOME/.config/bspwm/bspwm-volume.sh up
+    $HOME/.config/bspwm/bspwm-volume.mixer.sh up
 
 # замьютить
 @XF86AudioMute
-    $HOME/.config/bspwm/bspwm-volume.sh mute
+    $HOME/.config/bspwm/bspwm-volume.mixer.sh mute
 
