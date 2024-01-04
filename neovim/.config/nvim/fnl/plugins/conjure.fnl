@@ -12,6 +12,8 @@
                            ;; Настройки для Chez Scheme.
                            ["conjure#client#scheme#stdio#command" "petite"]
                            ["conjure#client#scheme#stdio#prompt_pattern" "> $?"]
-                           ["conjure#client#scheme#stdio#value_prefix_pattern" false]]]
+                           ["conjure#client#scheme#stdio#value_prefix_pattern" false]
+                           ;; Настройки для Python.
+                           ["conjure#client#python#stdio#command" "python3 -iq"]]]
                   (each [_ option (ipairs options)]
                     (core.assoc nvim.g (unpack option)))))}]
