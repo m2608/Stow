@@ -6,14 +6,20 @@ setenv SVDIR $HOME/.runit/service
 setenv WORKON_HOME $HOME/.virtualenvs
 
 set PATH \
-    $HOME/Bin \
-    $HOME/.gem/ruby/3.0/bin \
-    $HOME/.gem/ruby/2.7/bin \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
     $HOME/.gocode/bin \
-    $HOME/.roswell/lisp/quicklisp/bin \
-    $PATH
+    $HOME/.gem/ruby/2.7/bin \
+    $HOME/.gem/ruby/3.0/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/bin \
+    /usr/sbin \
+    /bin \
+    /sbin
 
 alias ls lsd
+alias eza "eza --group-directories-first"
 alias bat "PAGER=less $HOME/.cargo/bin/bat"
 alias aumix "env LANG=C aumix"
 alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'

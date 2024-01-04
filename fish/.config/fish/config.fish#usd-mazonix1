@@ -1,12 +1,24 @@
 setenv PAGER nvimpager
 
 set PATH \
+    /home/undume/.local/bin \
+    /home/undume/.cargo/bin \
+    /home/undume/.gocode/bin \
+    /home/undume/.gem/ruby/2.7/bin \
+    /home/undume/.gem/ruby/3.0/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/bin \
+    /usr/sbin \
+    /bin \
+    /sbin
+
+fish_add_path \
     $HOME/.local/go/bin \
     $HOME/go/bin \
     $HOME/perl5/bin \
     /opt/sbis3plugin \
-    /opt/metasploit-framework/bin \
-    $PATH
+    /opt/metasploit-framework/bin
 
 alias less 'less -r'
 alias curl7.78 'LD_LIBRARY_PATH=$HOME/.local/lib $HOME/.local/bin/curl7.78'

@@ -1,4 +1,4 @@
-set PATH $HOME/.local/bin $HOME/.cargo/bin $PATH
+fish_add_path $HOME/.local/bin $HOME/.cargo/bin
 
 setenv EDITOR nvim
 setenv NNN_PLUG "f:finder;c:fzcd;p:preview-tui;z:autojump"
