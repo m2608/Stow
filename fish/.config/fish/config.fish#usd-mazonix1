@@ -1,11 +1,12 @@
 setenv PAGER nvimpager
 
 set PATH \
-    /home/undume/.local/bin \
-    /home/undume/.cargo/bin \
-    /home/undume/.gocode/bin \
-    /home/undume/.gem/ruby/2.7/bin \
-    /home/undume/.gem/ruby/3.0/bin \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    $HOME/go/bin \
+    $HOME/perl5/bin \
+    /opt/metasploit-framework/bin \
+    /opt/sbis3plugin \
     /usr/local/bin \
     /usr/local/sbin \
     /usr/bin \
@@ -13,15 +14,7 @@ set PATH \
     /bin \
     /sbin
 
-fish_add_path \
-    $HOME/.local/go/bin \
-    $HOME/go/bin \
-    $HOME/perl5/bin \
-    /opt/sbis3plugin \
-    /opt/metasploit-framework/bin
-
 alias less 'less -r'
-alias curl7.78 'LD_LIBRARY_PATH=$HOME/.local/lib $HOME/.local/bin/curl7.78'
 alias ls lsd
 alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
 alias nnn "PAGER='nvimpager -p' "(which nnn)
@@ -35,8 +28,6 @@ alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .
 alias i3lock 'i3lock -c 000000 -b'
 
 abbr hurl-proxy "hurl --proxy socks://127.0.0.1:5555"
-
-bind \cz fg
 
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
 
