@@ -14,3 +14,9 @@
 @XF86AudioMute
     $HOME/.config/bspwm/bspwm-volume.mixer.sh mute
 
+#
+# скриншоты
+#
+
+Print
+    flameshot gui
