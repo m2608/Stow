@@ -3,6 +3,7 @@
 (local nvim (autoload "nvim"))
 
 [{1 "kkharji/lispdocs.nvim"
+  :lazy true
   :dependencies ["kkharji/sqlite.lua"]
   :config
   (fn []
