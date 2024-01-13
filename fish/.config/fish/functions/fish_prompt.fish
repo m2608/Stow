@@ -1,3 +1,49 @@
+function format_jobs -d "Format jobs list for prompt"
+    set -l color_norm "$argv[1]"
+    set -l color_jobs "$argv[2]"
+
+    set -l jobs
+    for job in (jobs | tail -n +1 | sort -n)
+        set -l job_info (string split (printf "\t") "$job")
+
+        set -l job_number $job_info[1]
+        set -l job_command (string split --fields 1 " " $job_info[4])
+
+        set --append jobs "$color_norm$job_number:$color_jobs$job_command$color_norm"
+    end
+
+    if test -n "$jobs"
+        echo " ["(string join " " $jobs)"]"
+    else
+        echo ""
+    end
+end
+
+function format_duration -d "Format duration (in milliseconds)"
+    set duration $argv[1]
+    set duration_list
+
+    for pairs in "1000 ms" "60 s" "60 m" "24 h"
+        set pair (string split " " $pairs)
+
+        set divider $pair[1]
+        set unit $pair[2]
+
+        set --prepend duration_list (math "$duration % $divider")$unit
+        set duration (math "floor($duration / $divider)")
+
+        if test $duration -eq 0
+            break
+        end
+    end
+
+    if test $duration -gt 0
+        set --prepend duration_list "$duration"d
+    end
+
+    echo $duration_list[1..2]
+end
+
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
@@ -27,12 +73,11 @@ function fish_prompt --description 'Write out the prompt'
     set -l statusb_color (set_color $bold_flag $fish_color_status)
     set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
 
-    # Show background jobs in prompt.
-    set -l jobs_color (set_color $fish_color_quote)
-    set -l jobs (jobs | tail -n +1 | cut -f 1,5 | sort -n | tr '\t' ':' | sed "s/:/:$jobs_color/;s/\$/$normal/;N;s/\n/|/")
-    if test "$jobs" != ""
-        set prompt_jobs "[$jobs]"
-    end
+    # List of jobs (if any)
+    set -l jobs (format_jobs "$normal" (set_color $fish_color_quote))
 
-    echo -n -s (prompt_login)' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal " "$prompt_jobs " "[$CMD_DURATION" "ms] " "$prompt_status $suffix " "
+    # Last command execution time.
+    set -l duration (format_duration $CMD_DURATION)
+
+    echo -n -s (prompt_login)' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $jobs " "[$duration] " "$prompt_status $suffix " "
 end
