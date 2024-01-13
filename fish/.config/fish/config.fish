@@ -6,7 +6,7 @@ setenv NNN_OPTS "aAcCdu"
 
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
-bind \cz fg
+bind \cz "jobs > /dev/null && fg"
 
 set host_config (status dirname)"$fold_config/config.fish#"(hostname | sed 's/\..*//')
 
