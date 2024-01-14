@@ -1,0 +1,28 @@
+[font]
+size = 14
+
+[font.normal]
+family = "APL386 Unicode"
+# family = Berkeley Mono
+# family = Iosevka Term
+# family = Iosevka Term SS08
+# family = Iosevka Term SS14
+# family = IosevkaTerm Nerd Font Mono
+# family = JetBrains Mono
+# family = JetBrainsMono Nerd Font Mono
+# family = M+ 2m
+# family = PragmataPro Mono
+# family = Sudo
+# family = Terminus
+# family = Victor Mono
+# family = VictorMono Nerd Font Mono
+
+[[keyboard.bindings]]
+chars = "\u001B[9;5u"
+key = "Tab"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B[9;6u"
+key = "Tab"
+mods = "Control|Shift"
