@@ -3,11 +3,11 @@ function format_jobs -d "Format jobs list for prompt"
     set -l color_jobs "$argv[2]"
 
     set -l jobs
-    for job in (jobs | tail -n +1 | sort -n)
+    for job in (jobs | sort -n)
         set -l job_info (string split (printf "\t") "$job")
 
         set -l job_number $job_info[1]
-        set -l job_command (string split --fields 1 " " $job_info[4])
+        set -l job_command (string split --fields 1 " " $job_info[-1])
 
         set --append jobs "$color_norm$job_number:$color_jobs$job_command$color_norm"
     end
