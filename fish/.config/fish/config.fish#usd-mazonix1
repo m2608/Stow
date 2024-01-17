@@ -22,10 +22,11 @@ alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u
 alias mvi='mpv --config-dir=$HOME/.config/mvi'
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
-alias alacritty "MESA_GL_VERSION_OVERRIDE=3.3 $HOME/.cargo/bin/alacritty"
+# alias alacritty "MESA_GL_VERSION_OVERRIDE=3.3 $HOME/.cargo/bin/alacritty"
 alias jq-record "jq '[.d, .s] | transpose | map({(.[1].n): .[0]}) | add'"
 alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .[0]}) | add'"
 alias i3lock 'i3lock -c 000000 -b'
+alias edir 'python3.11 -m edir'
 
 abbr hurl-proxy "hurl --proxy socks://127.0.0.1:5555"
 
