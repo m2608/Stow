@@ -3,7 +3,18 @@
 (local nvim (autoload "nvim"))
 
 ;; Список языковых серверов.
-(local local-servers ["pylsp" "clojure_lsp"])
+(local servers
+  {:pylsp
+   {:flags {:debounce_text_changes 150
+            :single_file_support true}}
+   :clojure_lsp
+   {:flags {:debounce_text_changes 150
+            :single_file_support true}}
+   :marksman
+   {:cmd ["marksman" "server"]
+    :flags {:debounce_text_changes 150
+            :single_file_support true}}
+   })
 
 ;; Список шоткатов.
 (local mappings 
@@ -47,6 +58,6 @@
   :config
   (fn []
     (let [lsp (require "lspconfig")]
-      (each [_ server (ipairs local-servers)]
-        ((. lsp server :setup) {:on_attach on-attach
-                                :flags {:debounce_text_changes 150}}))))}]
+      (each [name config (pairs servers)]
+        ((. lsp name :setup)
+         (core.merge config {:on_attach on-attach})))))}]
