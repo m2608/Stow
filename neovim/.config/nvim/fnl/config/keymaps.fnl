@@ -27,8 +27,6 @@
    ["n" "<BS>" ":nohlsearch<CR>"]
    ;; комбинация выключает предупреждения линтера
    ["n" "<Leader><BS>" ":lua vim.diagnostic.hide()<CR>"]
-   ;; используем пробел для сворачивания/разворачивания текущего блока
-   ["n" "<space>" "za"]
    ;; комбинация для открытия файла из текущего каталога
    ["n" "<Leader>e" ":e <C-R>=expand(\"%:p:h\") . \"/\"<CR>" {:noremap true}]
    ;; комбинация для смены текущего каталога на каталог в котором лежит файл из
@@ -38,14 +36,17 @@
    ;; интендации выделенного блока с помощью < и >
    ["v" "<" "<gv"]
    ["v" ">" ">gv"]
-   ;; ctrl+space для автодополнения через omnifunc
-   ["i" "<c-space>" "<c-x><c-o>"]
+   ;; tab для автодополнения через omnifunc
+   ;; если еще нет окна со списоком вариантов - автодополнение, если показываются варианты -
+   ;; ходим по этому списку
+   ["i" "<Tab>"   "pumvisible() ? \"<c-n>\" : \"<c-x><c-o>\"" {:noremap true :silent true :expr true}]
+   ["i" "<S-Tab>" "pumvisible() ? \"<c-p>\" : \"\""           {:noremap true :silent true :expr true}]
    ;; при дополнении по-умолчанию при выборе первого пункта с помощью кнопки Enter,
    ;; будет вставлен первый пункт и перевод строки, а при выборе любых других - только
    ;; вставлен пункт; чтобы сделать поведение всегда одинаковым нужно использовать
    ;; сочетание Ctrl+Y (см. :help popupmenu-keys); мы переназначим Enter таким образом,
    ;; чтобы, если открыто всплывающее меню, он посылал Ctrl+Y
-   ["i" "<cr>" "pumvisible() ? \"<c-y>\" : \"<cr>\"" {:noremap true :silent true :expr true}]
+   ["i" "<CR>" "pumvisible() ? \"<c-y>\" : \"<cr>\"" {:noremap true :silent true :expr true}]
    ;; копирует в буфер обмена от положения курсора до конца строки (по аналогии с
    ;; командами С и D)
    ["n" "Y" "y$"]
@@ -95,9 +96,7 @@
    ["v" "<leader>y" "<Plug>OSCYankVisual" {:noremap false :silent true}]
    ;; lispdocs
    ["n" "<leader>h" ":lua require('lispdocs').float({ fill = 0.8, win = { winblend = 0, cursorline = false }})<CR>"]
-   ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]
-   
-   ])
+   ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]])
 
 (each [_ mapping (ipairs mappings)]
   (set-mapping (unpack mapping)))
