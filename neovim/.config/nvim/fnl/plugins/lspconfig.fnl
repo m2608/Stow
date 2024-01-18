@@ -5,16 +5,15 @@
 ;; Список языковых серверов.
 (local servers
   {:pylsp
-   {:flags {:debounce_text_changes 150
-            :single_file_support true}}
+   {:flags {:debounce_text_changes 150}
+    :single_file_support true}
    :clojure_lsp
-   {:flags {:debounce_text_changes 150
-            :single_file_support true}}
+   {:flags {:debounce_text_changes 150}
+    :single_file_support false}
    :marksman
    {:cmd ["marksman" "server"]
-    :flags {:debounce_text_changes 150
-            :single_file_support true}}
-   })
+    :flags {:debounce_text_changes 150}
+    :single_file_support true}})
 
 ;; Список шоткатов.
 (local mappings 
