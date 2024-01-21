@@ -2,19 +2,6 @@
 (local core (autoload "nfnl.core"))
 (local nvim (autoload "nvim"))
 
-;; Список языковых серверов.
-(local servers
-  {:pylsp
-   {:flags {:debounce_text_changes 150}
-    :single_file_support true}
-   :clojure_lsp
-   {:flags {:debounce_text_changes 150}
-    :single_file_support false}
-   :marksman
-   {:cmd ["marksman" "server"]
-    :flags {:debounce_text_changes 150}
-    :single_file_support true}})
-
 ;; Список шоткатов.
 (local mappings 
   (core.map 
@@ -38,8 +25,8 @@
      ["<space>D"  "<cmd>lua vim.lsp.buf.type_definition()<CR>"]
      ["<space>rn" "<cmd>lua vim.lsp.buf.rename()<CR>"]
      ["<space>ca" "<cmd>lua vim.lsp.buf.code_action()<CR>"]
-     ["<space>e"  "<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>"]
-     ["<space>q"  "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>"]
+     ["<space>e"  "<cmd>lua vim.diagnostic.open_float()<CR>"]
+     ["<space>q"  "<cmd>lua vim.diagnostic.setloclist()<CR>"]
      ["<space>f"  "<cmd>lua vim.lsp.buf.formatting()<CR>"]]))
 
 (fn on-attach [client bufnr]
@@ -56,7 +43,18 @@
 [{1 "neovim/nvim-lspconfig"
   :config
   (fn []
-    (let [lsp (require "lspconfig")]
+    (let [lsp (require "lspconfig")
+          ;; Список языковых серверов.
+          servers
+          {:pylsp
+           {:flags {:debounce_text_changes 150}
+            :single_file_support true}
+           :clojure_lsp
+           {:flags {:debounce_text_changes 150}}
+           :marksman
+           {:cmd ["marksman" "server"]
+            :flags {:debounce_text_changes 150}
+            :single_file_support true}}]
       (each [name config (pairs servers)]
         ((. lsp name :setup)
          (core.merge config {:on_attach on-attach})))))}]
