@@ -13,5 +13,6 @@
          {:file_browser
           {:hijack_netrw true
            :grouped true
+           :initial_mode "normal"
            :dir_icon " "
            :sorting_strategy "ascending"}}})))}]
