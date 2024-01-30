@@ -22,7 +22,7 @@
    ;; вызов окна для навигации по коду (плагин tagbar)
    ["n" "<F8>" ":<c-u>TagbarToggle<CR>"]
    ;; вызов файлового браузера
-   ["n" "<F9>" ":<c-u>NvimTreeToggle<CR>"]
+   ["n" "<F9>" ":Telescope file_browser<CR>"]
    ;; забой убирает подсветку найденных фраз
    ["n" "<BS>" ":nohlsearch<CR>"]
    ;; комбинация выключает предупреждения линтера
@@ -79,12 +79,12 @@
    ["n" "<Leader>fF" ":Telescope file_browser<CR>"]
    ["n" "<Leader>fb" ":Telescope buffers<CR>"]
    ["n" "<Leader>fg" ":Telescope live_grep<CR>"]
+   ["n" "<Leader>fG" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
    ["n" "<Leader>fe" ":Telescope diagnostics<CR>"]
    ["n" "<Leader>fs" ":Telescope lsp_document_symbols<CR>"]
    ["n" "<Leader>fr" ":Telescope lsp_references<CR>"]
    ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
-   ["n" "<Leader>fG" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
    ;; горячие клавиши для Slime
    ["x" "<Leader>s" "<Plug>SlimeRegionSend" {:noremap false :silent true}]
    ["n" "<Leader>s" "<Plug>SlimeParagraphSend" {:noremap false :silent true}]
