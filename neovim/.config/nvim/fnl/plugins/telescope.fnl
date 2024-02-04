@@ -3,16 +3,20 @@
   :dependencies ["nvim-lua/plenary.nvim"]
   :config
   (fn []
-    (let [setup (. (require "telescope") :setup)
-          delete_buffer (. (require "telescope.actions") :delete_buffer)]
+    (let [setup      (. (require "telescope") :setup)
+          actions    (require "telescope.actions")
+          fb-actions (require "telescope._extensions.file_browser.actions")]
       (setup
         {:defaults
          {:preview {:check_mime_type false}
-          :mappings {:n {"d" delete_buffer}}}
+          :mappings {:n {"d" (. actions :delete_buffer)}}}
          :extensions
          {:file_browser
           {:hijack_netrw true
            :grouped true
            :initial_mode "normal"
            :dir_icon " "
-           :sorting_strategy "ascending"}}})))}]
+           :sorting_strategy "ascending"
+           :mappings {:n {"." (. fb-actions :toggle_hidden)
+                          "l" (. fb-actions :change_cwd)
+                          "h" (. fb-actions :goto_parent_dir)}}}}})))}]
