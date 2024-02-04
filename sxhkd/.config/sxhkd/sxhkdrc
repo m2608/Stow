@@ -17,3 +17,6 @@ shift+Insert
 # вставить текст из сниппета
 alt + Down
     snip load
+
+super + semicolon
+    keynav
