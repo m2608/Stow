@@ -5,7 +5,7 @@
 (fn set-mapping [mode from to ...]
   (let [opts (if (= (length [...]) 0) {:noremap true :silent true}
                (. [...] 1))]
-    (nvim.set_keymap mode from to opts)))
+    (vim.keymap.set mode from to opts)))
 
 (fn yank-for-quickfix
   []
@@ -21,8 +21,8 @@
    ["n" "<F2>" ":<c-u>update<CR>"]
    ;; вызов окна для навигации по коду (плагин tagbar)
    ["n" "<F8>" ":<c-u>TagbarToggle<CR>"]
-   ;; вызов файлового браузера
-   ["n" "<F9>" ":Telescope file_browser<CR>"]
+   ;; вызов файлового браузера в каталоге с текущим файлом
+   ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
    ;; забой убирает подсветку найденных фраз
    ["n" "<BS>" ":nohlsearch<CR>"]
    ;; комбинация выключает предупреждения линтера
@@ -36,11 +36,10 @@
    ;; интендации выделенного блока с помощью < и >
    ["v" "<" "<gv"]
    ["v" ">" ">gv"]
-   ;; tab для автодополнения через omnifunc
-   ;; если еще нет окна со списоком вариантов - автодополнение, если показываются варианты -
+   ;; если еще нет окна со списоком вариантов - Tab, если показываются варианты -
    ;; ходим по этому списку
-   ["i" "<Tab>"   "pumvisible() ? \"<c-n>\" : \"<c-x><c-o>\"" {:noremap true :silent true :expr true}]
-   ["i" "<S-Tab>" "pumvisible() ? \"<c-p>\" : \"\""           {:noremap true :silent true :expr true}]
+   ["i" "<Tab>"   "pumvisible() ? \"<C-n>\" : \"<Tab>\"" {:noremap true :silent true :expr true}]
+   ["i" "<S-Tab>" "pumvisible() ? \"<C-p>\" : \"\""      {:noremap true :silent true :expr true}]
    ;; при дополнении по-умолчанию при выборе первого пункта с помощью кнопки Enter,
    ;; будет вставлен первый пункт и перевод строки, а при выборе любых других - только
    ;; вставлен пункт; чтобы сделать поведение всегда одинаковым нужно использовать
