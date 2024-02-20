@@ -1,6 +1,7 @@
-(local {: autoload} (require "nfnl.module"))
-(local core (autoload "nfnl.core"))
-(local nvim (autoload "nvim"))
+(module settings
+  {autoload
+    {core :aniseed.core
+     nvim :aniseed.nvim}})
 
 (fn file-exists? [filename]
   "Проверяет, существует ли файл."

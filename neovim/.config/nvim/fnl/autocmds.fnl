@@ -1,6 +1,7 @@
-(local {: autoload} (require "nfnl.module"))
-(local core (autoload "nfnl.core"))
-(local nvim (autoload "nvim"))
+(module autocmds
+  {autoload
+    {core :aniseed.core
+     nvim :aniseed.nvim}})
 
 ;; Настройка Firenvim.
 (vim.api.nvim_create_autocmd

@@ -1,1 +1,1 @@
-["tomtom/tcomment_vim"]
+"tomtom/tcomment_vim"

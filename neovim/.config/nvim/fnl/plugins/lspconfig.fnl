@@ -1,6 +1,5 @@
-(local {: autoload} (require "nfnl.module"))
-(local core (autoload "nfnl.core"))
-(local nvim (autoload "nvim"))
+(local core (require "aniseed.core"))
+(local nvim (require "aniseed.nvim"))
 
 ;; Список шоткатов.
 (local mappings 
@@ -40,21 +39,21 @@
     (each [_ mapping (ipairs mappings)]
       (buf-set-keymap (unpack mapping)))))
 
-[{1 "neovim/nvim-lspconfig"
-  :config
-  (fn []
-    (let [lsp (require "lspconfig")
-          ;; Список языковых серверов.
-          servers
-          {:pylsp
-           {:flags {:debounce_text_changes 150}
-            :single_file_support true}
-           :clojure_lsp
-           {:flags {:debounce_text_changes 150}}
-           :marksman
-           {:cmd ["marksman" "server"]
-            :flags {:debounce_text_changes 150}
-            :single_file_support true}}]
-      (each [name config (pairs servers)]
-        ((. lsp name :setup)
-         (core.merge config {:on_attach on-attach})))))}]
+{1 "neovim/nvim-lspconfig"
+ :config
+ (fn []
+   (let [lsp (require "lspconfig")
+         ;; Список языковых серверов.
+         servers
+         {:pylsp
+          {:flags {:debounce_text_changes 150}
+           :single_file_support true}
+          :clojure_lsp
+          {:flags {:debounce_text_changes 150}}
+          :marksman
+          {:cmd ["marksman" "server"]
+           :flags {:debounce_text_changes 150}
+           :single_file_support true}}]
+     (each [name config (pairs servers)]
+       ((. lsp name :setup)
+        (core.merge config {:on_attach on-attach})))))}

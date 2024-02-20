@@ -1,1 +1,1 @@
-["ehamberg/vim-cute-python"]
+"ehamberg/vim-cute-python"

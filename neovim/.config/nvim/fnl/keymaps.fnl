@@ -1,6 +1,7 @@
-(local {: autoload} (require "nfnl.module"))
-(local core (autoload "nfnl.core"))
-(local nvim (autoload "nvim"))
+(module keymaps
+  {autoload
+    {core :aniseed.core
+     nvim :aniseed.nvim}})
 
 (fn set-mapping [mode from to ...]
   (let [opts (if (= (length [...]) 0) {:noremap true :silent true}

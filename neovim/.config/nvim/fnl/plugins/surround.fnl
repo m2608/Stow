@@ -1,2 +1,2 @@
-[{1 "tpope/vim-surround"
-  :dependencies ["tpope/vim-repeat"]}]
+{1 "tpope/vim-surround"
+ :dependencies ["tpope/vim-repeat"]}

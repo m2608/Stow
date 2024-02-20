@@ -1,5 +1,6 @@
-(local {: autoload} (require "nfnl.module"))
-(local nvim (autoload "nvim"))
+(module commands
+  {autoload
+    {nvim :aniseed.nvim}})
 
 (fn cmd [...]
   (nvim.command ...))

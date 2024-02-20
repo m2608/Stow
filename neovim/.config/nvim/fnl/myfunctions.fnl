@@ -1,5 +1,6 @@
-(local {: autoload} (require "nfnl.module"))
-(local nvim (autoload "nvim"))
+(module myfunctions
+  {autoload
+    {nvim :aniseed.nvim}})
 
 (fn pipe-visual []
   ;(vim.api.nvim_input "<ESC>")

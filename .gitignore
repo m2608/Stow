@@ -1,6 +1,5 @@
 neovim/.config/nvim/lua/*
-!neovim/.config/nvim/lua/plugins.lua
+neovim/.config/nvim/lazy-lock.json
 .clj-kondo/
 .lsp/
 emacs/.emacs~
-neovim/.config/nvim/lazy-lock.json

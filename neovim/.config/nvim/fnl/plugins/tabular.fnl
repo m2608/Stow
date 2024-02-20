@@ -1,1 +1,1 @@
-["godlygeek/tabular"]
+"godlygeek/tabular"

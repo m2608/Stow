@@ -1,1 +1,1 @@
-["fourjay/vim-hurl"]
+"fourjay/vim-hurl"

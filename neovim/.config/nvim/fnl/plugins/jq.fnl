@@ -1,1 +1,1 @@
-["vito-c/jq.vim"]
+"vito-c/jq.vim"
