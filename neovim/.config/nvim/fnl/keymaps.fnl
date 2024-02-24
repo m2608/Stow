@@ -54,6 +54,9 @@
    ;; нужно сделать биндинги в терминале (например, alacrirry поддерживает это).
    ["n" "<C-Tab>"   ":wincmd w<CR>"]
    ["n" "<C-S-Tab>" ":wincmd W<CR>"]
+   ;; дополнительные сочетания для нормального режима
+   ["n" "gh" "^"]
+   ["n" "gl" "$"]
    ;; сочетания клавиш для режима вставки
    ["i" "<c-e>" "<c-o>$"]
    ["i" "<c-a>" "<c-o>^"]
@@ -74,14 +77,15 @@
    ;; Открытие файла под курсором.
    ["n" "gx" ":silent execute '!xdg-open ' . shellescape(expand('<cfile>'), 1)<CR>"]
    ["v" "gx" "y | :silent execute '!xdg-open ' . shellescape(expand(@\"), 1)<CR>"]
-   ;; горячие клавиши для некоторых команд fzf
-   ["n" "<Leader>ff" ":Telescope find_files<CR>"]
-   ["n" "<Leader>fF" ":Telescope file_browser<CR>"]
-   ["n" "<Leader>fb" ":Telescope buffers<CR>"]
-   ["n" "<Leader>fg" ":Telescope live_grep<CR>"]
-   ["n" "<Leader>fG" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
+   ;; горячие клавиши для некоторых команд telescop
+   ["n" "<space>f" ":Telescope find_files<CR>"]
+   ["n" "<space>F" ":Telescope file_browser<CR>"]
+   ["n" "<space>b" ":Telescope buffers<CR>"]
+   ["n" "<space>/" ":Telescope live_grep<CR>"]
+   ["n" "<space>g" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
+   ["n" "<space>d" ":Telescope diagnostics<CR>"]
+
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
-   ["n" "<Leader>fe" ":Telescope diagnostics<CR>"]
    ["n" "<Leader>fs" ":Telescope lsp_document_symbols<CR>"]
    ["n" "<Leader>fr" ":Telescope lsp_references<CR>"]
    ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
@@ -91,9 +95,8 @@
    ;; выход из режима вставки в терминале по Esc
    ["t" "<Esc>" "<C-\\><C-n>"]
    ;; OSCYank
-   ["n" "<leader>y" "<Plug>OSCYankOperator" {:noremap false :silent true}]
-   ["n" "<leader>yy" "<leader>y_" {:noremap false :silent true}]
-   ["v" "<leader>y" "<Plug>OSCYankVisual" {:noremap false :silent true}]
+   ["n" "<space>y" "<Plug>OSCYankOperator" {:noremap false :silent true}]
+   ["v" "<space>y" "<Plug>OSCYankVisual"   {:noremap false :silent true}]
    ;; lispdocs
    ["n" "<leader>h" ":lua require('lispdocs').float({ fill = 0.8, win = { winblend = 0, cursorline = false }})<CR>"]
    ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]])
