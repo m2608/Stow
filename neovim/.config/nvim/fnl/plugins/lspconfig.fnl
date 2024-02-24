@@ -21,12 +21,11 @@
      ["<space>wa" "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"]
      ["<space>wr" "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"]
      ["<space>wl" "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"]
-     ["<space>D"  "<cmd>lua vim.lsp.buf.type_definition()<CR>"]
      ["<space>rn" "<cmd>lua vim.lsp.buf.rename()<CR>"]
      ["<space>ca" "<cmd>lua vim.lsp.buf.code_action()<CR>"]
      ["<space>e"  "<cmd>lua vim.diagnostic.open_float()<CR>"]
      ["<space>q"  "<cmd>lua vim.diagnostic.setloclist()<CR>"]
-     ["<space>f"  "<cmd>lua vim.lsp.buf.formatting()<CR>"]]))
+     ]))
 
 (fn on-attach [client bufnr]
   "Функция будет переназначать кнопки только после подключения языкового
