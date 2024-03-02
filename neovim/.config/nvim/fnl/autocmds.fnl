@@ -3,8 +3,11 @@
     {core :aniseed.core
      nvim :aniseed.nvim}})
 
+(local augroup vim.api.nvim_create_augroup)
+(local autocmd vim.api.nvim_create_autocmd)
+
 ;; Настройка Firenvim.
-(vim.api.nvim_create_autocmd
+(autocmd
   ["UIEnter"]
   {:callback
    (fn [event]
@@ -18,13 +21,13 @@
              (core.assoc nvim.o name value))))))})
 
 ;; Установка формата для файлов *.bqn.
-(vim.api.nvim_create_autocmd
+(autocmd
   ["BufRead" "BufNewFile"]
   {:pattern "*.bqn"
    :command "setf bqn"})
 
 ;; Маппинги символов BQN для файлов соответствующего типа.
-(vim.api.nvim_create_autocmd
+(autocmd
   ["FileType"]
   {:pattern "bqn"
    :callback (fn [event]
@@ -43,3 +46,11 @@
                                ["B" "⌈"] ["N" "N"] ["M" "≢"] ["<" "≤"] [">" "≥"] ["?" "⇐"] ["<space>" "‿"]]]
                      (each [_ [m k] (ipairs mappings)]
                        (vim.keymap.set "i" (.. prefix m) k {:buffer event.buf}))))})
+
+(augroup "markdown-conceal" {:clear true})
+(autocmd
+  "Filetype"
+  {:group "markdown-conceal"
+   :pattern "markdown"
+   :callback (fn [e]
+               (set vim.opt_local.conceallevel 2))})
