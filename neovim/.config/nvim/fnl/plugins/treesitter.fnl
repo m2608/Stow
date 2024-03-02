@@ -40,11 +40,13 @@
         "lua"
         "make"
         "markdown"
+        "markdown_inline"
         "python"
         "scheme"
         "sql"
         "toml"
         "typescript"
         "vue"]
-       :highlight {:enable true}
+       :highlight {:enable true
+                   :additional_vim_regex_highlighting ["markdown"]}
        :indent {:enable false}})))}
