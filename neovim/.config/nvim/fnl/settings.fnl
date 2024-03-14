@@ -31,7 +31,7 @@
                ;; показывать номер текущей строки
                [:number true]
                ;; показывать колонку с метками (иначе она будет показываться только когда
-                                                     ;; есть метки, например, предупреждения или ошибки)
+               ;; есть метки, например, предупреждения или ошибки)
                [:signcolumn "yes"]
                ;; вертикальный сплит открывает окно справа
                [:splitright true]
@@ -94,14 +94,20 @@
   (each [_ cmd (ipairs commands)]
     (nvim.command cmd)))
 
-(if (= (os.getenv "COOL_RETRO_TERM") "1")
+(if
+  (= (os.getenv "COOL_RETRO_TERM") "1")
   ;; Для Cool Retro Term выбираем какую-нибудь простую схему и устанавливаем
   ;; режим 16 цветов. Чтобы это работало, нужно при запуске CRT установить
   ;; переменную COOL_RETRO_TERM=1.
   (let [ffi (require "ffi")]
     (ffi.cdef "int t_colors")
     (core.assoc ffi.C :t_colors 16)
-    (nvim.command "colorscheme illyria"))
+    (vim.cmd.colorscheme "illyria"))
+
+  ;; Цветовая схема для nvim-gtk.
+  (core.get nvim.g :GtkGuiLoaded nil)
+  (vim.cmd.colorscheme "nano-theme")
+
   ;; Настройка цветовой схемы в соответствие со схемой терминала.
   (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
     (when (file-exists? colorscheme-filename)
@@ -131,6 +137,7 @@
                      ["Option" "Cmdline" 1]]]
     (each [_ option (ipairs gui-options)]
       (vim.rpcnotify 1 "Gui" (unpack option)))))
+
 
 ;; На рабочем компе меняем путь к python.
 (when (string.find (nvim.fn.hostname) "usd[-]mazonix1")
