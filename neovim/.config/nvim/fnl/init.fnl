@@ -1,2 +1,2 @@
 (module init
-  {require [autocmds commands keymaps myfunctions settings plugins]})
+  {require [plugins autocmds commands keymaps myfunctions settings]})
