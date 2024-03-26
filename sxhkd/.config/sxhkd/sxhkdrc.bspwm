@@ -45,9 +45,7 @@ super + {u,i}
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
-	bspc desktop -f {prev,next}.local \
-        && echo Workspace: $(bspc query -D -d focused --names) \
-            | dzen2 -p 1 -fn "Iosevka:size=16"
+    exec $HOME/.config/bspwm/bspwm-prevnext.sh {prev,next}
 
 # focus the last desktop
 super + Tab
