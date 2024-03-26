@@ -1,10 +1,10 @@
 # запуск терминала
 super + Escape
-	alacritty
+    st
 
 # запуск редактора
 super + e
-    alacritty -e fish -i -c nvim
+    st -e fish -i -c nvim
 
 # запуск dmenu
 super + p
