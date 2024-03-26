@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# window title
+title="layout"
 # screen width
 sw=$(xwininfo -root | grep Width | cut -d ':' -f 2)
 # icon width
@@ -15,4 +17,7 @@ sh -c '
     xkb-switch | tr a-z A-Z
     while true; do 
         xkb-switch --wait -p | tr a-z A-Z
-    done' | dzen2 -p 0 -bg "$bg" -fg "$fg" -fn "$font" -x $((sw-iw)) -w $iw -h $iw
+    done' | dzen2 \
+        -e "button1=exec:xkb-switch -n" \
+        -title-name "$title" \
+        -p 0 -bg "$bg" -fg "$fg" -fn "$font" -x $((sw-iw)) -w $iw -h $iw
