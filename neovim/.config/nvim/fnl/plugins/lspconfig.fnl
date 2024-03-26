@@ -52,7 +52,8 @@
           :marksman
           {:cmd ["marksman" "server"]
            :flags {:debounce_text_changes 150}
-           :single_file_support true}}]
+           :single_file_support true}
+          :clangd {}}]
      (each [name config (pairs servers)]
        ((. lsp name :setup)
         (core.merge config {:on_attach on-attach})))))}
