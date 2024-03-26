@@ -3,7 +3,9 @@ setenv PAGER nvimpager
 set PATH \
     $HOME/.local/bin \
     $HOME/.cargo/bin \
+    $HOME/.qlot/bin \
     $HOME/go/bin \
+    $HOME/.local/opt/python-3.11/bin \
     $HOME/perl5/bin \
     /opt/metasploit-framework/bin \
     /opt/sbis3plugin \
