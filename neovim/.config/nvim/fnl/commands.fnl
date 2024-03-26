@@ -54,3 +54,6 @@
 ;; Для работы нужен скрипт git-browse.
 (cmd (.. "command! -range GitLab "
          "execute 'silent ! git browse \"' . expand('%') . '\" ' . <line1> | checktime | redraw!"))
+
+(cmd (.. "command! -range GitLabShow "
+         "execute '! git browse -s \"' . expand('%') . '\" ' . <line1>"))
