@@ -20,6 +20,7 @@
 (straight-use-package 'telega)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'w3m)
+(straight-use-package 'vterm)
 (straight-use-package
   '(nano :type git :host github :repo "rougier/nano-emacs"))
 
@@ -35,7 +36,11 @@
 ;; для закрытия редактора нужно будет написать :quit
 (evil-ex-define-cmd "quit" 'evil-quit)
 
+;; отключаем строку меню
 (menu-bar-mode 0)
+
+;; включаем относительные номера строк
+(setq display-line-numbers 'relative)
 
 (define-key global-map (kbd "C-c t") telega-prefix-map)
 
@@ -45,3 +50,6 @@
    (define-key telega-msg-button-map "k" nil)
    (define-key telega-msg-button-map "l" nil)
    (define-key telega-msg-button-map "x" 'kill-current-buffer)))
+
+;; в календаре первый день недели - понедельник
+(setq calendar-week-start-day 1)
