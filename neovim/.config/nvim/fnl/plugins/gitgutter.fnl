@@ -1,1 +1,0 @@
-["airblade/vim-gitgutter"]
