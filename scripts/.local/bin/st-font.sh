@@ -1,11 +1,11 @@
 #!/bin/sh
 
-self=`basename "$0"`
+self=$(basename "$0")
 
 # for example, "PragmataPro Liga:size=13"
-current_spec=`xrdb -query 'st.font' | sed 's/st.font:\t*//'`
-current_font=`echo "$current_spec" | cut -d ':' -f 1`
-current_size=`echo "$current_spec" | cut -d ':' -f 2 | cut -d '=' -f 2`
+current_spec=$(xrdb -query | sed -n '/^st[.]font:/p' | sed -r 's/^st.font:[\s\t]*//')
+current_font=$(echo "$current_spec" | cut -d ':' -f 1)
+current_size=$(echo "$current_spec" | cut -d ':' -f 2 | cut -d '=' -f 2)
 
 while test $# -gt 0; do
     case "$1" in
