@@ -51,5 +51,8 @@ pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
 # Управление мышью с клавиатуры.
 keynav
 
+# Буфер обмена через сокет.
+clipper &
+
 # Запускаем службы, если они еще не запущены.
 pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
