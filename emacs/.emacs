@@ -21,6 +21,7 @@
 (straight-use-package 'lsp-mode)
 (straight-use-package 'w3m)
 (straight-use-package 'vterm)
+(straight-use-package 'restclient)
 (straight-use-package
   '(nano :type git :host github :repo "rougier/nano-emacs"))
 
