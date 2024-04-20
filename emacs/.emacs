@@ -27,7 +27,10 @@
 
 (require 'nano)
 
+;; используем свою версию библиотеки tdlib
 (setq telega-server-libs-prefix (concat (getenv "HOME") "/.local"))
+;; нужно для нормального отображения эмодзи
+(setq telega-emoji-use-images nil)
 
 (evil-mode 1)
 ;; перейти к определению функции
