@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "IosevkaTerm Nerd Font Mono:size=16";
+static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -28,13 +28,16 @@ char *vtiden = "\033[?6c";
 /* Kerning / character bounding-box multipliers */
 static float cwscale = 1.0;
 static float chscale = 1.0;
+/* Character rendering offsets in pixels */
+static short cxoffset = 0;
+static short cyoffset = 0;
 
 /*
  * word delimiter string
  *
  * More advanced example: L" `'\"()[]{}"
  */
-wchar_t *worddelimiters = L" |";
+wchar_t *worddelimiters = L" ";
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
@@ -53,7 +56,7 @@ int allowwindowops = 1;
  * near minlatency, but it waits longer for slow updates to avoid partial draw.
  * low minlatency will tear/flicker more, as it can "detect" idle too early.
  */
-static double minlatency = 8;
+static double minlatency = 2;
 static double maxlatency = 33;
 
 /*
@@ -135,19 +138,13 @@ unsigned int defaultcs = 256;
 static unsigned int defaultrcs = 257;
 
 /*
- * Default style of cursor
- * 0: Blinking block
- * 1: Blinking block (default)
- * 2: Steady block ("█")
- * 3: Blinking underline
- * 4: Steady underline ("_")
- * 5: Blinking bar
- * 6: Steady bar ("|")
- * 7: Blinking st cursor
- * 8: Steady st cursor
+ * Default shape of cursor
+ * 2: Block ("█")
+ * 4: Underline ("_")
+ * 6: Bar ("|")
+ * 7: Snowman ("☃")
  */
-static unsigned int cursorshape = 1;
-static Rune stcursor = 0x2603; /* snowman (U+2603) */
+static unsigned int cursorshape = 2;
 
 /*
  * Default columns and rows numbers
@@ -207,6 +204,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*
