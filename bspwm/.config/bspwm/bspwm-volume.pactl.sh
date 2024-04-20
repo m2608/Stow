@@ -33,11 +33,33 @@ elif test "$action" = "mute"; then
     pactl set-sink-mute $sink $mute_state
 fi
 
-if test $(pactl get-sink-mute $sink | cut -d ':' -f 2 | tr -d ' ') = "yes"; then
-    message="Volume: mute"
+pactl_version=$(pactl --version \
+    | sed -n '/^pactl[ ]+/p' \
+    | sed -E 's/^pactl[ ]+([0-9]+)([.].*)?/\1/')
+
+if test $pactl_version -ge 15; then
+    if test $(pactl get-sink-mute $sink | cut -d ':' -f 2 | tr -d ' ') = "yes"; then
+        message="Volume: mute"
+    else
+        volume=$(pactl get-sink-volume $sink \
+            | head -n 1 | cut -d '/' -f 2 | tr -d ' ')
+        message="Volume: $volume"
+    fi
 else
-    message="Volume: $( \
-        pactl get-sink-volume $sink | head -n 1 | cut -d '/' -f 2 | tr -d ' ')"
+    mute=$(LANG=C pactl list sinks     \
+        | sed -n "/^Sink #$sink$/,/^$/p" \
+        | sed -nE '/^[\s\t]+Mute:/p'   \
+        | sed -E 's/^[\s\t]+Mute:[ ]+//')
+
+    if test "$mute" = "yes"; then
+        message="Volume: mute"
+    else
+        volume=$(LANG=C pactl list sinks     \
+            | sed -n "/^Sink #$sink$/,/^$/p" \
+            | sed -nE '/^[\s\t]+Volume:/p'   \
+            | sed -E 's/^.*[ ]([0-9]+)%.*[ ]([0-9]+)%.*/\1/')
+        message="Volume: $volume"
+    fi
 fi
 
 $(dirname $0)/bspwm-message.sh "$message"
