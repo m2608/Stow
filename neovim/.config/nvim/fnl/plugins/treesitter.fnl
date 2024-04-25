@@ -24,6 +24,7 @@
       {:ensure_installed
        ["c"
         "clojure"
+        "comment"
         "commonlisp"
         "cpp"
         "css"
