@@ -9,7 +9,9 @@
      (setup
        {:defaults
         {:preview {:check_mime_type false}
-         :file_ignore_patterns {}}
+         :file_ignore_patterns {}
+         :mappings {:i {"<C-y>" (. (require "telescope.actions.layout") :toggle_preview)}
+                    :n {"<C-y>" (. (require "telescope.actions.layout") :toggle_preview)}}}
 
         :pickers
         {:buffers {:mappings {:n {"d" (. actions :delete_buffer)}}}}
