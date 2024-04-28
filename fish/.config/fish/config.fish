@@ -2,7 +2,7 @@ fish_add_path $HOME/.local/bin $HOME/.cargo/bin
 
 setenv EDITOR nvim
 setenv NVIM_GTK_NO_HEADERBAR 1
-setenv NNN_PLUG "f:finder;c:fzcd;p:preview-tui;z:autojump"
+setenv NNN_PLUG ";:fzplug;z:autojump;p:preview-tui"
 setenv NNN_OPTS "aAcCdu"
 
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
