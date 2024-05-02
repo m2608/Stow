@@ -12,11 +12,11 @@
         result))
     [["gD"        "<cmd>lua vim.lsp.buf.declaration()<CR>"]
      ["gd"        "<cmd>lua vim.lsp.buf.definition()<CR>"]
-     ["K"         "<cmd>lua vim.lsp.buf.hover()<CR>"]
      ["gi"        "<cmd>lua vim.lsp.buf.implementation()<CR>"]
      ["gr"        "<cmd>lua vim.lsp.buf.references()<CR>"]
+     ["K"         "<cmd>lua vim.lsp.buf.hover()<CR>"]
      ["[d"        "<cmd>lua vim.diagnostic.goto_prev()<CR>"]
-      ["]d"        "<cmd>lua vim.diagnostic.goto_next()<CR>"]
+     ["]d"        "<cmd>lua vim.diagnostic.goto_next()<CR>"]
      ["<space>k"  "<cmd>lua vim.lsp.buf.signature_help()<CR>"]
      ["<space>wa" "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"]
      ["<space>wr" "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"]
@@ -24,8 +24,7 @@
      ["<space>rn" "<cmd>lua vim.lsp.buf.rename()<CR>"]
      ["<space>ca" "<cmd>lua vim.lsp.buf.code_action()<CR>"]
      ["<space>e"  "<cmd>lua vim.diagnostic.open_float()<CR>"]
-     ["<space>q"  "<cmd>lua vim.diagnostic.setloclist()<CR>"]
-     ]))
+     ["<space>q"  "<cmd>lua vim.diagnostic.setloclist()<CR>"]]))
 
 (fn on-attach [client bufnr]
   "Функция будет переназначать кнопки только после подключения языкового
@@ -46,7 +45,10 @@
          servers
          {:pylsp
           {:flags {:debounce_text_changes 150}
-           :single_file_support true}
+           :single_file_support true
+           :settings {:pylsp {:plugins {:pyflakes {:enabled false}
+                                        :pycodestyle {:enabled true
+                                                      :ignore ["E126" "E127" "E128" "E502" "W503"]}}}}}
           :clojure_lsp
           {:flags {:debounce_text_changes 150}}
           :marksman
@@ -56,4 +58,6 @@
           :clangd {}}]
      (each [name config (pairs servers)]
        ((. lsp name :setup)
-        (core.merge config {:on_attach on-attach})))))}
+        (core.merge config
+                    {:on_attach on-attach})))))}
+
