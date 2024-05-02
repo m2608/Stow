@@ -19,7 +19,7 @@ set PATH \
     /sbin
 
 alias ls lsd
-alias eza "eza --group-directories-first"
+alias eza "eza --group-directories-first --no-quotes"
 alias bat "PAGER=less $HOME/.cargo/bin/bat"
 alias aumix "env LANG=C aumix"
 alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
