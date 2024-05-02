@@ -39,8 +39,12 @@
    ["v" ">" ">gv"]
    ;; если еще нет окна со списоком вариантов - Tab, если показываются варианты -
    ;; ходим по этому списку
-   ["i" "<Tab>"   "pumvisible() ? \"<C-n>\" : \"<Tab>\"" {:noremap true :silent true :expr true}]
-   ["i" "<S-Tab>" "pumvisible() ? \"<C-p>\" : \"\""      {:noremap true :silent true :expr true}]
+   ["i" "<Tab>"   "pumvisible() ? \"<Down>\" : \"<Tab>\"" {:noremap true :silent true :expr true}]
+   ["i" "<S-Tab>" "pumvisible() ? \"<Up>\"   : \"\""      {:noremap true :silent true :expr true}]
+   ;; открываем окно с вариантами дополнения по C-n/C-p, по умолчанию эти сочетания открывают
+   ;; окно с дополнением по ключевым словам - им я не пользуюсь
+   ["i" "<C-n>"   "pumvisible() ? \"<Down>\" : \"<C-x><C-o>\"" {:noremap true :silent true :expr true}]
+   ["i" "<C-p>"   "pumvisible() ? \"<Up\"    : \"<C-x><C-o>\"" {:noremap true :silent true :expr true}]
    ;; при дополнении по-умолчанию при выборе первого пункта с помощью кнопки Enter,
    ;; будет вставлен первый пункт и перевод строки, а при выборе любых других - только
    ;; вставлен пункт; чтобы сделать поведение всегда одинаковым нужно использовать
@@ -101,6 +105,7 @@
    ;; lispdocs
    ["n" "<leader>h" ":lua require('lispdocs').float({ fill = 0.8, win = { winblend = 0, cursorline = false }})<CR>"]
    ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]])
+
 
 (each [_ mapping (ipairs mappings)]
   (set-mapping (unpack mapping)))
