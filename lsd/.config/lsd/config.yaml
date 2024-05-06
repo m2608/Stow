@@ -5,3 +5,4 @@ sorting:
 date: '+%F %T'
 color:
   theme: custom
+literal: true
