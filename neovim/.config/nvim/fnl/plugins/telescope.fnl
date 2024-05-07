@@ -21,6 +21,7 @@
          {:hijack_netrw true
           :grouped true
           :respect_gitignore false
+          :follow_symlinks true
           :initial_mode "normal"
           :dir_icon " "
           :sorting_strategy "ascending"
