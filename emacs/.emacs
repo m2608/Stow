@@ -57,3 +57,5 @@
 
 ;; в календаре первый день недели - понедельник
 (setq calendar-week-start-day 1)
+
+(setq warning-minimum-level :error)
