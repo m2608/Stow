@@ -8,7 +8,7 @@ super + e
 
 # запуск dmenu
 super + p
-    dmenu_run -fn "Terminus:size=16"
+    dmenu_run -fn "Terminus:size=16" -nb '#202020' -nf '#a0a0a0' -sb '#606060' -sf '#e0e0e0'
 
 # вставить текст из буфера
 shift+Insert
