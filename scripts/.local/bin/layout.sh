@@ -13,6 +13,8 @@ bg="#432d59"
 # foreground
 fg="#00ff00"
 
+set -m
+
 sh -c '
     xkb-switch | tr a-z A-Z
     while true; do 
