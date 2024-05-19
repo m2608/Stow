@@ -61,6 +61,11 @@
    ;; дополнительные сочетания для нормального режима
    ["n" "gh" "^"]
    ["n" "gl" "$"]
+   ["n" "mm" "%"]
+   ["v" "mm" "%"]
+   ["n" "s" "<Nop>"]
+   ["n" "%" "ggVG"]
+   ["v" "%" "<Nop>"]
    ["n" "<m-x>" ":" {:noremap true :silent false}]
    ;; сочетания клавиш для режима вставки
    ["i" "<c-e>" "<c-o>$"]
@@ -102,6 +107,9 @@
    ;; OSCYank
    ["n" "<space>y" "<Plug>OSCYankOperator" {:noremap false :silent true}]
    ["v" "<space>y" "<Plug>OSCYankVisual"   {:noremap false :silent true}]
+   ;; paste from system clipboard
+   ["n" "<space>p" "\"+p"]
+   ["n" "<space>P" "\"+P"]
    ;; lispdocs
    ["n" "<leader>h" ":lua require('lispdocs').float({ fill = 0.8, win = { winblend = 0, cursorline = false }})<CR>"]
    ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]])
