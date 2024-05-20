@@ -84,7 +84,7 @@ super + Return
 
 # scratchpad терминал
 super + n
-    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad" --command "st -c scratchpad"
+    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad" --command "alacritty --class scratchpad"
 
 # показать или скрыть системный трей
 super + t
