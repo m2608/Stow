@@ -2,8 +2,8 @@ include "%L"
 
 <Multi_key> <equal> <minus>         : "✘"       U2718   # HEAVY BALLOT X
 <Multi_key> <equal> <plus>          : "✔"       U2714   # HEAVY CHECK MARK
-<Multi_key> <@> <plus>              : "➕"      U2795   # HEAVY PLUS SIGN
-<Multi_key> <@> <minus>             : "➖"      U2796   # HEAVY PLUS SIGN
+<Multi_key> <at> <plus>              : "➕"      U2795   # HEAVY PLUS SIGN
+<Multi_key> <at> <minus>             : "➖"      U2796   # HEAVY PLUS SIGN
 <Multi_key> <o> <r>                 : "🔴 "     U1F534  # RED CIRCLE
 <Multi_key> <o> <o>                 : "🟠 "     U1F7E0  # ORANGE CIRCLE
 <Multi_key> <o> <g>                 : "🟢 "     U1F7E2  # GREEN CIRCLE
