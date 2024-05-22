@@ -15,11 +15,10 @@ fg="#00ff00"
 
 set -m
 
-sh -c '
-    xkb-switch | tr a-z A-Z
-    while true; do 
-        xkb-switch --wait -p | tr a-z A-Z
-    done' | dzen2 \
-        -e "button1=exec:xkb-switch -n" \
-        -title-name "$title" \
-        -p 0 -bg "$bg" -fg "$fg" -fn "$font" -x $((sw-iw)) -w $iw -h $iw
+while true; do 
+    xkb-switch -p | tr a-z A-Z
+    xkb-switch --wait
+done | dzen2 \
+    -e "button1=exec:xkb-switch -n" \
+    -title-name "$title" \
+    -p 0 -bg "$bg" -fg "$fg" -fn "$font" -x $((sw-iw)) -w $iw -h $iw
