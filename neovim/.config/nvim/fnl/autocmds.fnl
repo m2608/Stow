@@ -26,6 +26,12 @@
   {:pattern "*.bqn"
    :command "setf bqn"})
 
+;; Настройка комментариев для hurl.
+(autocmd
+  ["BufNewFile" "BufRead"]
+  {:pattern "*.hurl"
+   :command "setlocal commentstring=#\\ %s"})
+
 ;; Маппинги символов BQN для файлов соответствующего типа.
 (autocmd
   ["FileType"]
