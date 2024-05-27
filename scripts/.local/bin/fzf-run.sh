@@ -29,7 +29,7 @@ echo "$PATH"                                               \
 | tr ':' '\0'                                              \
 | xargs -0 -I{} sh -c 'test -d "{}" && printf "%s\0" "{}"' \
 | xargs -0 -I{} fd -0 --exact-depth 1 -t x -L . "{}"       \
-| xargs -0 basename                                        \
+| xargs -0 basename -a                                     \
 | sort -u                                                  \
 | fzf --print-query --bind="tab:transform-query(echo {1})" \
 | tail -n 1                                                \
