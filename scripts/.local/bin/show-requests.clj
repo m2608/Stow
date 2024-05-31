@@ -1,5 +1,4 @@
 #!/usr/bin/env bb
-#_" -*- mode: clojure; -*-"
 ;; Based on https://github.com/babashka/babashka/blob/master/examples/image_viewer.clj
 
 (ns http-server
@@ -12,8 +11,7 @@
             [cheshire.core :as json])
   (:import [java.net URLDecoder URLEncoder]
            [java.time LocalDateTime]
-           [java.time.format DateTimeFormatter]
-           ))
+           [java.time.format DateTimeFormatter]))
 
 (def cli-options
   [["-p" "--port PORT" "Port for HTTP server" :default 8000 :parse-fn #(Integer/parseInt %)]
@@ -46,14 +44,8 @@
 
 (assert (fs/directory? dir) (str "The given dir `" dir "` is not a directory."))
 
-(def csp (str "default-src *  data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval' 'unsafe-dynamic'; "
-              "script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; "
-              "connect-src * data: blob: 'unsafe-inline'; "
-              "img-src * data: blob: 'unsafe-inline'; "
-              "frame-src * data: blob: ; "
-              "style-src * data: blob: 'unsafe-inline';"
-              "font-src * data: blob: 'unsafe-inline';"
-              "frame-ancestors * data: blob: 'unsafe-inline';"))
+(def csp (str/join " " (map #(str % " *;")
+                            ["default-src" "script-src" "img-src" "font-src" "style-src" "object-src" "media-src" "frame-src"])))
 
 (defn now
   []
@@ -70,6 +62,7 @@
                             (if request-body (str "\n" (slurp request-body) "\n") ""))
           request-json (json/generate-string
                          {:method (str/upper-case (name request-method))
+                          :uri uri
                           :remote-addr remote-addr
                           :headers headers
                           :body (if request-body (str "\n" (slurp request-body) "\n") nil)})]
