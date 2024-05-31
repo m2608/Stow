@@ -10,7 +10,7 @@ if echo "$monitors" | grep -q "HDMI-1" && echo "$monitors" | grep -q "HDMI-2"; t
     bspc wm -O HDMI-2 HDMI-1
 
     bspc monitor HDMI-2 -d 1 2 3 4 5
-    bspc monitor HDMI-1 -d 6 7 8 9 0
+    bspc monitor HDMI-1 -d 6 7 8 9 10
 else
     # Вариант с одним монитором.
     bspc monitor -d 1 2 3 4 5
