@@ -90,10 +90,10 @@
    ["n" "<space>/" ":Telescope live_grep<CR>"]
    ["n" "<space>g" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
    ["n" "<space>d" ":Telescope diagnostics<CR>"]
+   ["n" "<space>s" ":Telescope lsp_document_symbols<CR>"]
+   ["n" "<space>r" ":Telescope lsp_references<CR>"]
 
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
-   ["n" "<Leader>fs" ":Telescope lsp_document_symbols<CR>"]
-   ["n" "<Leader>fr" ":Telescope lsp_references<CR>"]
    ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
    ;; горячие клавиши для Slime
    ["x" "<Leader>s" "<Plug>SlimeRegionSend" {:noremap false :silent true}]
