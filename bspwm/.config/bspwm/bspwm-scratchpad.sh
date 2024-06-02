@@ -3,9 +3,20 @@
 # открывает маленькое окошко в центре экрана
 # подразумевается использовать скрипт для быстрого открытия терминала
 
+rect=$(bspc query -T -m $(bspc query -M | head -n 1) | jq '.rectangle')
+mon_h=$(echo "$rect" | jq .height)
+mon_w=$(echo "$rect" | jq .width)
+
 # размеры окна по умолчанию
-width=1400
-height=1000
+width=$((mon_w*9/10))
+height=$((mon_h*9/10))
+
+# ограничиваем ширину на очень широких мониторах
+max_w=$((height*3/2))
+
+if test $max_w -lt $width; then
+    width=$max_w
+fi
 
 while test $# -gt 0; do
     case "$1" in
