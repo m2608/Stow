@@ -9,6 +9,8 @@ setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
 bind \cz "jobs > /dev/null && fg"
 
+alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
+alias nnn "LANG=ru_RU.UTF-8 PAGER='nvimpager -p' "(which nnn)
 alias oil "nvim -c 'Oil'"
 
 set host_config (status dirname)"$fold_config/config.fish#"(hostname | sed 's/\..*//')
