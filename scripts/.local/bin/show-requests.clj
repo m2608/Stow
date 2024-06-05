@@ -1,16 +1,14 @@
 #!/usr/bin/env bb
 ;; Based on https://github.com/babashka/babashka/blob/master/examples/image_viewer.clj
 
-(ns http-server
+(ns show-requests
   (:require [babashka.fs :as fs]
-            [clojure.java.browse :as browse]
+            [babashka.process :refer [process]]
             [clojure.string :as str]
             [clojure.tools.cli :refer [parse-opts]]
             [org.httpkit.server :as server]
-            [hiccup2.core :as html]
             [cheshire.core :as json])
-  (:import [java.net URLDecoder URLEncoder]
-           [java.time LocalDateTime]
+  (:import [java.time LocalDateTime]
            [java.time.format DateTimeFormatter]))
 
 (def cli-options
@@ -52,27 +50,49 @@
   (let [date (LocalDateTime/now)]
     (.format date (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss"))))
 
+(defn text-to-image [text]
+  @(process
+    {:in text :out :bytes}
+    "convert"
+    "-background" "black"
+    "-fill" "#03A062"
+    "-font" "White-Rabbit"
+    "-pointsize" "24"
+    "text:-"
+    "-trim"
+    "+repage"
+    "-bordercolor" "black"
+    "-border" "10x10"
+    "PNG:-"))
+
 (server/run-server
   (fn [{:keys [uri remote-addr request-method headers]
         request-body :body
         :or {request-body nil}}]
     (let [origin (-> (filter (fn [h] (= (first h) "origin")) headers) first second)
-          request-text (str "--> " (now) " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri "\n"
+          now (now)
+          request-text (str "--> " now " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri "\n"
                             (str/join "\n" (map (fn [h] (str (first h) ": " (second h))) headers)) "\n"
                             (if request-body (str "\n" (slurp request-body) "\n") ""))
           request-json (json/generate-string
-                         {:method (str/upper-case (name request-method))
+                         {:time now
+                          :method (str/upper-case (name request-method))
                           :uri uri
                           :remote-addr remote-addr
                           :headers headers
-                          :body (if request-body (str "\n" (slurp request-body) "\n") nil)})]
+                          :body (if request-body (str "\n" (slurp request-body) "\n") nil)}
+                         {:pretty true})]
       (println request-text)
-      {:headers {"Content-Type" "application/json"
-                 "Content-Security-Policy" csp
-                 ;"Access-Control-Allow-Origin" (or origin "*")
-                 ;"Access-Control-Allow-Methods" "POST, GET"}
-                 }
-       :body request-json}))
+      (cond
+        (str/starts-with? uri "/!png/")
+        {:headers {"Content-Type" "image/png"
+                   "Content-Security-Policty" csp}
+         :body (-> (text-to-image request-json) :out)}
+
+        :else
+        {:headers {"Content-Type" "application/json"
+                   "Content-Security-Policy" csp}
+         :body request-json})))
   {:port port :ip bind})
 
 (println "Starting http server at" (str bind ":" port))
