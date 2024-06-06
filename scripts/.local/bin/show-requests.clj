@@ -95,7 +95,7 @@
                    "Content-Security-Policty" csp}
          :body (html [:html
                       [:head [:title (str "Request from " remote-addr)]]
-                      [:body [:code request-json]]])}
+                      [:body [:pre request-json]]])}
 
         :else
         {:headers {"Content-Type" "application/json"
