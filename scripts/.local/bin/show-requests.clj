@@ -7,7 +7,8 @@
             [clojure.string :as str]
             [clojure.tools.cli :refer [parse-opts]]
             [org.httpkit.server :as server]
-            [cheshire.core :as json])
+            [cheshire.core :as json]
+            [hiccup.core :refer [html]])
   (:import [java.time LocalDateTime]
            [java.time.format DateTimeFormatter]))
 
@@ -88,6 +89,13 @@
         {:headers {"Content-Type" "image/png"
                    "Content-Security-Policty" csp}
          :body (-> (text-to-image request-json) :out)}
+
+        (str/starts-with? uri "/!html/")
+        {:headers {"Content-Type" "text/html"
+                   "Content-Security-Policty" csp}
+         :body (html [:html
+                      [:head [:title (str "Request from " remote-addr)]]
+                      [:body [:code request-json]]])}
 
         :else
         {:headers {"Content-Type" "application/json"
