@@ -1,6 +1,6 @@
 # запуск терминала
 super + Escape
-    alacritty
+    st
 
 # запуск редактора
 super + e
