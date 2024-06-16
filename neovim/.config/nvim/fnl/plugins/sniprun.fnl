@@ -12,4 +12,8 @@
                   :chez
                   {:supported_filetypes "scheme"
                    :extension "*.scm"
-                   :interpreter "chez-scheme -q"}}}})))}
+                   :interpreter "chez-scheme -q"}}}
+                :snipruncolors {:SniprunVirtualTextOk {}
+                                :SniprunFloatingWinOk {}
+                                :SniprunVirtualTextErr {}
+                                :SniprunFloatingWinErr {}}})))}
