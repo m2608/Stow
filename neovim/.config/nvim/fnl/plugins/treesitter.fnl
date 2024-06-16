@@ -20,7 +20,7 @@
    (let [ts-install (require "nvim-treesitter.install")
          ts-configs (require "nvim-treesitter.configs")]
      (tset ts-install :compilers ["clang"])
-     ((. ts-configs "setup")
+     (ts-configs.setup
       {:ensure_installed
        ["c"
         "clojure"
@@ -47,7 +47,9 @@
         "sql"
         "toml"
         "typescript"
+        "vimdoc"
         "vue"]
        :highlight {:enable true
                    :additional_vim_regex_highlighting ["markdown"]}
-       :indent {:enable true}})))}
+       :indent {:enable true}
+       :playground {:enabled true}})))}
