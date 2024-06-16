@@ -43,6 +43,7 @@
         "markdown"
         "markdown_inline"
         "python"
+        "query"
         "scheme"
         "sql"
         "toml"
