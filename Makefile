@@ -1,8 +1,9 @@
-NVIM := "$(HOME)/.local/bin/nvim"
-HELIX := "$(HOME)/.local/bin/hx"
+NVIM     := "$(HOME)/.local/bin/nvim"
+HELIX    := "$(HOME)/.local/bin/hx"
 BABASHKA := "$(HOME)/.local/bin/bb"
-CQ := "$(HOME)/.local/bin/cq"
-JET := "$(HOME)/.local/bin/jet"
+CQ       := "$(HOME)/.local/bin/cq"
+JET      := "$(HOME)/.local/bin/jet"
+MARKSMAN := "$(HOME)/.local/bin/marksman"
 
 define get-from-github
 	xh "https://api.github.com/repos/$(1)/releases" \
@@ -40,6 +41,12 @@ install-jet:
 	$(call get-from-github,borkdude/jet,"^jet-[0-9.]+-linux-amd64.tar.gz$$") \
 		| tar --gz --to-stdout -xf - > $(JET);
 	chmod +x $(JET)
+
+install-marksman:
+	$(call get-from-github,artempyanykh/marksman,"^marksman-linux-x64$$") \
+		| tar --gz --to-stdout -xf - > $(MARKSMAN);
+	chmod +x $(MARKSMAN)
+ 
 
 all: symlinks
 
