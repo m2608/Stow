@@ -22,35 +22,14 @@
      (tset ts-install :compilers ["clang"])
      (ts-configs.setup
       {:ensure_installed
-       ["c"
-        "clojure"
-        "comment"
-        "commonlisp"
-        "cpp"
-        "css"
-        "diff"
-        "dockerfile"
-        "dot"
-        "fennel"
-        "fish"
-        "html"
-        "ini"
-        "javascript"
-        "jq"
-        "json"
-        "lua"
-        "make"
-        "markdown"
-        "markdown_inline"
-        "python"
-        "query"
-        "scheme"
-        "sql"
-        "toml"
-        "typescript"
-        "vimdoc"
-        "vue"]
+       ["c" "clojure" "comment" "commonlisp" "cpp" "css" "diff" "dockerfile" "dot" "fennel" "fish" "html" "ini" "javascript" "jq" "json" "lua" "make" "markdown" "markdown_inline" "python" "query" "scheme" "sql" "toml" "typescript" "vimdoc" "vue"]
        :highlight {:enable true
                    :additional_vim_regex_highlighting ["markdown"]}
        :indent {:enable true}
-       :playground {:enabled true}})))}
+       :playground {:enabled true}
+       :textobjects
+       {:select
+        {:enable true
+         :keymaps
+         {"af" "@function.outer"
+          "if" "@function.inner"}}}})))}
