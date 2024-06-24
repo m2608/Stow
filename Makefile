@@ -1,9 +1,11 @@
-NVIM     := "$(HOME)/.local/bin/nvim"
-HELIX    := "$(HOME)/.local/bin/hx"
-BABASHKA := "$(HOME)/.local/bin/bb"
-CQ       := "$(HOME)/.local/bin/cq"
-JET      := "$(HOME)/.local/bin/jet"
-MARKSMAN := "$(HOME)/.local/bin/marksman"
+NVIM        := "$(HOME)/.local/bin/nvim"
+HELIX       := "$(HOME)/.local/bin/hx"
+BABASHKA    := "$(HOME)/.local/bin/bb"
+CQ          := "$(HOME)/.local/bin/cq"
+JET         := "$(HOME)/.local/bin/jet"
+MARKSMAN    := "$(HOME)/.local/bin/marksman"
+CLOJURE_LSP := "$(HOME)/.local/bin/clojure-lsp"
+CLJ_KONDO   := "$(HOME)/.local/bin/clj-kondo"
 
 define get-from-github
 	xh "https://api.github.com/repos/$(1)/releases" \
@@ -46,7 +48,16 @@ install-marksman:
 	$(call get-from-github,artempyanykh/marksman,"^marksman-linux-x64$$") \
 		| tar --gz --to-stdout -xf - > $(MARKSMAN);
 	chmod +x $(MARKSMAN)
- 
+
+install-clojure-lsp:
+	$(call get-from-github,clojure-lsp/clojure-lsp,"^clojure-lsp-native-linux-amd64.zip$$") \
+		| bsdtar -xO - > $(CLOJURE_LSP);
+	chmod +x $(CLOJURE_LSP)
+
+install-clj-kondo:
+	$(call get-from-github,clj-kondo/clj-kondo,"^clj-kondo-[0-9.]+-linux-amd64.zip$$") \
+		| bsdtar -xO - > $(CLJ_KONDO);
+	chmod +x $(CLJ_KONDO)
 
 all: symlinks
 
