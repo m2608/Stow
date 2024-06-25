@@ -6,6 +6,8 @@ JET         := "$(HOME)/.local/bin/jet"
 MARKSMAN    := "$(HOME)/.local/bin/marksman"
 CLOJURE_LSP := "$(HOME)/.local/bin/clojure-lsp"
 CLJ_KONDO   := "$(HOME)/.local/bin/clj-kondo"
+CLJFMT      := "$(HOME)/.local/bin/cljfmt"
+CLJFMT_JAR  := "$(HOME)/.local/opt/cljfmt/cljfmt.jar"
 
 define get-from-github
 	xh "https://api.github.com/repos/$(1)/releases" \
@@ -58,6 +60,13 @@ install-clj-kondo:
 	$(call get-from-github,clj-kondo/clj-kondo,"^clj-kondo-[0-9.]+-linux-amd64.zip$$") \
 		| bsdtar -xO - > $(CLJ_KONDO);
 	chmod +x $(CLJ_KONDO)
+
+install-cljfmt:
+	mkdir -p `dirname $(CLJFMT_JAR)`;
+	$(call get-from-github,weavejester/cljfmt,"^cljfmt-[0-9.]+-standalone.jar$$") \
+		> $(CLJFMT_JAR);
+	printf "#!/bin/sh\n\njava -jar $(CLJFMT_JAR) $$\@\n" > $(CLJFMT); 
+	chmod +x $(CLJFMT)
 
 all: symlinks
 
