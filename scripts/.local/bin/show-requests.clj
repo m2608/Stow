@@ -67,12 +67,17 @@
     "PNG:-"))
 
 (server/run-server
-  (fn [{:keys [uri remote-addr request-method headers]
+  (fn [{:keys [uri remote-addr request-method headers query-string]
         request-body :body
         :or {request-body nil}}]
     (let [origin (-> (filter (fn [h] (= (first h) "origin")) headers) first second)
           now (now)
-          request-text (str "--> " now " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri "\n"
+          query-params (when query-string
+                         (->> (str/split query-string #"[&]")
+                              (map #(str/split % #"[=]" 2))
+                              (into {})))
+          request-text (str "--> " now " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri
+                            (if query-string (str "?" query-string) "") "\n"
                             (str/join "\n" (map (fn [h] (str (first h) ": " (second h))) headers)) "\n"
                             (if request-body (str "\n" (slurp request-body) "\n") ""))
           request-json (json/generate-string
@@ -81,6 +86,8 @@
                           :uri uri
                           :remote-addr remote-addr
                           :headers headers
+                          :query-string query-string
+                          :query-params query-params
                           :body (if request-body (str "\n" (slurp request-body) "\n") nil)}
                          {:pretty true})]
       (println request-text)
