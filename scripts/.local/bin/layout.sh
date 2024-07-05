@@ -3,7 +3,11 @@
 # window title
 title="layout"
 # screen width
-sw=$(xwininfo -root | grep Width | cut -d ':' -f 2)
+# sw=$(xwininfo -root | grep Width | cut -d ':' -f 2)
+# width of the leftmost monitor
+sw=$(bspc query -M \
+    | parallel -k -n 1 bspc query -T -m {} \
+    | jq --slurp 'sort_by(.rectangle | .x) | .[0] .rectangle .width')
 # icon width
 iw=28
 # font
