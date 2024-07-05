@@ -20,4 +20,8 @@ bspc config automatic_scheme        alternate
 bspc config focus_follows_pointer   true
 bspc config pointer_follows_monitor true
 
+bspc config ignore_ewmh_focus       true
+
+bspc rule -a firefox focus=off follow=off
+
 exec "$HOME/.config/bspwm/bspwmrc#$hostname"
