@@ -17,11 +17,22 @@ fg="#00ff00"
 # time output format
 format="%H:%M:%S"
 
+# current OS
+uname=$(uname)
+
 # message
 message="Time is up!"
 
+get_time() {
+    if test "$uname" = "FreeBSD"; then
+        date -u -j -f "%s" $1 +"$format"
+    else
+        date -u --date="@$1" +"$format"
+    fi
+}
+
 mh=32
-mw1=$(xftwidth "$font" $(date -u -j -f "%s" 0 +"$format"))
+mw1=$(xftwidth "$font" $(get_time 0))
 mw2=$(xftwidth "$font" "$message")
 mx=0
 my=0
@@ -44,7 +55,7 @@ while true; do
     # redraw screen only if time changed
     if test $prev_time -ne $time; then
         prev_time=$time
-        date -u -j -f "%s" "$time" +"$format"
+        get_time $time
     fi
 
     if test $timestamp -ge $timefinish; then
@@ -56,4 +67,11 @@ while true; do
 done | dzen2 -bg "$bg" -fg "$fg" -fn "$font" -w $mw1 -h $mh -x $mx -y $my
 
 echo "$message" | dzen2 -p 5 -bg "$bg" -fg "$fg" -fn "$font" -w $mw2 -h $mh -x $mx -y $my &
-mpv "$alarm"
+
+if which "notify-send"; then
+    notify-send "$message"
+fi
+
+if test -f "$alarm"; then
+    mpv "$alarm"
+fi
