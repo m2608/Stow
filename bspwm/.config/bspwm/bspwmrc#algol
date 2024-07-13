@@ -33,5 +33,8 @@ sysctl hw.snd.default_unit=1
 # Индикатор языка.
 pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
 
+# Управление мышью с клавиатуры.
+keynav
+
 # Запускаем службы, если они еще не запущены.
 pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
