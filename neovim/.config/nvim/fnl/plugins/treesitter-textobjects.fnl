@@ -1,1 +1,3 @@
-{1 "nvim-treesitter/nvim-treesitter-textobjects"}
+{1 "nvim-treesitter/nvim-treesitter-textobjects"
+ :lazy true
+ :dependencies ["nvim-treesitter/nvim-treesitter"]}
