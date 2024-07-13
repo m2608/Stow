@@ -1,2 +1,2 @@
 \set PAGER pspg
-\set SYNTAX_HL_FORMAT terminal
+\set SYNTAX_HL false
