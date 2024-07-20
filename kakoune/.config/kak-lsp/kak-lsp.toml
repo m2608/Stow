@@ -1,0 +1,71 @@
+file_watch_support = false
+snippet_support = true
+verbosity = 2
+
+[server]
+# exit session if no requests were received during given period in seconds
+# set to 0 to disable
+timeout = 1800 # seconds = 30 minutes
+
+[language_server.clojure-lsp]
+filetypes = ["clojure"]
+roots = ["project.clj", ".git"]
+command = "clojure-lsp"
+settings_section = "_"
+[language_server.clojure-lsp.settings._]
+# See https://clojure-lsp.io/settings/#all-settings
+# source-paths-ignore-regex = ["resources.*", "target.*"]
+
+[language_server.markdown]
+filetypes = ["markdown"]
+roots = [".marksman.toml", ".git"]
+command = "marksman"
+args = ["server"]
+
+[language_server.pylsp]
+filetypes = ["python"]
+roots = ["requirements.txt", "setup.py", ".git"]
+command = "pylsp"
+settings_section = "_"
+[language_server.pylsp.settings._]
+# See https://github.com/python-lsp/python-lsp-server#configuration
+# pylsp.configurationSources = ["flake8"]
+pylsp.plugins.jedi_completion.include_params = true
+
+# [language_server.pyright]
+# filetypes = ["python"]
+# roots = ["requirements.txt", "setup.py", "pyrightconfig.json", ".git", ".hg"]
+# command = "pyright-langserver"
+# args = ["--stdio"]
+
+# [language_server.ruff]
+# filetypes = ["python"]
+# roots = ["requirements.txt", "setup.py", ".git", ".hg"]
+# command = "ruff-lsp"
+# settings_section = "_"
+# [language_server.ruff.settings._.globalSettings]
+# organizeImports = true
+# fixAll = true
+
+# Semantic tokens support
+# See https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_semanticTokens
+# for the default list of tokens and modifiers.
+# However, many language servers implement their own values.
+# Make sure to check the output of `lsp-capabilities` and each server's documentation and source code as well.
+# Examples:
+# - TypeScript: https://github.com/microsoft/vscode-languageserver-node/blob/main/client/src/common/semanticTokens.ts
+# - Rust Analyzer: https://github.com/rust-analyzer/rust-analyzer/blob/master/crates/ide/src/syntax_highlighting.rs
+[semantic_tokens]
+faces = [
+    {face="documentation", token="comment", modifiers=["documentation"]},
+    {face="comment", token="comment"},
+    {face="function", token="function"},
+    {face="keyword", token="keyword"},
+    {face="module", token="namespace"},
+    {face="operator", token="operator"},
+    {face="string", token="string"},
+    {face="type", token="type"},
+    {face="default+d", token="variable", modifiers=["readonly"]},
+    {face="default+d", token="variable", modifiers=["constant"]},
+    {face="variable", token="variable"},
+]
