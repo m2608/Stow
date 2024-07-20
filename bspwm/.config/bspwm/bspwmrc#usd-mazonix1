@@ -5,7 +5,7 @@ monitors=$(xrandr --query | grep "[ ]connected[ ]" | cut -d " " -f 1)
 
 if echo "$monitors" | grep -q "HDMI-1" && echo "$monitors" | grep -q "HDMI-2"; then
     # Вариант с двумя мониторами.
-    xrandr --output HDMI-2 --left-of HDMI-1 &
+    xrandr --output HDMI-2 --right-of HDMI-1 &
 
     bspc wm -O HDMI-2 HDMI-1
 
