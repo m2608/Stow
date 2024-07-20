@@ -24,6 +24,8 @@
    ["n" "<F8>" ":<c-u>TagbarToggle<CR>"]
    ;; вызов файлового браузера в каталоге с текущим файлом
    ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
+   ;; включить режим без лишних панелей
+   ["n" "<F11>" ":ZenMode<CR>"]
    ;; забой убирает подсветку найденных фраз
    ["n" "<BS>" ":nohlsearch<CR>"]
    ;; комбинация выключает предупреждения линтера
@@ -91,6 +93,7 @@
    ["n" "<space>d" ":Telescope diagnostics<CR>"]
    ["n" "<space>s" ":Telescope lsp_document_symbols<CR>"]
    ["n" "<space>r" ":Telescope lsp_references<CR>"]
+   ["n" "<space>j" ":Telescope jumplist<CR>"]
 
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
    ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
