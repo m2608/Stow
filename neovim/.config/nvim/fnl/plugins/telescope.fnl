@@ -8,7 +8,7 @@
          fb-actions (require "telescope._extensions.file_browser.actions")]
      (setup
        {:defaults
-        {:preview {:check_mime_type false}
+        {:preview {:check_mime_type true}
          :file_ignore_patterns {}
          :mappings {:i {"<C-y>" (. (require "telescope.actions.layout") :toggle_preview)}
                     :n {"<C-y>" (. (require "telescope.actions.layout") :toggle_preview)}}}
@@ -22,6 +22,8 @@
           :grouped true
           :respect_gitignore false
           :follow_symlinks true
+          :preview {:hide_on_startup true
+                    :check_mime_type false}
           :initial_mode "normal"
           :dir_icon " "
           :sorting_strategy "ascending"
