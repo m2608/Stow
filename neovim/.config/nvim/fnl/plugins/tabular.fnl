@@ -1,1 +1,3 @@
-"godlygeek/tabular"
+{1 "godlygeek/tabular"
+ :lazy true
+ :cmd ["Tabularize"]}

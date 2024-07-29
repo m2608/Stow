@@ -10,8 +10,10 @@
     (if exists filename nil)))
 
 {1 "preservim/tagbar"
+ :lazy true
  :config
  (fn []
    (core.assoc nvim.g "tagbar_ctags_bin"
                (or (file-exists? "/usr/local/bin/uctags")
-                   (file-exists? "/usr/bin/ctags"))))}
+                   (file-exists? "/usr/bin/ctags"))))
+ :cmd ["TagbarToggle"]}

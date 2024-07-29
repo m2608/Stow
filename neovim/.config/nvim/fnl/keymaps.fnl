@@ -19,13 +19,15 @@
 
 (local mappings 
   [;; сохранить файл
-   ["n" "<F2>" ":<c-u>update<CR>"]
+   ["n" "<F2>" ":<C-u>update<CR>"]
+   ["i" "<F2>" "<C-o>:update<CR>"]
    ;; вызов окна для навигации по коду (плагин tagbar)
-   ["n" "<F8>" ":<c-u>TagbarToggle<CR>"]
+   ["n" "<F8>" ":<C-u>TagbarToggle<CR>"]
    ;; вызов файлового браузера в каталоге с текущим файлом
    ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
    ;; включить режим без лишних панелей
    ["n" "<F11>" ":ZenMode<CR>"]
+   ["n" "<F11>" "<C-o>:ZenMode<CR>"]
    ;; забой убирает подсветку найденных фраз
    ["n" "<BS>" ":nohlsearch<CR>"]
    ;; комбинация выключает предупреждения линтера
@@ -103,8 +105,8 @@
    ;; выход из режима вставки в терминале по Esc
    ["t" "<Esc>" "<C-\\><C-n>"]
    ;; OSCYank
-   ["n" "<space>y" "<Plug>OSCYankOperator" {:noremap false :silent true}]
-   ["v" "<space>y" "<Plug>OSCYankVisual"   {:noremap false :silent true}]
+   ["n" "<space>y" ":OSCYankOperator<CR>" {:noremap false :silent true}]
+   ["v" "<space>y" ":OSCYankVisual<CR>"   {:noremap false :silent true}]
    ;; paste from system clipboard
    ["n" "<space>p" "\"+p"]
    ["n" "<space>P" "\"+P"]
