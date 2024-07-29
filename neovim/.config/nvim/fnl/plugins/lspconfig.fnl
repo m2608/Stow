@@ -46,7 +46,7 @@
          {:pylsp
           {:flags {:debounce_text_changes 150}
            :single_file_support true
-           :settings {:pylsp {:plugins {:pyflakes {:enabled false}
+           :settings {:pylsp {:plugins {:pyflakes {:enabled true}
                                         :pycodestyle {:enabled true
                                                       :ignore ["E126" "E127" "E128" "E502" "W503"]}}}}}
           :clojure_lsp
