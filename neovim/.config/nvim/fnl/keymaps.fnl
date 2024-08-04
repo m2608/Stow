@@ -25,6 +25,8 @@
    ["n" "<F8>" ":<C-u>TagbarToggle<CR>"]
    ;; вызов файлового браузера в каталоге с текущим файлом
    ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
+   ;; терминал
+   ["n" "<F10>" ":ToggleTerm<CR>"]
    ;; включить режим без лишних панелей
    ["n" "<F11>" ":ZenMode<CR>"]
    ["n" "<F11>" "<C-o>:ZenMode<CR>"]
