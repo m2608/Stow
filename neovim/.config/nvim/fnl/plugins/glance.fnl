@@ -1,2 +1,4 @@
 {1 "dnlhc/glance.nvim"
- :config true}
+ :lazy true
+ :config true
+ :cmd "Glance"}
