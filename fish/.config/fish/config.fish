@@ -4,6 +4,7 @@ setenv EDITOR nvim
 setenv NVIM_GTK_NO_HEADERBAR 1
 setenv NNN_PLUG ";:fzplug;z:autojump;p:preview-tui;t:preview-tabbed"
 setenv NNN_OPTS "aAcdu"
+setenv NNN_FIFO "/tmp/nnn.fifo"
 
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
