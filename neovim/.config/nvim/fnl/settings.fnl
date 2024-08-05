@@ -1,6 +1,7 @@
 (module settings
   {autoload
     {core :aniseed.core
+     str :aniseed.string
      nvim :aniseed.nvim}})
 
 (fn file-exists? [filename]
@@ -10,6 +11,27 @@
     (when exists
       (io.close file))
     exists))
+
+(fn get-resource [name]
+  "Получает значение параметра Xresources."
+  (let [h (io.popen (.. "xrdb -get " name))]
+    (when h
+      (let [value (h:read "*a")]
+        (h:close)
+        value))))
+
+(fn get-resource-color-components [name]
+  "Получает компоненты цвета, заданного в параметре Xresources."
+  (let [value (get-resource name)]
+    (when value
+      (core.map (fn [x] (tonumber x 16))
+                (str.split (core.first (str.split (core.second (str.split value ":"))
+                                                  "\n"))
+                           "/")))))
+
+(fn sum [numbers]
+  "Суммирует числа."
+  (core.reduce (fn [a b] (+ a b)) 0 numbers))
 
 (let [;; маппинги для использования команд, если включена русская системная раскладка
       lang-mappings ["ё`" "йq" "цw" "уe" "кr" "еt" "нy" "гu" "шi" "щo" "зp" "х[" "ъ]" "фa" "ыs" "вd"
@@ -101,6 +123,7 @@
   (each [_ cmd (ipairs commands)]
     (nvim.command cmd)))
 
+
 (if
   (= (os.getenv "COOL_RETRO_TERM") "1")
   ;; Для Cool Retro Term выбираем какую-нибудь простую схему и устанавливаем
@@ -116,7 +139,16 @@
   (vim.cmd.colorscheme "nano-theme")
 
   ;; Настройка цветовой схемы в соответствие со схемой терминала.
-  (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
+  ;; Определяем цвета терминала из Xresources. В зависимости от значений
+  ;; фона и основного цвета устанавливаем тёмную или светлую цветовую тему.
+  (let [fg (sum (get-resource-color-components "st.foreground"))
+        bg (sum (get-resource-color-components "st.background"))
+        colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
+
+    (if (< bg fg)
+      (core.assoc nvim.o :background "dark")
+      (core.assoc nvim.o :background "light"))
+
     (when (file-exists? colorscheme-filename)
       ; (core.assoc nvim.g :base16colorspace 256)
       (nvim.command (.. "source" colorscheme-filename)))))
