@@ -36,7 +36,3 @@ set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "c
 zoxide init fish | source
 
 source $HOME/.config/grc/grc.fish
-
-if test -n "$base16_theme" && status --is-interactive
-  base16-$base16_theme
-end

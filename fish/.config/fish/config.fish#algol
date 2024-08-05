@@ -30,7 +30,3 @@ alias hiew 'wineconsole $HOME/.local/opt/hiew/hiew32.exe'
 zoxide init fish | source
 
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
-
-if test -n "$base16_theme" && status --is-interactive
-  base16-$base16_theme
-end
