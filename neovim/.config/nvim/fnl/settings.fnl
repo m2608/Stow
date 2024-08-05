@@ -20,7 +20,9 @@
       ;; Последовательность задания опций может быть важна, так что используем массив, а не хешмэп, при обходе
       ;; которого последовательность не гарантируется. Например, если установить опцию "iminsert" перед "keymap",
       ;; при установке "keymap", значение "iminsert" будет переопределено.
-      options [;; размер табуляции - 4 пробела
+      options [;; поддержка true color
+               [:termguicolors true]
+               ;; размер табуляции - 4 пробела
                [:tabstop 4]
                ;; заменять табуляции пробелами для всех файлов, кроме Makefile
                [:expandtab true]
@@ -58,18 +60,21 @@
                [:smartcase true]
                ;; отключаем перенос длинных строк
                [:wrap false]
-               ;; включаем сворачивание кода
-               [:foldenable true]
+               ;; выключаем сворачивание кода
+               [:foldenable false]
                ;; показывать только меню при автодополнении (не показывать окно предпросмотра)
                [:completeopt "menu"]
                ;; команда :find будет искать файлы также и в подкаталогах
                [:path (.. (core.get nvim.o "path") "**")]
                ;; шрифт для графического режима
-               [:guifont "Iosevka:h14"]]]
+               [:guifont "Iosevka Term:h16"]]]
   (each [_ option (ipairs options)]
     (let [name (. option 1)
           value (. option 2)]
       (core.assoc nvim.o name value))))
+
+;; для отрытия каталогов в telescope file browser
+(core.assoc nvim.g :loaded_netrw 1)
 
 (let [commands
       [;; заменять табуляции пробелами для всех файлов, кроме Makefile
@@ -113,8 +118,9 @@
   ;; Настройка цветовой схемы в соответствие со схемой терминала.
   (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
     (when (file-exists? colorscheme-filename)
-      (core.assoc nvim.g :base16colorspace 256)
-      (nvim.command (.. "source" colorscheme-filename)))))
+      ; (core.assoc nvim.g :base16colorspace 256)
+      (nvim.command (.. "source" colorscheme-filename))
+      (vim.cmd.colorscheme "nano-theme"))))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,
