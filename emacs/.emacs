@@ -77,6 +77,10 @@
    (define-key telega-root-mode-map "k" 'previous-line)
    ))
 
+(setq telega-proxies
+      (list
+        '(:server "127.0.0.1" :port 5555 :enable t :type (:@type "proxyTypeSocks5"))))
+
 (evil-set-initial-state 'telega-root-mode 'emacs)
 (evil-set-initial-state 'telega-chat-mode 'emacs)
 (evil-set-initial-state 'vterm-mode 'emacs)
