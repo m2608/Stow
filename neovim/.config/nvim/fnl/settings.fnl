@@ -119,8 +119,8 @@
   (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
     (when (file-exists? colorscheme-filename)
       ; (core.assoc nvim.g :base16colorspace 256)
-      (nvim.command (.. "source" colorscheme-filename))
-      (vim.cmd.colorscheme "nano-theme"))))
+      (nvim.command (.. "source" colorscheme-filename)))))
+
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,
