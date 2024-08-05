@@ -6,6 +6,7 @@
    (let [chatgpt (require "chatgpt")
          openai-proxy    (os.getenv "OPENAI_PROXY")
          openai-key-path (os.getenv "OPENAI_KEY_PATH")
+         openai-key-cmd  (os.getenv "OPENAI_KEY_COMMAND")
          openai-model    (os.getenv "OPENAI_MODEL")]
      (chatgpt.setup
        (core.merge
@@ -19,7 +20,9 @@
        (when openai-proxy
          {:extra_curl_params ["-x" openai-proxy]})
        (when openai-key-path
-         {:api_key_cmd (.. "gpg --quiet --batch --decrypt " openai-key-path)})))))
+         {:api_key_cmd (.. "gpg --quiet --batch --decrypt " openai-key-path)})
+       (when openai-key-cmd
+         {:api_key_cmd openai-key-cmd})))))
  :dependencies ["MunifTanjim/nui.nvim"
                 "nvim-lua/plenary.nvim"
                 "folke/trouble.nvim"
