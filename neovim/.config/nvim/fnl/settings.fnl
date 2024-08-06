@@ -14,9 +14,13 @@
 
 (fn get-resource [name]
   "Получает значение параметра Xresources."
-  (let [h (io.popen (.. "xrdb -get " name))]
+  ;; Старые версии xrdb не поддерживают получение значения параметра по его имени:
+  ;; `xrdb -get st.foreground`. Поэтому приходится сначала получать весь список с
+  ;; помощью `xrdb -query`.
+  (let [n (string.gsub name "[.]" "[.]")
+        h (io.popen (.. "xrdb -query | sed -r -n '/^" n ":/ s/^" n ":[\\s\\t]*// p'"))]
     (when h
-      (let [value (h:read "*a")]
+      (let [value (str.trim (h:read "*a"))]
         (h:close)
         value))))
 
