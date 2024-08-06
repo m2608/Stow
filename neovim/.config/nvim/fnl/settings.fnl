@@ -17,12 +17,15 @@
   ;; Старые версии xrdb не поддерживают получение значения параметра по его имени:
   ;; `xrdb -get st.foreground`. Поэтому приходится сначала получать весь список с
   ;; помощью `xrdb -query`.
-  (let [n (string.gsub name "[.]" "[.]")
-        h (io.popen (.. "xrdb -query | sed -r -n '/^" n ":/ s/^" n ":[\\s\\t]*// p'"))]
+  (let [h (io.popen "xrdb -query")]
     (when h
-      (let [value (str.trim (h:read "*a"))]
+      (let [data (h:read "*a")]
         (h:close)
-        value))))
+        (->> (str.split data "\n")
+             (core.map (fn [line] (str.split line "\t")))
+             (core.filter (fn [[n _]] (= n (.. name ":"))))
+             core.first
+             core.second)))))
 
 (fn get-resource-color-components [name]
   "Получает компоненты цвета, заданного в параметре Xresources."
