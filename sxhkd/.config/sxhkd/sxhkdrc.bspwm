@@ -78,18 +78,3 @@ super + {Left,Down,Up,Right}
 super + Return
 	bspc node -s biggest.local
 
-#
-# other
-#
-
-# scratchpad терминал
-super + n
-    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad" --command "st -c scratchpad"
-
-# показать или скрыть системный трей
-super + t
-    exec $HOME/.config/bspwm/bspwm-showhide.sh "stalonetray"
-
-# вебка
-super + w
-    exec $HOME/.config/bspwm/bspwm-webcam.sh

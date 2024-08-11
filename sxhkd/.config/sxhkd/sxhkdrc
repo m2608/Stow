@@ -2,13 +2,25 @@
 super + Escape
     st
 
-# запуск редактора
-super + e
-    st -e fish -i -c nvim
-
 # запуск dmenu
 super + p
     dmenu_run -fn "Terminus:size=16" -nb '#202020' -nf '#a0a0a0' -sb '#606060' -sf '#e0e0e0'
+
+# scratchpad терминал
+super + n
+    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-term"   --command "st -c scratchpad-term"
+
+# aichat
+super + a
+    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-aichat" --command "st -c scratchpad-aichat -e fish -i -c aichat"
+
+# показать или скрыть системный трей
+super + t
+    exec $HOME/.config/bspwm/bspwm-showhide.sh "stalonetray"
+
+# вебка
+super + w
+    exec $HOME/.config/bspwm/bspwm-webcam.sh
 
 # вставить текст из буфера
 shift + Insert
