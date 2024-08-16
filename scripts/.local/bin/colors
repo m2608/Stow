@@ -1,0 +1,10 @@
+#!/bin/sh
+
+for y in $(seq 0 15); do
+    for x in $(seq 0 15); do
+        n=$((x*16+y))
+        printf "%02x\033[48;5;$n""m   \033[000m" $n
+    done
+    printf "\n"
+done
+
