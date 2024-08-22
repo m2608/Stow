@@ -1,0 +1,49 @@
+#!/usr/bin/env bb
+
+(require '[babashka.process :refer [shell exec process]]
+         '[babashka.fs :as fs]
+         '[clojure.edn :refer [read-string]]
+         '[clojure.string :as str])
+
+;; Переменные, которые используются для подстановки.
+(def ^:dynamic filename nil)
+
+;; Путь к файлу с настройками.
+(def associations-file (str (System/getenv "HOME") "/.config/associations.edn"))
+
+(defn gui?
+  "Функция для определения, запускается приложение из консоли или нет."
+  []
+  (nil? (System/console)))
+
+(defn mime
+  "Функция для определения mime типа."
+  [name]
+  (when (fs/exists? name)
+    (-> (shell {:out :string} "mimetype" "--brief" "--dereference" name)
+        :out
+        str/trim-newline)))
+
+(defn association-matches
+  "Проверяет, подходит ли ассоциация под mime тип и соответствует ли ассоциация
+  способу запуска (из графического интерфейса или из терминала)."
+  [call-from-gui mimetype association]
+  (and (re-matches (re-pattern (:pattern association)) mimetype)
+       (or (nil? (:gui association))
+           (= (:gui association) call-from-gui))))
+
+(defn get-association
+  "Находит ассоциацию, соответствующую mime типу и способу запуска (из gui или
+  из терминала)."
+  [associations mimetype]
+  (let [call-from-gui (gui?)]
+    (first (drop-while (comp not (partial association-matches call-from-gui mimetype))
+                       associations))))
+
+(let [filename-arg (first *command-line-args*)
+      associations (read-string (slurp associations-file))
+      selected-ass (get-association associations (mime filename-arg))]
+  (when selected-ass
+    (binding [filename filename-arg]
+      ((if (get selected-ass :detach false) process exec)
+       (eval (:program selected-ass))))))
