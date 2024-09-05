@@ -1,4 +1,5 @@
 #!/usr/bin/env bb
+;; vim: set ft=clojure:
 
 (require '[babashka.process :refer [shell exec process]]
          '[babashka.fs :as fs]
