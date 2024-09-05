@@ -5,7 +5,7 @@ test -n "$1" || exit 0
 message="$1"
 
 # font
-font="Terminus:size=16"
+font="Terminess Nerd Font Mono:size=16"
 # background
 bg="#432d59"
 # foreground

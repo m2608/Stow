@@ -11,7 +11,7 @@ sw=$(bspc query -M \
 # icon width
 iw=28
 # font
-font="Terminus:size=16:style=medium"
+font="Terminess Nerd Font Mono:size=16"
 # background
 bg="#432d59"
 # foreground

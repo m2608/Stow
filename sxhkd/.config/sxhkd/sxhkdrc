@@ -4,7 +4,7 @@ super + Escape
 
 # запуск dmenu
 super + p
-    dmenu_run -fn "Terminus:size=16" -nb '#202020' -nf '#a0a0a0' -sb '#606060' -sf '#e0e0e0'
+    dmenu_run -fn "Terminess Nerd Font Mono:size=16" -nb '#202020' -nf '#a0a0a0' -sb '#606060' -sf '#e0e0e0'
 
 # scratchpad терминал
 super + n
