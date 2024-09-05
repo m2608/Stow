@@ -13,6 +13,7 @@ bind \cz "jobs > /dev/null && fg"
 alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
 alias nnn "LANG=ru_RU.UTF-8 PAGER='nvimpager -p' NO_COLOR=1 "(which nnn)
 alias oil "nvim -c 'Oil'"
+alias xfreerdp (which xfreerdp)" +fonts +bitmap-cache +glyph-cache +clipboard +auto-reconnect /audio-mode:1 /compression-level:2 /monitors:1 /window-position:0x0 /bpp:15 /dynamic-resolution"
 
 set host_config (status dirname)"$fold_config/config.fish#"(hostname | sed 's/\..*//')
 
