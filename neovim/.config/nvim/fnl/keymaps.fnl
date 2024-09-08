@@ -22,7 +22,8 @@
    ["n" "<F2>" ":<C-u>update<CR>"]
    ["i" "<F2>" "<C-o>:update<CR>"]
    ;; вызов окна для навигации по коду (плагин tagbar)
-   ["n" "<F8>" ":<C-u>TagbarToggle<CR>"]
+   ; ["n" "<F8>" ":<C-u>TagbarToggle<CR>"]
+   ["n" "<F8>" ":<C-u>Outline<CR>"]
    ;; вызов файлового браузера в каталоге с текущим файлом
    ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
    ;; терминал
