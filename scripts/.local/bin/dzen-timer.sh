@@ -6,7 +6,7 @@ if [ "$1" == "--help" -o "$1" == "" ]; then
 fi
 
 # font
-font="Terminess Nerd Font Mono:size=16:style=medium"
+font="Terminus:size=16:style=medium"
 
 # background
 bg="#432d59"
