@@ -4,6 +4,23 @@ set global indentwidth 4
 
 add-highlighter global/ number-lines -relative
 
+# define-command -hidden move-left-in-line %{
+#     try %{
+#         exec -draft %{ <a-h> }
+# 		exec h
+#     } catch %{
+#     }
+# }
+# 
+# map global normal h ":move-left-in-line<ret>"
+# map global insert <esc> "<esc>:move-left-in-line<ret>"
+
+declare-user-mode leader
+map global normal <space> ":enter-user-mode leader<ret>" -docstring "enter leader mode"
+map global leader <y> "<a-|>xclip -selection clipboard<ret>" -docstring "yank to system clipboard"
+map global leader <p> "|xclip -o<ret>" -docstring "paste from system clipboard"
+map global leader <c> ":comment-block<ret>" -docstring "comment block"
+
 evaluate-commands %sh{
     plugins="$kak_config/plugins"
     mkdir -p "$plugins"
