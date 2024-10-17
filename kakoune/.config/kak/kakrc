@@ -4,23 +4,6 @@ set global indentwidth 4
 
 add-highlighter global/ number-lines -relative
 
-# define-command -hidden move-left-in-line %{
-#     try %{
-#         exec -draft %{ <a-h> }
-# 		exec h
-#     } catch %{
-#     }
-# }
-# 
-# map global normal h ":move-left-in-line<ret>"
-# map global insert <esc> "<esc>:move-left-in-line<ret>"
-
-declare-user-mode leader
-map global normal <space> ":enter-user-mode leader<ret>" -docstring "enter leader mode"
-map global leader <y> "<a-|>xclip -selection clipboard<ret>" -docstring "yank to system clipboard"
-map global leader <p> "|xclip -o<ret>" -docstring "paste from system clipboard"
-map global leader <c> ":comment-block<ret>" -docstring "comment block"
-
 evaluate-commands %sh{
     plugins="$kak_config/plugins"
     mkdir -p "$plugins"
@@ -29,9 +12,96 @@ evaluate-commands %sh{
     printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
 }
 
+define-command surround-info -params 1 -hidden %{
+	info -title %arg{1} "b,(,):  parentheses block
+B,{,}:  braces block
+r,[,]:  bracket block
+a,<,>:  angle block
+"",Q:    double quote string
+',q:    single quote string
+`,g:    grave quote string
+others: pressed character
+"
+}
+
+define-command surround %{
+
+	surround-info "char to surround"
+
+	on-key %{ execute-keys %sh{
+    	bb -o '
+    		(let [key (System/getenv "kak_key")
+    		      [b e] (get {
+    		      	"("    ["( "         " )"]
+    		      	")"    ["("           ")"]
+    		      	"b"    ["("           ")"]
+    		      	"["    ["[ "         " ]"]
+    		      	"]"    ["["           "]"]
+    		      	"r"    ["["           "]"]
+    		      	"<lt>" ["<lt> "   " <gt>"]
+    		      	"<gt>" ["<lt>"     "<gt>"]
+    		      	"a"    ["<lt>"     "<gt>"]
+    		      	"g"    ["`"           "`"]
+    		      	"q"    ["\u0027" "\u0027"]
+    		      	"Q"    ["\u0022" "\u0022"]
+    		      } key [key key])]
+    			(str "i" b "<esc>" "a" e "<esc>" ","))
+    	'
+	}}
+}
+
+define-command surround-delete %{
+    surround-info "char to delete surround"
+    on-key %{
+        execute-keys "<a-a>%val{key}<a-S>d,"
+    }
+}
+
+define-command surround-change %{
+    surround-info "char to change surround"
+    on-key %{
+        execute-keys "<a-a>%val{key}<a-S>d"
+        execute-keys "G.H:surround<ret>"
+    }
+}
+
 plug "andreyorst/plug.kak" noload
 plug "andreyorst/fzf.kak"
-plug "h-youhei/kakoune-surround"
+plug "https://git.sr.ht/~nasmevka/repl.kak"
+
+map global normal <F2> ":w<ret>"
+map global insert <F2> "<a-;>:w<ret>"
+
+map global insert "<c-a>" "<home>"
+map global insert "<c-e>" "<end>"
+map global insert "<c-p>" "<up>"
+map global insert "<c-n>" "<down>"
+map global insert "<c-b>" "<left>"
+map global insert "<c-f>" "<right>"
+map global insert "<a-b>" "<s-left>"
+map global insert "<a-f>" "<s-right>"
+
+declare-user-mode leader
+map global normal <space> ":enter-user-mode leader<ret>" -docstring "enter leader mode"
+map global leader <y> "<a-|>xclip -selection clipboard<ret>" -docstring "yank to system clipboard"
+map global leader <p> "<a-!>xclip -o -selection clipboard<ret>" -docstring "paste from system clipboard"
+map global leader <P> "!xclip -o -selection clipboard<ret>" -docstring "paste from system clipboard on the previous line"
+map global leader <c> ":comment-block<ret>" -docstring "comment block"
+map global leader <Y> '<a-|>nop %{printf "\e]52;;%s\e\\" $(printf "%s" "$kak_main_reg_dquote" | base64 | tr -d "\n") > /dev/tty}<ret>' -docstring "yank using OSC52"
+
+declare-user-mode match
+map global normal <m> ":enter-user-mode match<ret>" -docstring "enter match mode"
+map global match <m> "m" -docstring "select to next matching char"
+map global match <M> "M" -docstring "extend to next matching char"
+map global match <a-m> "<a-m>" -docstring "select to previous matching char"
+map global match <a-M> "<a-M>" -docstring "extend to previous matching char"
+map global match <s> ":surround<ret>" -docstring "add surrounding chars to selection"
+map global match <d> ":surround-delete<ret>" -docstring "delete surrounding chars"
+map global match <c> ":surround-change<ret>" -docstring "change surrounding chars"
 
 eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
+
+hook global WinSetOption filetype=(clojure) %{
+  set-option window formatcmd "cljfmt fix -"
+}
