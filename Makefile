@@ -8,6 +8,7 @@ CLOJURE_LSP := "$(HOME)/.local/bin/clojure-lsp"
 CLJ_KONDO   := "$(HOME)/.local/bin/clj-kondo"
 CLJFMT      := "$(HOME)/.local/bin/cljfmt"
 CLJFMT_JAR  := "$(HOME)/.local/opt/cljfmt/cljfmt.jar"
+BOOTLEG     := "$(HOME)/.local/bin/bootleg"
 
 define get-from-github
 	xh "https://api.github.com/repos/$(1)/releases" \
@@ -67,6 +68,11 @@ install-cljfmt:
 		> $(CLJFMT_JAR);
 	printf "#!/bin/sh\n\njava -jar $(CLJFMT_JAR) $$\@\n" > $(CLJFMT); 
 	chmod +x $(CLJFMT)
+
+install-bootleg:
+	$(call get-from-github,retrogradeorbit/bootleg,"^bootleg-[0-9.]+-linux-amd64.tgz$$") \
+		| tar --gz --to-stdout -xf - > $(BOOTLEG);
+	chmod +x $(BOOTLEG)
 
 all: symlinks
 
