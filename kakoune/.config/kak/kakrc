@@ -1,4 +1,13 @@
-colorscheme reeder
+# bb -i '(->> *input* (map (fn [line] (if-let [m (re-matches #"(.*):\s+(.*)" line)] [(keyword (nth m 1)) (nth m 2)]))) (into {}) ((juxt :st.background :st.foreground)) (map (fn [rgb] (->> (-> rgb (clojure.string/split #":") second (clojure.string/split #"/")) (map (fn [x] (Integer/parseInt x 16)))))))'
+ 
+colorscheme %sh{
+    if test "$COOL_RETRO_TERM" = 1; then
+    	echo "default"
+    else
+    	echo "reeder"
+    fi
+}
+
 set global tabstop 4
 set global indentwidth 4
 
