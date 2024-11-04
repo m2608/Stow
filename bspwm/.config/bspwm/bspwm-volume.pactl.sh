@@ -9,8 +9,12 @@ sink=$(pactl list short sinks                 \
     | sed -e 's,^\([0-9][0-9]*\)[^0-9].*,\1,' \
     | head -n 1)
 
+if test -z "$sink"; then
+	$(dirname $0)/bspwm-message.sh "NO SOUND"
+	exit 0
+fi
 
-if test    "$action" = "up" ; then
+if test "$action" = "up" ; then
 
     # увеличить громкость
     pactl set-sink-mute $sink 0
@@ -34,7 +38,7 @@ elif test "$action" = "mute"; then
 fi
 
 pactl_version=$(pactl --version \
-    | sed -n '/^pactl[ ]+/p' \
+    | sed -En '/^pactl[ ]+/p' \
     | sed -E 's/^pactl[ ]+([0-9]+)([.].*)?/\1/')
 
 if test $pactl_version -ge 15; then
