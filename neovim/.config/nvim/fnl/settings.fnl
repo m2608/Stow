@@ -12,34 +12,6 @@
       (io.close file))
     exists))
 
-(fn get-resource [name]
-  "Получает значение параметра Xresources."
-  ;; Старые версии xrdb не поддерживают получение значения параметра по его имени:
-  ;; `xrdb -get st.foreground`. Поэтому приходится сначала получать весь список с
-  ;; помощью `xrdb -query`.
-  (let [h (io.popen "xrdb -query")]
-    (when h
-      (let [data (h:read "*a")]
-        (h:close)
-        (->> (str.split data "\n")
-             (core.map (fn [line] (str.split line "\t")))
-             (core.filter (fn [[n _]] (= n (.. name ":"))))
-             core.first
-             core.second)))))
-
-(fn get-resource-color-components [name]
-  "Получает компоненты цвета, заданного в параметре Xresources."
-  (let [value (get-resource name)]
-    (when value
-      (core.map (fn [x] (tonumber x 16))
-                (str.split (core.first (str.split (core.second (str.split value ":"))
-                                                  "\n"))
-                           "/")))))
-
-(fn sum [numbers]
-  "Суммирует числа."
-  (core.reduce (fn [a b] (+ a b)) 0 numbers))
-
 ; (fn pipe-visual []
 ;   (let [buffer (vim.api.nvim_get_current_buf)
 ;         [sl sc el ec] (unpack (vim.api.nvim_buf_get_mark buffer "<>"))]
@@ -154,6 +126,10 @@
     (nvim.command cmd)))
 
 
+;; Хак для определения фона терминала в tmux.
+; (when (= (os.getenv "TERM") "tmux-256color")
+;   (vim.uv.fs_write 2 "\27Ptmux;\27\27]11;?\7\27\\" -1 nil))
+
 (if
   (= (os.getenv "COOL_RETRO_TERM") "1")
   ;; Для Cool Retro Term выбираем какую-нибудь простую схему и устанавливаем
@@ -169,20 +145,10 @@
   (vim.cmd.colorscheme "nano-theme")
 
   ;; Настройка цветовой схемы в соответствие со схемой терминала.
-  ;; Определяем цвета терминала из Xresources. В зависимости от значений
-  ;; фона и основного цвета устанавливаем тёмную или светлую цветовую тему.
-  (let [fg (sum (get-resource-color-components "st.foreground"))
-        bg (sum (get-resource-color-components "st.background"))
-        colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
-
-    (if (< bg fg)
-      (core.assoc nvim.o :background "dark")
-      (core.assoc nvim.o :background "light"))
-
+  (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
     (when (file-exists? colorscheme-filename)
       ; (core.assoc nvim.g :base16colorspace 256)
       (nvim.command (.. "source" colorscheme-filename)))))
-
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,
@@ -207,7 +173,6 @@
                      ["Option" "Cmdline" 1]]]
     (each [_ option (ipairs gui-options)]
       (vim.rpcnotify 1 "Gui" (unpack option)))))
-
 
 ;; На рабочем компе меняем путь к python.
 (when (string.find (nvim.fn.hostname) "usd[-]mazonix1")
