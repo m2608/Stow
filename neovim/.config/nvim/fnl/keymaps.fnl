@@ -115,7 +115,13 @@
    ["n" "<space>P" "\"+P"]
    ;; lispdocs
    ["n" "<leader>h" ":lua require('lispdocs').float({ fill = 0.8, win = { winblend = 0, cursorline = false }})<CR>"]
-   ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]])
+   ["n" "<leader>d" ":lua require('nvim-devdocs.init').open_doc_current_file(true)<CR>"]
+   ;; navigator
+   ["n" "<A-h>" "<CMD>NavigatorLeft<CR>"]
+   ["n" "<A-l>" "<CMD>NavigatorRight<CR>"]
+   ["n" "<A-k>" "<CMD>NavigatorUp<CR>"]
+   ["n" "<A-j>" "<CMD>NavigatorDown<CR>"]
+])
 
 
 (each [_ mapping (ipairs mappings)]
