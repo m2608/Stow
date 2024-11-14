@@ -48,8 +48,8 @@
 
 (defn now
   []
-  (let [date (LocalDateTime/now)]
-    (.format date (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss"))))
+  (.format (LocalDateTime/now)
+           (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")))
 
 (defn text-to-image [text]
   @(process
@@ -70,18 +70,18 @@
   (fn [{:keys [uri remote-addr request-method headers query-string]
         request-body :body
         :or {request-body nil}}]
-    (let [origin (-> (filter (fn [h] (= (first h) "origin")) headers) first second)
-          now (now)
+    (let [local-datetime (now)
+          origin (-> (filter (fn [h] (= (first h) "origin")) headers) first second)
           query-params (when query-string
                          (->> (str/split query-string #"[&]")
                               (map #(str/split % #"[=]" 2))
                               (into {})))
-          request-text (str "--> " now " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri
+          request-text (str "--> " local-datetime " [" remote-addr "]\n" (str/upper-case (name request-method)) " " uri
                             (if query-string (str "?" query-string) "") "\n"
                             (str/join "\n" (map (fn [h] (str (first h) ": " (second h))) headers)) "\n"
                             (if request-body (str "\n" (slurp request-body) "\n") ""))
           request-json (json/generate-string
-                         {:time now
+                         {:time local-datetime
                           :method (str/upper-case (name request-method))
                           :uri uri
                           :remote-addr remote-addr
@@ -110,6 +110,6 @@
          :body request-json})))
   {:port port :ip bind})
 
-(println "Starting http server at" (str bind ":" port))
+(println "Starting http server at" (str bind ":" port) "at" (now))
 
 @(promise)
