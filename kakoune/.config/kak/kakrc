@@ -11,7 +11,9 @@ colorscheme %sh{
 set global tabstop 4
 set global indentwidth 4
 
-add-highlighter global/ number-lines -relative
+add-highlighter global/relative-numbers number-lines -relative
+add-highlighter global/soft-wordwrap    wrap -word -indent
+add-highlighter global/trailing-spaces  regex '\h+$' 0:Error
 
 evaluate-commands %sh{
     plugins="$kak_config/plugins"
