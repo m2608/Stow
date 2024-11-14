@@ -114,3 +114,7 @@ lsp-enable
 hook global WinSetOption filetype=(clojure) %{
   set-option window formatcmd "cljfmt fix -"
 }
+
+hook global WinSetOption filetype=(sql) %{
+  set-option window formatcmd "sleek"
+}
