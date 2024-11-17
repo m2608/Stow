@@ -97,9 +97,6 @@
           value (. option 2)]
       (core.assoc nvim.o name value))))
 
-;; для отрытия каталогов в telescope file browser
-(core.assoc nvim.g :loaded_netrw 1)
-
 (let [commands
       [;; заменять табуляции пробелами для всех файлов, кроме Makefile
        "autocmd FileType make setlocal noexpandtab"

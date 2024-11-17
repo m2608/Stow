@@ -3,15 +3,16 @@
  :dependencies ["nvim-lua/plenary.nvim"]
  :config
  (fn []
-   (let [setup      (. (require "telescope") :setup)
+   (let [telescope  (require "telescope")
          actions    (require "telescope.actions")
+         layout     (require "telescope.actions.layout")
          fb-actions (require "telescope._extensions.file_browser.actions")]
-     (setup
+     (telescope.setup
        {:defaults
         {:preview {:check_mime_type true}
          :file_ignore_patterns {}
-         :mappings {:i {"<C-y>" (. (require "telescope.actions.layout") :toggle_preview)}
-                    :n {"<C-y>" (. (require "telescope.actions.layout") :toggle_preview)}}}
+         :mappings {:i {"<C-y>" (. layout :toggle_preview)}
+                    :n {"<C-y>" (. layout :toggle_preview)}}}
 
         :pickers
         {:buffers {:mappings {:n {"d" (. actions :delete_buffer)}}}}
@@ -33,4 +34,7 @@
                          "~" (. fb-actions :goto_home_dir)
                          "e" (. fb-actions :open)
                          "c" (. fb-actions :copy)
-                         "n" (. fb-actions :create)}}}}})))}
+                         "n" (. fb-actions :create)}}}}})
+       ;; It is required to load "file_browser" to use netrw hijack just after
+       ;; nvim start.
+       (telescope.load_extension "file_browser")))}
