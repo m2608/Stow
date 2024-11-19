@@ -99,6 +99,7 @@ map global leader <p> "<a-!>xclip -o -selection clipboard<ret>" -docstring "past
 map global leader <P> "!xclip -o -selection clipboard<ret>" -docstring "paste from system clipboard on the previous line"
 map global leader <c> ":comment-block<ret>" -docstring "comment block"
 map global leader <Y> '<a-|>nop %{printf "\e]52;;%s\e\\" $(printf "%s" "$kak_main_reg_dquote" | base64 | tr -d "\n") > /dev/tty}<ret>' -docstring "yank using OSC52"
+map global leader <f> ':prompt -menu -shell-script-candidates %{ fd -t f } \"\" %{ edit %val{text} }<ret>' -docstring "find files"
 
 declare-user-mode match
 map global normal <m> ":enter-user-mode match<ret>" -docstring "enter match mode"
