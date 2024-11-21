@@ -85,12 +85,14 @@ map global insert <F2> "<a-;>:w<ret>"
 
 map global insert "<c-a>" "<home>"
 map global insert "<c-e>" "<end>"
-map global insert "<c-p>" "<up>"
-map global insert "<c-n>" "<down>"
 map global insert "<c-b>" "<left>"
 map global insert "<c-f>" "<right>"
 map global insert "<a-b>" "<s-left>"
 map global insert "<a-f>" "<s-right>"
+
+# Used for completion:
+# map global insert "<c-p>" "<up>"
+# map global insert "<c-n>" "<down>"
 
 declare-user-mode leader
 map global normal <space> ":enter-user-mode leader<ret>" -docstring "enter leader mode"
