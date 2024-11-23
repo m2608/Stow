@@ -383,108 +383,108 @@ include "%L"
 <Multi_key> <bar> <0> : "𝟙" U1D7D9 # mathematical double-str uck digit one
 <Multi_key> <bar> <0> : "𝟘" U1D7D8 # mathematical double-str uck digit zero
 
-<Multi_key> <numbersign> <9> "🯹" U1FBF9 # segmented digit ni ne
-<Multi_key> <numbersign> <8> "🯸" U1FBF8 # segmented digit ei ght
-<Multi_key> <numbersign> <7> "🯷" U1FBF7 # segmented digit se ven
-<Multi_key> <numbersign> <6> "🯶" U1FBF6 # segmented digit si x
-<Multi_key> <numbersign> <5> "🯵" U1FBF5 # segmented digit fi ve
-<Multi_key> <numbersign> <4> "🯴" U1FBF4 # segmented digit fo ur
-<Multi_key> <numbersign> <3> "🯳" U1FBF3 # segmented digit th ree
-<Multi_key> <numbersign> <2> "🯲" U1FBF2 # segmented digit tw o
-<Multi_key> <numbersign> <1> "🯱" U1FBF1 # segmented digit on e
-<Multi_key> <numbersign> <0> "🯰" U1FBF0 # segmented digit ze ro
+<Multi_key> <numbersign> <9> : "🯹" U1FBF9 # segmented digit ni ne
+<Multi_key> <numbersign> <8> : "🯸" U1FBF8 # segmented digit ei ght
+<Multi_key> <numbersign> <7> : "🯷" U1FBF7 # segmented digit se ven
+<Multi_key> <numbersign> <6> : "🯶" U1FBF6 # segmented digit si x
+<Multi_key> <numbersign> <5> : "🯵" U1FBF5 # segmented digit fi ve
+<Multi_key> <numbersign> <4> : "🯴" U1FBF4 # segmented digit fo ur
+<Multi_key> <numbersign> <3> : "🯳" U1FBF3 # segmented digit th ree
+<Multi_key> <numbersign> <2> : "🯲" U1FBF2 # segmented digit tw o
+<Multi_key> <numbersign> <1> : "🯱" U1FBF1 # segmented digit on e
+<Multi_key> <numbersign> <0> : "🯰" U1FBF0 # segmented digit ze ro
 
-<Multi_key> <f> <w> <exclam>  "！" UFF01 # fullwidth exclamation mark
-<Multi_key> <f> <w> <quotedbl>  "＂" UFF02 # fullwidth quotation ma rk
-<Multi_key> <f> <w> <numbersign>  "＃" UFF03 # fullwidth number sign
-<Multi_key> <f> <w> <dollar>  "＄" UFF04 # fullwidth dollar sign
-<Multi_key> <f> <w> <percent> "％" UFF05 # fullwidth percent sign
-<Multi_key> <f> <w> <ampersand> "＆" UFF06 # fullwidth ampersand
-<Multi_key> <f> <w> <apostrophe> "＇" UFF07 # fullwidth apostrophe
-<Multi_key> <f> <w> <parenleft> "（" UFF08 # fullwidth left parenthe sis
-<Multi_key> <f> <w> <parenright> "）" UFF09 # fullwidth right parenth esis
-<Multi_key> <f> <w> <asterisk> "＊" UFF0A # fullwidth asterisk
-<Multi_key> <f> <w> <plus> "＋" UFF0B # fullwidth plus sign
-<Multi_key> <f> <w> <comma> "，" UFF0C # fullwidth comma
-<Multi_key> <f> <w> <minus> "－" UFF0D # fullwidth hyphen-minus
-<Multi_key> <f> <w> <period> "．" UFF0E # fullwidth full stop
-<Multi_key> <f> <w> <slash> "／" UFF0F # fullwidth solidus
-<Multi_key> <f> <w> <0> "０" UFF10 # fullwidth digit zero
-<Multi_key> <f> <w> <1> "１" UFF11 # fullwidth digit one
-<Multi_key> <f> <w> <2> "２" UFF12 # fullwidth digit two
-<Multi_key> <f> <w> <3> "３" UFF13 # fullwidth digit three
-<Multi_key> <f> <w> <4> "４" UFF14 # fullwidth digit four
-<Multi_key> <f> <w> <5> "５" UFF15 # fullwidth digit five
-<Multi_key> <f> <w> <6> "６" UFF16 # fullwidth digit six
-<Multi_key> <f> <w> <7> "７" UFF17 # fullwidth digit seven
-<Multi_key> <f> <w> <8> "８" UFF18 # fullwidth digit eight
-<Multi_key> <f> <w> <9> "９" UFF19 # fullwidth digit nine
-<Multi_key> <f> <w> <colon> "：" UFF1A # fullwidth colon
-<Multi_key> <f> <w> <semicolon> "；" UFF1B # fullwidth semicolon
-<Multi_key> <f> <w> <less> "＜" UFF1C # fullwidth less-than sign 
-<Multi_key> <f> <w> <equal> "＝" UFF1D # fullwidth equals sign
-<Multi_key> <f> <w> <greater> "＞" UFF1E # fullwidth greater-than s ign
-<Multi_key> <f> <w> <question> "？" UFF1F # fullwidth question mark
-<Multi_key> <f> <w> <at> "＠" UFF20 # fullwidth commercial at
-<Multi_key> <f> <w> <A> "Ａ" UFF21 # fullwidth latin capital  letter a
-<Multi_key> <f> <w> <B> "Ｂ" UFF22 # fullwidth latin capital  letter b
-<Multi_key> <f> <w> <C> "Ｃ" UFF23 # fullwidth latin capital  letter c
-<Multi_key> <f> <w> <D> "Ｄ" UFF24 # fullwidth latin capital  letter d
-<Multi_key> <f> <w> <E> "Ｅ" UFF25 # fullwidth latin capital  letter e
-<Multi_key> <f> <w> <F> "Ｆ" UFF26 # fullwidth latin capital  letter f
-<Multi_key> <f> <w> <G> "Ｇ" UFF27 # fullwidth latin capital  letter g
-<Multi_key> <f> <w> <H> "Ｈ" UFF28 # fullwidth latin capital  letter h
-<Multi_key> <f> <w> <I> "Ｉ" UFF29 # fullwidth latin capital  letter i
-<Multi_key> <f> <w> <J> "Ｊ" UFF2A # fullwidth latin capital  letter j
-<Multi_key> <f> <w> <K> "Ｋ" UFF2B # fullwidth latin capital  letter k
-<Multi_key> <f> <w> <L> "Ｌ" UFF2C # fullwidth latin capital  letter l
-<Multi_key> <f> <w> <M> "Ｍ" UFF2D # fullwidth latin capital letter m
-<Multi_key> <f> <w> <N> "Ｎ" UFF2E # fullwidth latin capital letter n
-<Multi_key> <f> <w> <O> "Ｏ" UFF2F # fullwidth latin capital letter o
-<Multi_key> <f> <w> <P> "Ｐ" UFF30 # fullwidth latin capital letter p
-<Multi_key> <f> <w> <Q> "Ｑ" UFF31 # fullwidth latin capital letter q
-<Multi_key> <f> <w> <R> "Ｒ" UFF32 # fullwidth latin capital letter r
-<Multi_key> <f> <w> <S> "Ｓ" UFF33 # fullwidth latin capital letter s
-<Multi_key> <f> <w> <T> "Ｔ" UFF34 # fullwidth latin capital letter t
-<Multi_key> <f> <w> <U> "Ｕ" UFF35 # fullwidth latin capital letter u
-<Multi_key> <f> <w> <V> "Ｖ" UFF36 # fullwidth latin capital letter v
-<Multi_key> <f> <w> <W> "Ｗ" UFF37 # fullwidth latin capital letter w
-<Multi_key> <f> <w> <X> "Ｘ" UFF38 # fullwidth latin capital letter x
-<Multi_key> <f> <w> <Y> "Ｙ" UFF39 # fullwidth latin capital letter y
-<Multi_key> <f> <w> <Z> "Ｚ" UFF3A # fullwidth latin capital letter z
-<Multi_key> <f> <w> <bracketleft> "［" UFF3B # fullwidth left square bracket
-<Multi_key> <f> <w> <backslash> "＼" UFF3C # fullwidth reverse solidus
-<Multi_key> <f> <w> <bracketright> "］" UFF3D # fullwidth right square bracket
-<Multi_key> <f> <w> <asciicircum> "＾" UFF3E # fullwidth circumflex accent
-<Multi_key> <f> <w> <underscore> "＿" UFF3F # fullwidth low line
-<Multi_key> <f> <w> <grave> "｀" UFF40 # fullwidth grave accent
-<Multi_key> <f> <w> <a> "ａ" UFF41 # fullwidth latin small letter a
-<Multi_key> <f> <w> <b> "ｂ" UFF42 # fullwidth latin small letter b
-<Multi_key> <f> <w> <c> "ｃ" UFF43 # fullwidth latin small letter c
-<Multi_key> <f> <w> <d> "ｄ" UFF44 # fullwidth latin small letter d
-<Multi_key> <f> <w> <e> "ｅ" UFF45 # fullwidth latin small letter e
-<Multi_key> <f> <w> <f> "ｆ" UFF46 # fullwidth latin small letter f
-<Multi_key> <f> <w> <g> "ｇ" UFF47 # fullwidth latin small letter g
-<Multi_key> <f> <w> <h> "ｈ" UFF48 # fullwidth latin small letter h
-<Multi_key> <f> <w> <i> "ｉ" UFF49 # fullwidth latin small letter i
-<Multi_key> <f> <w> <j> "ｊ" UFF4A # fullwidth latin small letter j
-<Multi_key> <f> <w> <k> "ｋ" UFF4B # fullwidth latin small letter k
-<Multi_key> <f> <w> <l> "ｌ" UFF4C # fullwidth latin small letter l
-<Multi_key> <f> <w> <m> "ｍ" UFF4D # fullwidth latin small letter m
-<Multi_key> <f> <w> <n> "ｎ" UFF4E # fullwidth latin small letter n
-<Multi_key> <f> <w> <o> "ｏ" UFF4F # fullwidth latin small letter o
-<Multi_key> <f> <w> <p> "ｐ" UFF50 # fullwidth latin small letter p
-<Multi_key> <f> <w> <q> "ｑ" UFF51 # fullwidth latin small letter q
-<Multi_key> <f> <w> <r> "ｒ" UFF52 # fullwidth latin small letter r
-<Multi_key> <f> <w> <s> "ｓ" UFF53 # fullwidth latin small letter s
-<Multi_key> <f> <w> <t> "ｔ" UFF54 # fullwidth latin small letter t
-<Multi_key> <f> <w> <u> "ｕ" UFF55 # fullwidth latin small letter u
-<Multi_key> <f> <w> <v> "ｖ" UFF56 # fullwidth latin small letter v
-<Multi_key> <f> <w> <w> "ｗ" UFF57 # fullwidth latin small letter w
-<Multi_key> <f> <w> <x> "ｘ" UFF58 # fullwidth latin small letter x
-<Multi_key> <f> <w> <y> "ｙ" UFF59 # fullwidth latin small letter y
-<Multi_key> <f> <w> <z> "ｚ" UFF5A # fullwidth latin small letter z
-<Multi_key> <f> <w> <braceleft> "｛" UFF5B # fullwidth left curly bracket
-<Multi_key> <f> <w> <bar> "｜" UFF5C # fullwidth vertical line
-<Multi_key> <f> <w> <braceright> "｝" UFF5D # fullwidth right curly bracket
-<Multi_key> <f> <w> <asciitilde> "～" UFF5E # fullwidth tilde
+<Multi_key> <f> <w> <exclam>        : "！" UFF01 # fullwidth exclamation mark
+<Multi_key> <f> <w> <quotedbl>      : "＂" UFF02 # fullwidth quotation ma rk
+<Multi_key> <f> <w> <numbersign>    : "＃" UFF03 # fullwidth number sign
+<Multi_key> <f> <w> <dollar>        : "＄" UFF04 # fullwidth dollar sign
+<Multi_key> <f> <w> <percent>       : "％" UFF05 # fullwidth percent sign
+<Multi_key> <f> <w> <ampersand>     : "＆" UFF06 # fullwidth ampersand
+<Multi_key> <f> <w> <apostrophe>    : "＇" UFF07 # fullwidth apostrophe
+<Multi_key> <f> <w> <parenleft>     : "（" UFF08 # fullwidth left parenthe sis
+<Multi_key> <f> <w> <parenright>    : "）" UFF09 # fullwidth right parenth esis
+<Multi_key> <f> <w> <asterisk>      : "＊" UFF0A # fullwidth asterisk
+<Multi_key> <f> <w> <plus>          : "＋" UFF0B # fullwidth plus sign
+<Multi_key> <f> <w> <comma>         : "，" UFF0C # fullwidth comma
+<Multi_key> <f> <w> <minus>         : "－" UFF0D # fullwidth hyphen-minus
+<Multi_key> <f> <w> <period>        : "．" UFF0E # fullwidth full stop
+<Multi_key> <f> <w> <slash>         : "／" UFF0F # fullwidth solidus
+<Multi_key> <f> <w> <0>             : "０" UFF10 # fullwidth digit zero
+<Multi_key> <f> <w> <1>             : "１" UFF11 # fullwidth digit one
+<Multi_key> <f> <w> <2>             : "２" UFF12 # fullwidth digit two
+<Multi_key> <f> <w> <3>             : "３" UFF13 # fullwidth digit three
+<Multi_key> <f> <w> <4>             : "４" UFF14 # fullwidth digit four
+<Multi_key> <f> <w> <5>             : "５" UFF15 # fullwidth digit five
+<Multi_key> <f> <w> <6>             : "６" UFF16 # fullwidth digit six
+<Multi_key> <f> <w> <7>             : "７" UFF17 # fullwidth digit seven
+<Multi_key> <f> <w> <8>             : "８" UFF18 # fullwidth digit eight
+<Multi_key> <f> <w> <9>             : "９" UFF19 # fullwidth digit nine
+<Multi_key> <f> <w> <colon>         : "：" UFF1A # fullwidth colon
+<Multi_key> <f> <w> <semicolon>     : "；" UFF1B # fullwidth semicolon
+<Multi_key> <f> <w> <less>          : "＜" UFF1C # fullwidth less-than sign
+<Multi_key> <f> <w> <equal>         : "＝" UFF1D # fullwidth equals sign
+<Multi_key> <f> <w> <greater>       : "＞" UFF1E # fullwidth greater-than s ign
+<Multi_key> <f> <w> <question>      : "？" UFF1F # fullwidth question mark
+<Multi_key> <f> <w> <at>            : "＠" UFF20 # fullwidth commercial at
+<Multi_key> <f> <w> <A>             : "Ａ" UFF21 # fullwidth latin capital  letter a
+<Multi_key> <f> <w> <B>             : "Ｂ" UFF22 # fullwidth latin capital  letter b
+<Multi_key> <f> <w> <C>             : "Ｃ" UFF23 # fullwidth latin capital  letter c
+<Multi_key> <f> <w> <D>             : "Ｄ" UFF24 # fullwidth latin capital  letter d
+<Multi_key> <f> <w> <E>             : "Ｅ" UFF25 # fullwidth latin capital  letter e
+<Multi_key> <f> <w> <F>             : "Ｆ" UFF26 # fullwidth latin capital  letter f
+<Multi_key> <f> <w> <G>             : "Ｇ" UFF27 # fullwidth latin capital  letter g
+<Multi_key> <f> <w> <H>             : "Ｈ" UFF28 # fullwidth latin capital  letter h
+<Multi_key> <f> <w> <I>             : "Ｉ" UFF29 # fullwidth latin capital  letter i
+<Multi_key> <f> <w> <J>             : "Ｊ" UFF2A # fullwidth latin capital  letter j
+<Multi_key> <f> <w> <K>             : "Ｋ" UFF2B # fullwidth latin capital  letter k
+<Multi_key> <f> <w> <L>             : "Ｌ" UFF2C # fullwidth latin capital  letter l
+<Multi_key> <f> <w> <M>             : "Ｍ" UFF2D # fullwidth latin capital letter m
+<Multi_key> <f> <w> <N>             : "Ｎ" UFF2E # fullwidth latin capital letter n
+<Multi_key> <f> <w> <O>             : "Ｏ" UFF2F # fullwidth latin capital letter o
+<Multi_key> <f> <w> <P>             : "Ｐ" UFF30 # fullwidth latin capital letter p
+<Multi_key> <f> <w> <Q>             : "Ｑ" UFF31 # fullwidth latin capital letter q
+<Multi_key> <f> <w> <R>             : "Ｒ" UFF32 # fullwidth latin capital letter r
+<Multi_key> <f> <w> <S>             : "Ｓ" UFF33 # fullwidth latin capital letter s
+<Multi_key> <f> <w> <T>             : "Ｔ" UFF34 # fullwidth latin capital letter t
+<Multi_key> <f> <w> <U>             : "Ｕ" UFF35 # fullwidth latin capital letter u
+<Multi_key> <f> <w> <V>             : "Ｖ" UFF36 # fullwidth latin capital letter v
+<Multi_key> <f> <w> <W>             : "Ｗ" UFF37 # fullwidth latin capital letter w
+<Multi_key> <f> <w> <X>             : "Ｘ" UFF38 # fullwidth latin capital letter x
+<Multi_key> <f> <w> <Y>             : "Ｙ" UFF39 # fullwidth latin capital letter y
+<Multi_key> <f> <w> <Z>             : "Ｚ" UFF3A # fullwidth latin capital letter z
+<Multi_key> <f> <w> <bracketleft>   : "［" UFF3B # fullwidth left square bracket
+<Multi_key> <f> <w> <backslash>     : "＼" UFF3C # fullwidth reverse solidus
+<Multi_key> <f> <w> <bracketright>  : "］" UFF3D # fullwidth right square bracket
+<Multi_key> <f> <w> <asciicircum>   : "＾" UFF3E # fullwidth circumflex accent
+<Multi_key> <f> <w> <underscore>    : "＿" UFF3F # fullwidth low line
+<Multi_key> <f> <w> <grave>         : "｀" UFF40 # fullwidth grave accent
+<Multi_key> <f> <w> <a>             : "ａ" UFF41 # fullwidth latin small letter a
+<Multi_key> <f> <w> <b>             : "ｂ" UFF42 # fullwidth latin small letter b
+<Multi_key> <f> <w> <c>             : "ｃ" UFF43 # fullwidth latin small letter c
+<Multi_key> <f> <w> <d>             : "ｄ" UFF44 # fullwidth latin small letter d
+<Multi_key> <f> <w> <e>             : "ｅ" UFF45 # fullwidth latin small letter e
+<Multi_key> <f> <w> <f>             : "ｆ" UFF46 # fullwidth latin small letter f
+<Multi_key> <f> <w> <g>             : "ｇ" UFF47 # fullwidth latin small letter g
+<Multi_key> <f> <w> <h>             : "ｈ" UFF48 # fullwidth latin small letter h
+<Multi_key> <f> <w> <i>             : "ｉ" UFF49 # fullwidth latin small letter i
+<Multi_key> <f> <w> <j>             : "ｊ" UFF4A # fullwidth latin small letter j
+<Multi_key> <f> <w> <k>             : "ｋ" UFF4B # fullwidth latin small letter k
+<Multi_key> <f> <w> <l>             : "ｌ" UFF4C # fullwidth latin small letter l
+<Multi_key> <f> <w> <m>             : "ｍ" UFF4D # fullwidth latin small letter m
+<Multi_key> <f> <w> <n>             : "ｎ" UFF4E # fullwidth latin small letter n
+<Multi_key> <f> <w> <o>             : "ｏ" UFF4F # fullwidth latin small letter o
+<Multi_key> <f> <w> <p>             : "ｐ" UFF50 # fullwidth latin small letter p
+<Multi_key> <f> <w> <q>             : "ｑ" UFF51 # fullwidth latin small letter q
+<Multi_key> <f> <w> <r>             : "ｒ" UFF52 # fullwidth latin small letter r
+<Multi_key> <f> <w> <s>             : "ｓ" UFF53 # fullwidth latin small letter s
+<Multi_key> <f> <w> <t>             : "ｔ" UFF54 # fullwidth latin small letter t
+<Multi_key> <f> <w> <u>             : "ｕ" UFF55 # fullwidth latin small letter u
+<Multi_key> <f> <w> <v>             : "ｖ" UFF56 # fullwidth latin small letter v
+<Multi_key> <f> <w> <w>             : "ｗ" UFF57 # fullwidth latin small letter w
+<Multi_key> <f> <w> <x>             : "ｘ" UFF58 # fullwidth latin small letter x
+<Multi_key> <f> <w> <y>             : "ｙ" UFF59 # fullwidth latin small letter y
+<Multi_key> <f> <w> <z>             : "ｚ" UFF5A # fullwidth latin small letter z
+<Multi_key> <f> <w> <braceleft>     : "｛" UFF5B # fullwidth left curly bracket
+<Multi_key> <f> <w> <bar>           : "｜" UFF5C # fullwidth vertical line
+<Multi_key> <f> <w> <braceright>    : "｝" UFF5D # fullwidth right curly bracket
+<Multi_key> <f> <w> <asciitilde>    : "～" UFF5E # fullwidth tilde
