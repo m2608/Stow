@@ -1,3 +1,5 @@
+#!/usr/bin/sh bb
+
 ;; Скрипт убирает изображения обложки из fb2, переданного на stdin. Другие картинки
 ;; не трогает.
 
@@ -22,22 +24,23 @@
 ;;   ...
 ;; </binary>
 
-(ns remove-cover
-  (:require [clojure.string :as str]
-            [clojure.data.xml :as xml]
-            [clojure.walk :as walk]))
+(require '[clojure.string :as str]
+         '[clojure.data.xml :as xml]
+         '[clojure.walk :as walk])
 
-(defn get-tag [xml-data & keys]
+(defn get-tag
   "Получает содержимое xml-тега по пути к нему. На пути каждый раз выбирает
   первый тег, возвращает список."
-  (if-let [xml-tag (->> xml-data :content (filter #(= (:tag %) (first keys))))]
+  [xml-data & keys]
+  (when-let [xml-tag (->> xml-data :content (filter #(= (:tag %) (first keys))))]
     (if (empty? (rest keys))
       xml-tag
       (recur (first xml-tag) (rest keys)))))
 
-(defn get-cover-images [xml-data]
+(defn get-cover-images
   "Возвращает список идентификаторов изображений, используемых в качестве обложки
   для данной книги."
+  [xml-data]
   (let [images-ids (map #(get-in % [:attrs :href])
                         (get-tag xml-data :description :title-info :coverpage :image))]
     (for [image-id images-ids
