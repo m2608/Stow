@@ -20,23 +20,25 @@ set PATH \
     /sbin
 
 alias ls lsd
-alias bat "PAGER=less $HOME/.cargo/bin/bat"
 alias aumix "env LANG=C aumix"
-alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
 alias mosh "MOSH_ESCAPE_KEY=(printf '\x1f') /usr/local/bin/mosh"
 alias hiew 'wineconsole $HOME/.local/opt/hiew/hiew32.exe'
-alias xfreerdp (which xfreerdp)" \
-	+fonts               \
-	+bitmap-cache        \
-	+glyph-cache         \
-	+clipboard           \
-	+auto-reconnect      \
-	/audio-mode:1        \
-	/compression-level:2 \
-	/monitors:1          \
-	/window-position:0x0 \
-	/bpp:15              \
-	/dynamic-resolution"
+
+set xfreerdp (which xfreerdp)
+if test -n "$xfreerdp"
+    alias xfreerdp "$xfreerdp \
+        +fonts               \
+        +bitmap-cache        \
+        +glyph-cache         \
+        +clipboard           \
+        +auto-reconnect      \
+        /audio-mode:1        \
+        /compression-level:2 \
+        /monitors:1          \
+        /window-position:0x0 \
+        /bpp:15              \
+        /dynamic-resolution"
+end
 
 
 zoxide init fish | source

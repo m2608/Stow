@@ -29,6 +29,7 @@ alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .
 alias i3lock 'i3lock -c 000000 -b'
 alias edir 'python3.11 -m edir'
 alias hiew 'wineconsole $HOME/.local/opt/hiew32demo/hiew32demo.exe'
+alias xml-beautify 'xmllint --format --encode utf-8 -'
 
 abbr hurl-proxy "hurl --proxy socks://127.0.0.1:5555"
 
