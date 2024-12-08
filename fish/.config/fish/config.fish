@@ -17,6 +17,8 @@ if test -n "$nnn"
     alias nnn "LANG=ru_RU.UTF-8 PAGER='nvimpager -p' NO_COLOR=1 $nnn"
 end
 alias oil "nvim -c 'Oil'"
+alias nrepl "clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version \"1.3.0\"} cider/cider-nrepl {:mvn/version \"0.50.3\"}}}' -M -m nrepl.cmdline --interactive"
+
 
 set host_config (status dirname)"$fold_config/config.fish#"(hostname | sed 's/\..*//')
 
