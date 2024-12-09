@@ -26,6 +26,7 @@
           :preview {:hide_on_startup true
                     :check_mime_type false}
           :initial_mode "normal"
+          :cwd_to_path false
           :dir_icon " "
           :sorting_strategy "ascending"
           :mappings {:n {"." (. fb-actions :toggle_hidden)
