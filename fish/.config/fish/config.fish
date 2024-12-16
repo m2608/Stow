@@ -5,7 +5,7 @@ setenv NVIM_GTK_NO_HEADERBAR 1
 setenv NNN_PLUG ";:fzplug;z:autojump;p:preview-tui;t:preview-tabbed"
 setenv NNN_OPTS "aAcdu"
 setenv NNN_FIFO "/tmp/nnn.fifo"
-setenv FZF_DEFAULT_OPTS "--no-mouse"
+setenv FZF_DEFAULT_OPTS "--no-mouse --color=bw"
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
 bind \cz "jobs > /dev/null && echo && fg"
