@@ -11,6 +11,10 @@ pgrep -x sxhkd > /dev/null \
 bspc config border_width            2
 bspc config window_gap              0
 
+# Не изменять размеры окон для точного соответствия сетке (чтобы не было
+# рамки в терминале).
+#bspc config honor_size_hints        true
+
 bspc config split_ratio             0.50
 bspc config borderless_monocle      true
 bspc config gapless_monocle         true
