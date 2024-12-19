@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OS=$(uname -o)
+OS=$(uname)
 
 battery_status()
 {
