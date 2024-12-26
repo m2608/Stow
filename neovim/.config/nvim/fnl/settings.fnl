@@ -93,7 +93,7 @@
                ;; команда :find будет искать файлы также и в подкаталогах
                [:path (.. (core.get nvim.o "path") "**")]
                ;; шрифт для графического режима
-               [:guifont "Iosevka Term:h16"]]]
+               [:guifont "APL386 Unicode:h16"]]]
   (each [_ option (ipairs options)]
     (let [name (. option 1)
           value (. option 2)]
@@ -161,12 +161,7 @@
 ;; Настройки nvim-gtk.
 (when (core.get nvim.g :GtkGuiLoaded nil)
   (let [hostname (vim.fn.hostname)
-        gui-options [["Font" (if
-                               (= hostname "algol")
-                               "PragmataPro Liga 16"
-                               (string.find hostname "usd[-]mazonix1")
-                               "Iosevka 14"
-                               "")]
+        gui-options [["Font" "APL386 Unicode 18"]
                      ["Option" "Popupmenu" 1]
                      ["Option" "Tabline" 1]
                      ["Option" "Cmdline" 1]]]
