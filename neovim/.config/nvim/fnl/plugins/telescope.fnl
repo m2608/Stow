@@ -26,11 +26,10 @@
           :preview {:hide_on_startup true
                     :check_mime_type false}
           :initial_mode "normal"
-          :cwd_to_path false
           :dir_icon " "
           :sorting_strategy "ascending"
           :mappings {:n {"." (. fb-actions :toggle_hidden)
-                         "l" (. fb-actions :change_cwd)
+                         "l" (. fb-actions :open_dir)
                          "h" (. fb-actions :goto_parent_dir)
                          "~" (. fb-actions :goto_home_dir)
                          "e" (. fb-actions :open)
