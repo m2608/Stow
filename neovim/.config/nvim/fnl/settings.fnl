@@ -12,29 +12,6 @@
       (io.close file))
     exists))
 
-; (fn pipe-visual []
-;   (let [buffer (vim.api.nvim_get_current_buf)
-;         [sl sc el ec] (unpack (vim.api.nvim_buf_get_mark buffer "<>"))]
-;     [sl sc el ec]))
-
-; function VisualToUpper()
-;     -- Get the current buffer and selection range
-;     local bufnr = vim.api.nvim_get_current_buf()
-;     local start_line, start_col, end_line, end_col = unpack(vim.api.nvim_buf_get_mark(bufnr, '<>'))
-;
-;     -- Get the selected lines
-;     local lines = vim.api.nvim_buf_get_lines(bufnr, start_line - 1, end_line, false)
-;
-;     -- Convert the selected lines to uppercase
-;     local uppercase_lines = {}
-;     for _, line in ipairs(lines) do
-;         table.insert(uppercase_lines, string.upper(line))
-;     end
-;
-;     -- Replace the selected lines with the uppercase lines
-;     vim.api.nvim_buf_set_text(bufnr, start_line - 1, start_col - 1, end_line, end_col, uppercase_lines)
-; end
-
 (let [;; маппинги для использования команд, если включена русская системная раскладка
       lang-mappings ["ё`" "йq" "цw" "уe" "кr" "еt" "нy" "гu" "шi" "щo" "зp" "х[" "ъ]" "фa" "ыs" "вd"
                      "аf" "пg" "рh" "оj" "лk" "дl" "ж;" "э'" "яz" "чx" "сc" "мv" "иb" "тn" "ьm" "б,"
