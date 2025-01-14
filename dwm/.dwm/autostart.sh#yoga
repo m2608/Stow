@@ -12,11 +12,14 @@ xinput set-prop "Elan Touchpad" "Device Enabled" 0
 xrdb -merge ~/.Xresources
 
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+
+pkill sxhkd
 sxhkd -c "$HOME/.config/sxhkd/sxhkdrc#$(hostname | cut -d '.' -f 1)" &
+
 wmname LG3D
 
 sndioctl -q output.level=0.5
 
 $HOME/.local/bin/dwmstatus.sh loop &
 
-runsvdir $HOME/.runsvdir/ &
+sh -c "while xkb-switch -w; do $HOME/.local/bin/dwmstatus.sh; done" &
