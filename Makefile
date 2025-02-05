@@ -9,6 +9,7 @@ CLJ_KONDO   := "$(HOME)/.local/bin/clj-kondo"
 CLJFMT      := "$(HOME)/.local/bin/cljfmt"
 CLJFMT_JAR  := "$(HOME)/.local/opt/cljfmt/cljfmt.jar"
 BOOTLEG     := "$(HOME)/.local/bin/bootleg"
+KAK_LSP     := "$(HOME)/.local/bin/kak-lsp"
 
 define get-from-github
 	xh "https://api.github.com/repos/$(1)/releases" \
@@ -49,7 +50,7 @@ install-jet:
 
 install-marksman:
 	$(call get-from-github,artempyanykh/marksman,"^marksman-linux-x64$$") \
-		| tar --gz --to-stdout -xf - > $(MARKSMAN);
+		 > $(MARKSMAN);
 	chmod +x $(MARKSMAN)
 
 install-clojure-lsp:
@@ -73,6 +74,11 @@ install-bootleg:
 	$(call get-from-github,retrogradeorbit/bootleg,"^bootleg-[0-9.]+-linux-amd64.tgz$$") \
 		| tar --gz --to-stdout -xf - > $(BOOTLEG);
 	chmod +x $(BOOTLEG)
+
+install-kak-lsp:
+	$(call get-from-github,kakoune-lsp/kakoune-lsp,"^kakoune-lsp-v[0-9.]+-x86_64-unknown-linux-musl[.]tar[.]gz$$") \
+		| tar --gz --to-stdout -xf - kak-lsp > $(KAK_LSP);
+	chmod +x $(KAK_LSP)
 
 all: symlinks
 
