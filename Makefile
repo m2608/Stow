@@ -14,7 +14,7 @@ KAK_LSP     := "$(HOME)/.local/bin/kak-lsp"
 define get-from-github
 	xh "https://api.github.com/repos/$(1)/releases" \
 		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test($(2))) | .browser_download_url' \
-		| parallel xh -F get "{}"
+		| xargs -I{} xh -F get "{}"
 endef
 
 symlinks:
@@ -27,7 +27,7 @@ fisher:
 		&& fisher install PatrickF1/fzf.fish'
 
 install-nvim:
-	$(call get-from-github,neovim/neovim-releases,"^nvim.appimage$$") > $(NVIM);
+	$(call get-from-github,neovim/neovim-releases,"^nvim-linux-x86_64[.]appimage$$") > $(NVIM);
 	chmod +x $(NVIM)
 
 install-hx:
