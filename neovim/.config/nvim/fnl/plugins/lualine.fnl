@@ -6,4 +6,8 @@
                      {:icons_enabled false
                       :theme :auto
                       :component_separators {:left "|" :right "|"}
-                      :section_separators {:left "" :right ""}}})))}
+                      :section_separators {:left "" :right ""}}
+                     :sections
+                     {:lualine_c
+                      [{1 "filename"
+                        :path 1}]}})))}
