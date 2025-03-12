@@ -4,6 +4,7 @@ setenv LEIN_ROOT 1
 setenv GOPATH $HOME/.gocode
 setenv SVDIR $HOME/.runit/service
 setenv WORKON_HOME $HOME/.virtualenvs
+setenv JAVA_CMD /usr/local/openjdk22/bin/java
 
 set PATH \
     $HOME/.local/bin \
