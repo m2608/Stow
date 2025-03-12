@@ -1,0 +1,27 @@
+daemonize
+clear
+
+ctrl+semicolon start
+Escape end
+ctrl+bracketleft end
+
+e grid-nav toggle
+
+h cut-left
+j cut-down
+k cut-up
+l cut-right
+
+Left move-left
+Down move-down
+Up move-up
+Right move-right
+
+1 click 1
+2 click 2
+3 click 3
+i click 4
+u click 5
+
+semicolon warp
+space warp,click 1,end
