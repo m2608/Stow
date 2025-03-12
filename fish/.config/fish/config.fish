@@ -8,6 +8,11 @@ setenv NNN_FIFO "/tmp/nnn.fifo"
 setenv FZF_DEFAULT_OPTS "--no-mouse --color=bw --bind=ctrl-j:accept,ctrl-k:kill-line"
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
+setenv XDG_DATA_HOME   $HOME/.local/share
+setenv XDG_CONFIG_HOME $HOME/.config
+setenv XDG_STATE_HOME  $HOME/.local/state
+setenv XDG_CACHE_HOME  $HOME/.cache
+
 bind \cz "jobs > /dev/null && echo && fg"
 
 alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
