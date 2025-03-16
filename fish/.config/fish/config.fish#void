@@ -1,0 +1,21 @@
+set PATH \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    $HOME/go/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/bin \
+    /usr/sbin \
+    /bin \
+    /sbin \
+    /usr/lib/jvm/default-jdk/bin \
+    /usr/lib/jvm/default-jre/bin
+
+setenv PAGER nvimpager
+
+alias ls lsd
+alias nnn "PAGER='nvimpager -p' "(which nnn)
+
+zoxide init fish | source
+
+set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
