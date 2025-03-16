@@ -17,6 +17,10 @@ define get-from-github
 		| xargs -I{} xh -F get "{}"
 endef
 
+define get-gist
+	curl -Ls $(1) | jq -r '.files["$(2)"] .content' > $(3)
+endef
+
 symlinks:
 	stow --target=$(HOME) --restow */
 
@@ -81,8 +85,8 @@ install-kak-lsp:
 	chmod +x $(KAK_LSP)
 
 install-scripts:
-	curl -Ls --output "$(HOME)/.local/bin/b16_themes" https://gist.github.com/m2608/48185612f371a7a0803ad1c329e59933/raw/d6900b1431bff572f23a011ceef39d36f831c3c0/b16_themes.clj
-	chmod +x "$(HOME)/.local/bin/b16_themes"
+	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
+	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
 
 all: symlinks
 
