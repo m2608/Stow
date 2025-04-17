@@ -26,3 +26,6 @@ shift+Insert
 # скриншот
 Print
     flameshot gui 1> /dev/null 2> /dev/null
+
+super + r
+    rotate.bb
