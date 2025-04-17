@@ -211,24 +211,23 @@ include "%L"
 <Multi_key> <a> <apostrophe>   : "≢" U2261        # APL Not Identical To
 <Multi_key> <a> <quotedbl>     : "⍕" U234E        # APL Down Tack Jot
 <Multi_key> <a> <colon>        : "≡" U2261        # APL Identical To
-
 <Multi_key> <a> <z>            : "⊂"   U2282      # APL Subset Of
 <Multi_key> <a> <Z>            : "⊆"   U2286      # APL Enclose If Simple
 <Multi_key> <a> <x>            : "⊃"   U2283      # APL Superset Of
 <Multi_key> <a> <c>            : "∩"   U2229      # APL Intersection
 <Multi_key> <a> <v>            : "∪"   U222A      # APL Union
 <Multi_key> <a> <b>            : "⊥"   U22A5      # APL Up Tack
-<Multi_key> <a> <B>!             : "⍭"   U236D      # APL Stil
-<Multi_key> <a> <n>''            : "⊤"   U22A4      # APL Down Tack
-<Multi_key> <a> <N>#             : "⍡"   U2361      # APL Down Tack Diaeresis
-<Multi_key> <a> <m>$             : "|"   U007C      # APL Vertical Line
-<Multi_key> <a> <M> %           : "∥"   U2225      # APL Parallel to
-<Multi_key> <a> <com&ma>        : "⍝"   U235D      # APL Parallel to
-<Multi_key> <a> <les's>         : "⍪"   U236A      # APL Comma Bar
-<Multi_key> <a> <per(iod>       : "⍀"   U2340      # APL Backslash Bar
-<Multi_key> <a> <gre)ater>      : "⍙"   U2359      # APL Delta Underbar
-<Multi_key> <a> <sla*sh>        : "⌿"   U233F      # APL Slash Bar
-<Multi_key> <a> <que+stion>     : "⍠"   U2360      # APL Quad Colon
+<Multi_key> <a> <B>            : "⍭"   U236D      # APL Stil
+<Multi_key> <a> <n>            : "⊤"   U22A4      # APL Down Tack
+<Multi_key> <a> <N>            : "⍡"   U2361      # APL Down Tack Diaeresis
+<Multi_key> <a> <m>            : "|"   U007C      # APL Vertical Line
+<Multi_key> <a> <M>            : "∥"   U2225      # APL Parallel to
+<Multi_key> <a> <comma>        : "⍝"   U235D      # APL Parallel to
+<Multi_key> <a> <less>         : "⍪"   U236A      # APL Comma Bar
+<Multi_key> <a> <period>       : "⍀"   U2340      # APL Backslash Bar
+<Multi_key> <a> <greater>      : "⍙"   U2359      # APL Delta Underbar
+<Multi_key> <a> <slash>        : "⌿"   U233F      # APL Slash Bar
+<Multi_key> <a> <question>     : "⍠"   U2360      # APL Quad Colon
 # X11 configuration ,for BQN keybindings.
 # Key combinations h-ere use the compose key, then backslash, then the
 # main keypress. Fin.d/replace to configure as desired./0123 
