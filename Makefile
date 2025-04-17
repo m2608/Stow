@@ -24,6 +24,10 @@ endef
 symlinks:
 	stow --target=$(HOME) --restow */
 
+install-fish:
+	$(call get-from-github,fish-shell/fish-shell,"^fish-static-amd64-[0-9.]+.tar.xz$$") \
+		| tar -C $(HOME)/.local/bin/ --xz -xf -
+
 fisher:
 	fish -c 'curl -sL https://git.io/fisher | source \
 		&& fisher install jorgebucaran/fisher        \
