@@ -5,7 +5,7 @@
  :lazy (not nvim.g.started_by_firenvim)
  :build
  (fn []
-   ((. nvim.fn "firenvim#install")))
+   ((. nvim.fn "firenvim#install") 0))
  :config
  (fn []
    (core.assoc nvim.g "firenvim_config"

@@ -14,10 +14,10 @@
      (let [client (. (vim.api.nvim_get_chan_info nvim.v.event.chan) "client")]
        (when (and client (= client.name "Firenvim"))
          (each [_ option (ipairs [[:laststatus 0]
-                                  [:columns 100]
-                                  [:lines   100]
+                                  [:columns 200]
+                                  [:lines 50]
                                   [:background "light"]
-                                  [:guifont "Iosevka:h16"]
+                                  [:guifont "Iosevka:h14"]
                                   [:cmdheight 0]])]
            (let [name (. option 1)
                  value (. option 2)]
