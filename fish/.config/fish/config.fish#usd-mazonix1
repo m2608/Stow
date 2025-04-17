@@ -1,12 +1,15 @@
 setenv PAGER nvimpager
 
+setenv GOPATH $HOME/.gocode
+
 set PATH \
-    $HOME/.local/bin \
     $HOME/.cargo/bin \
     $HOME/.qlot/bin \
-    $HOME/go/bin \
+    $GOPATH/bin \
+    $HOME/.local/opt/go/bin/ \
     $HOME/.local/opt/python-3.11/bin \
     $HOME/.local/opt/android-cmdline-tools/bin \
+    $HOME/.local/bin \
     $HOME/perl5/bin \
     /opt/metasploit-framework/bin \
     /opt/sbis3plugin \
