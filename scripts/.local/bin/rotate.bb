@@ -5,16 +5,20 @@
 
 (def finger-touch "Wacom Pen and multitouch sensor Finger touch")
 (def stilus-touch "Wacom Pen and multitouch sensor Pen stylus")
+(def eraser-touch "Wacom Pen and multitouch sensor Pen eraser")
 
+;; Типы поворотов экрана.
 (def rotations
   [:normal :left :right :inverted])
 
+;; Матрицы транформации для пересчета координат перьевого ввода.
 (def matrixes
   {:normal   [ 1  0  0  0  1  0  0  0  1]
    :left     [ 0 -1  1  1  0  0  0  0  1]
    :right    [ 0  1  0 -1  0  1  0  0  1]
    :inverted [-1  0  1  0 -1  1  0  0  1]})
 
+;; Регулярное выражение для получения текущего типа поворота экрана.
 (def regex-rotation #"(\w+) connected primary [0-9x+]+ (?:(\w*) )?[(].*")
 
 (defn get-output-and-rotation
@@ -32,8 +36,10 @@
 (let [[output rotation] (get-output-and-rotation)
       new-rotation (rotations (mod (inc (.indexOf rotations rotation))
                                    (count rotations)))]
-  (if (or (= new-rotation :left) (= new-rotation :right))
-    (shell "xinput" "disable" finger-touch)
-    (shell "xinput" "enable" finger-touch))
+  ;; Поворачиваем экран.
   (shell "xrandr" "--output" output "--rotate" (name new-rotation))
-  (apply shell (concat ["xinput" "set-prop" stilus-touch "Coordinate Transformation Matrix"] (matrixes new-rotation))))
+  ;; Отключаем пальцевый ввод для альбомных ориентаций.
+  (shell "xinput" (if (#{:left :right} new-rotation) "disable" "enable") finger-touch)
+  ;; Для перьевого ввода устанавливаем матрицу трансформации.
+  (doseq [touch [stilus-touch eraser-touch]]
+    (apply shell (concat ["xinput" "set-prop" touch "Coordinate Transformation Matrix"] (matrixes new-rotation)))))
