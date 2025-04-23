@@ -31,6 +31,9 @@ super + f
 super + r
 	bspc node @parent -R 90
 
+super + shift + r
+    bspc node @parent -R -90
+
 #
 # focus/swap
 #
