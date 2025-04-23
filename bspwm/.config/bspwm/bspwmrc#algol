@@ -6,8 +6,8 @@ bspc monitor HDMI-0 -d 1 2 3 4 5
 # Раскладка.
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 
-xbmouse -b 8 xkev -u -e u &
-xbmouse -b 9 xkev -u -e i &
+xbmouse -b 8 xkev -u -e r &
+xbmouse -b 9 xkev -u -s -e r &
 
 # Устанавливаем обои и курсор.
 xsetroot -solid black
