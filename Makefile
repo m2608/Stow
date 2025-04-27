@@ -88,6 +88,10 @@ install-kak-lsp:
 		| tar --gz --to-stdout -xf - kak-lsp > $(KAK_LSP);
 	chmod +x $(KAK_LSP)
 
+install-uv:
+	$(call get-from-github,astral-sh/uv,"^uv-x86_64-unknown-linux-gnu[.]tar[.]gz$$") \
+		| tar -C $(HOME)/.local/bin --strip-components=1 --gz -xf -
+
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
 	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
