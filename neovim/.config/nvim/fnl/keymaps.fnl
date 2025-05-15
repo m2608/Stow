@@ -97,6 +97,7 @@
    ["n" "<space>s" ":Telescope lsp_document_symbols<CR>"]
    ["n" "<space>r" ":Telescope lsp_references<CR>"]
    ["n" "<space>j" ":Telescope jumplist<CR>"]
+   ["n" "<space>u" ":Telescope undo<CR>"]
 
    ["n" "<Leader>fh" ":Telescope help_tags<CR>"]
    ["n" "<Leader>fd" ":Telescope lsp_definitions<CR>"]
