@@ -24,6 +24,7 @@ alias ls lsd
 alias aumix "env LANG=C aumix"
 alias mosh "MOSH_ESCAPE_KEY=(printf '\x1f') /usr/local/bin/mosh"
 alias hiew 'wineconsole $HOME/.local/opt/hiew/hiew32.exe'
+alias joker "rlwrap $HOME/.local/bin/joker --no-readline"
 
 set xfreerdp (which xfreerdp)
 if test -n "$xfreerdp"
