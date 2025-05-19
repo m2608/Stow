@@ -16,6 +16,7 @@ setenv XDG_CACHE_HOME  $HOME/.cache
 bind \cz "jobs > /dev/null && echo && fg"
 
 alias cal "cal -M"
+alias parallel "parallel --will-cite"
 alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
 
 set nnn (which nnn)

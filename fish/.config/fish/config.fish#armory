@@ -1,1 +1,1 @@
-set PATH $HOME/.local/opt/node/bin $PATH
+set PATH /opt/neovim/bin $HOME/.local/opt/node/bin $PATH
