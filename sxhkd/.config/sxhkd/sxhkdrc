@@ -4,7 +4,11 @@ super + Escape
 
 # запуск dmenu
 super + p
-    dmenu_run -fn "Terminus:size=16" -nb '#202020' -nf '#a0a0a0' -sb '#606060' -sf '#e0e0e0'
+    dmenu_run
+
+# калькулятор
+super + c
+    printf "" | dmenu -c -p calc | xargs -I[] fish -c "math '[]'" | xargs notify-send
 
 # scratchpad терминал
 super + n
