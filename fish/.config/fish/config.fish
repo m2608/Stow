@@ -18,6 +18,9 @@ bind \cz "jobs > /dev/null && echo && fg"
 alias cal "cal -M"
 alias parallel "parallel --will-cite"
 alias fc-select "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort -u | fzf --layout reverse-list"
+alias jq-record "jq '[.d, .s] | transpose | map({(.[1].n): .[0]}) | add'"
+alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .[0]}) | add'"
+alias xml-beautify 'xmllint --format --encode utf-8 -'
 
 set nnn (which nnn)
 if test -n "$nnn"
