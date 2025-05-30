@@ -4,6 +4,7 @@ self=`basename $0`
 
 if test -z "$1" -o -z "$2" -o ! -f "$1"; then
     echo Usage: "$self <file name> <command>"
+    exit 0
 fi
 
 filename="$1"
