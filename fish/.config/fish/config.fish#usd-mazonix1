@@ -1,4 +1,6 @@
 setenv PAGER nvimpager
+# setenv MANPAGER "sh -c 'col -bx | bat --pager less -l man -p'"
+setenv LC_COLLATE C
 
 setenv GOPATH $HOME/.gocode
 
@@ -12,13 +14,20 @@ set PATH \
     $HOME/.local/bin \
     $HOME/perl5/bin \
     /opt/metasploit-framework/bin \
-    /opt/sbis3plugin \
+    /opt/Tensor/Saby \
     /usr/local/bin \
     /usr/local/sbin \
     /usr/bin \
     /usr/sbin \
     /bin \
     /sbin
+
+set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/\1/')
+if test "$os_name" = "CentOS Linux"
+    set PATH "$HOME/.local/centos-bin:$PATH"
+else if test "$os_name" = "Void"
+    set PATH "$HOME/.local/void-bin:$PATH"
+end
 
 alias less 'less -r'
 alias ls lsd
