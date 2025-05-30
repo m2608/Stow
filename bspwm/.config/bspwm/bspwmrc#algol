@@ -33,6 +33,9 @@ sysctl hw.snd.default_unit=1
 # Индикатор языка.
 pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
 
+# Менеджер буфера обмена.
+clipmenud &
+
 # Управление мышью с клавиатуры.
 keynav
 
