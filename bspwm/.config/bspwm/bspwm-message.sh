@@ -3,14 +3,8 @@
 test -n "$1" || exit 0
 
 # check for required tools
-which dzen2 || exit 1
-which magick || which convert || exit 1
-
-if which magick; then
-    magick="magick"
-else
-    magick="convert"
-fi
+command -v dzen2 || exit 1
+magick=$(command -v magick || command -v convert) || exit 1
 
 get_resource() {
     name="$1"
