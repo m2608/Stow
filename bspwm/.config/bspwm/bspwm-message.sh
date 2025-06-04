@@ -2,14 +2,21 @@
 
 test -n "$1" || exit 0
 
+get_resource() {
+    name="$1"
+    xrdb -query | sed -r -n "/^$name:/ s/$name:[\\s\\t]+// p"
+}
+
 message="$1"
 
-# font
-font="Terminus:size=16"
-# background
-bg="#432d59"
-# foreground
-fg="#00ff00"
+font=$(get_resource "bspwm-message[.]font")
+bg=$(get_resource "bspwm-message[.]background")
+fg=$(get_resource "bspwm-message[.]foreground")
+
+: "${font:='Terminus:size=16'}"
+: "${bg:='#432d59'}"
+: "${fg:='#00ff00'}"
+
 
 # message size
 mw=$(xftwidth "$font" "$message")
