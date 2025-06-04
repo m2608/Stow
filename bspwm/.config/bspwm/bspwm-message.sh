@@ -2,6 +2,16 @@
 
 test -n "$1" || exit 0
 
+# check for required tools
+which dzen2 || exit 1
+which magick || which convert || exit 1
+
+if which magick; then
+    magick="magick"
+else
+    magick="convert"
+fi
+
 get_resource() {
     name="$1"
     xrdb -query | sed -r -n "/^$name:/ s/$name:[\\s\\t]+// p"
@@ -27,7 +37,7 @@ fontsize=$(fc-match -f "%{size}" "$font")
 dpi=$(xdpyinfo | sed -n -r '/^[ ]*resolution:[ ]+[0-9]+x[0-9]+ dots/ s/^[ ]*resolution:[ ]+([0-9]+)x([0-9]+) dots .*/(\1+\2)\/2/p' | bc)
 
 # message size
-size=$(magick -density $dpi -font "$fontfile" -pointsize $fontsize label:"$message" -format "%wx%h" info:)
+size=$("$magick" -density $dpi -font "$fontfile" -pointsize $fontsize label:"$message" -format "%wx%h" info:)
 
 mw=$(echo $size | cut -d 'x' -f 1)
 mh=$(echo $size | cut -d 'x' -f 2)
