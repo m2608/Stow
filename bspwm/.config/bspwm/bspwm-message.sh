@@ -36,15 +36,18 @@ size=$("$magick" -density $dpi -font "$fontfile" -pointsize $fontsize label:"$me
 mw=$(echo $size | cut -d 'x' -f 1)
 mh=$(echo $size | cut -d 'x' -f 2)
 
-# screen size
-wininfo=$(xwininfo -root)
-sw=$(echo "$wininfo" | grep Width  | cut -d ':' -f 2)
-sh=$(echo "$wininfo" | grep Height | cut -d ':' -f 2)
+# screen size and position
+rect=$(bspc query -T -m focused | jq .rectangle)
+
+sx=$(jq -n --argjson rect "$rect" '$rect .x')
+sy=$(jq -n --argjson rect "$rect" '$rect .y')
+sw=$(jq -n --argjson rect "$rect" '$rect .width')
+sh=$(jq -n --argjson rect "$rect" '$rect .height')
 
 printf "%s\n" "$message" \
 | dzen2 -p 1 -bg "$bg" -fg "$fg" -fn "$font" \
-    -w $mw            \
-    -h $mh            \
-    -x $(((sw-mw)/2)) \
-    -y $(((sh-mh)/2))
+    -w $mw \
+    -h $mh \
+    -x $((sx+(sw-mw)/2)) \
+    -y $((sy+(sh-mh)/2))
 
