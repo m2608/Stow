@@ -22,6 +22,10 @@ alias jq-record "jq '[.d, .s] | transpose | map({(.[1].n): .[0]}) | add'"
 alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .[0]}) | add'"
 alias xml-beautify 'xmllint --format --encode utf-8 -'
 
+alias theme-toggle 'config.clj toggle ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita Adwaita-dark'
+alias theme-light  'config.clj set    ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita'
+alias theme-dark   'config.clj set    ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita-dark'
+
 set nnn (which nnn)
 if test -n "$nnn"
     alias nnn "LANG=ru_RU.UTF-8 PAGER='nvimpager -p' NO_COLOR=1 $nnn"
