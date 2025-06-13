@@ -80,7 +80,7 @@ function fish_prompt --description 'Write out the prompt'
     set -l duration (format_duration $CMD_DURATION)
 
     # Hostname icon and color.
-    set icon (printf "\U0001f5b3 ")
+    set icon (printf "\U00002b53")
     set -l color_host (hostname | cut -d '.' -f 1 | md5sum | cut -c 1-6)
 
     echo -n -s (set_color $color_host) $icon ' ' (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $jobs " "[$duration] " "$prompt_status $suffix " "
