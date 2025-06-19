@@ -13,7 +13,7 @@ setenv XDG_CONFIG_HOME $HOME/.config
 setenv XDG_STATE_HOME  $HOME/.local/state
 setenv XDG_CACHE_HOME  $HOME/.cache
 
-bind \cz "jobs > /dev/null && echo && fg"
+bind ctrl-z "jobs > /dev/null && echo && fg"
 
 alias cal "cal -M"
 alias parallel "parallel --will-cite"
