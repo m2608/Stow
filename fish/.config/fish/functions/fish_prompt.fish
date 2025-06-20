@@ -79,9 +79,13 @@ function fish_prompt --description 'Write out the prompt'
     # Last command execution time.
     set -l duration (format_duration $CMD_DURATION)
 
+    # Username.
+    set -l user (set_color $fish_color_user)(whoami | cut -d '@' -f 1)
+
     # Hostname icon and color.
     set -l color_host (hostname | cut -d '.' -f 1 | md5sum | cut -c 1-6)
-    set icon (set_color $color_host)(printf "\U00002b1b")
+    set icon (set_color $color_host)(printf "⯂")
+    set host (set_color $fish_color_host)(hostname | cut -d '.' -f 1)
 
-    echo -n -s $icon (prompt_login) ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $jobs " "[$duration] " "$prompt_status $suffix " "
+    echo -n -s $user $icon $host ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $jobs " "[$duration] " "$prompt_status $suffix " "
 end
