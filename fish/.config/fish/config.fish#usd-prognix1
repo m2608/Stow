@@ -1,6 +1,7 @@
 setenv PAGER nvimpager
 
 set PATH \
+    $HOME/.local/bin \
     $HOME/.local/go/bin \
     $PATH
 
