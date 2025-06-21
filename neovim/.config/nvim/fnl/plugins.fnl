@@ -1,11 +1,5 @@
-(module plugins
-  {autoload {
-    nvim aniseed.nvim
-    core aniseed.core
-	fs   aniseed.fs}})
-
-((. (require :lazy) :setup) 
- (core.map (fn [path]
-             (require (string.gsub path "^/(.*)[.]fnl$" "plugins.%1")))
-           (fs.relglob (.. (vim.fn.stdpath "config") "/fnl/plugins")
-                       "*.fnl")))
+[{1 "folke/lazy.nvim"
+  :version "*"}
+ {1 "Olical/nfnl"
+  :ft "fennel"
+  :init (fn [] (require "config"))}]

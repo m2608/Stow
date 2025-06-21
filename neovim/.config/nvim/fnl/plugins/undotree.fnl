@@ -1,1 +1,1 @@
-"mbbill/undotree"
+{1 "mbbill/undotree"}

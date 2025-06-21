@@ -1,11 +1,9 @@
-(local nvim (require "aniseed.nvim"))
-
 {1 "nvim-treesitter/nvim-treesitter"
 
  ;; Проверяем наличие компилятора и tree-sitter.
  :cond
- (and (= 1 (nvim.fn.executable "clang"))
-      (= 1 (nvim.fn.executable "tree-sitter")))
+ (and (= 1 (vim.fn.executable "clang"))
+      (= 1 (vim.fn.executable "tree-sitter")))
 
  :build
  (fn []
@@ -30,4 +28,6 @@
         {:enable true
          :keymaps
          {"af" "@function.outer"
-          "if" "@function.inner"}}}})))}
+          "if" "@function.inner"}}}})
+     ; (vim.treesitter.language.register "clojure" "joker")
+     ))}

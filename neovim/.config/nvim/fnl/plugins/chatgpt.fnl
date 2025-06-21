@@ -1,4 +1,4 @@
-(local core (require "aniseed.core"))
+(local core (require "nfnl.core"))
 
 {1 "jackMort/ChatGPT.nvim"
  :config

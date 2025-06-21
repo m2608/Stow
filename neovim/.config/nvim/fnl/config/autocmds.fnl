@@ -1,7 +1,5 @@
-(module autocmds
-  {autoload
-    {core :aniseed.core
-     nvim :aniseed.nvim}})
+(local {: autoload} (require "nfnl.module"))
+(local core (autoload "nfnl.core"))
 
 (local augroup vim.api.nvim_create_augroup)
 (local autocmd vim.api.nvim_create_autocmd)
@@ -11,7 +9,7 @@
   ["UIEnter"]
   {:callback
    (fn [event]
-     (let [client (. (vim.api.nvim_get_chan_info nvim.v.event.chan) "client")]
+     (let [client (. (vim.api.nvim_get_chan_info vim.v.event.chan) "client")]
        (when (and client (= client.name "Firenvim"))
          (each [_ option (ipairs [[:laststatus 0]
                                   [:columns 200]
@@ -21,7 +19,7 @@
                                   [:cmdheight 0]])]
            (let [name (. option 1)
                  value (. option 2)]
-             (core.assoc nvim.o name value))))))})
+             (core.assoc vim.o name value))))))})
 
 ;; Установка формата для файлов *.bqn.
 (autocmd
@@ -34,6 +32,25 @@
   ["BufNewFile" "BufRead"]
   {:pattern "*.hurl"
    :command "setlocal commentstring=#\\ %s"})
+
+; (augroup "joker" {:clear true})
+;
+; (autocmd
+;   ["BufRead" "BufNewFile"]
+;   {:pattern "*.jk"
+;    :group "joker"
+;    :callback (fn []
+;                (vim.cmd "set filetype=joker")
+;                (vim.cmd "set syntax=clojure")
+;                (vim.cmd "runtime! indent/clojure.vim"))})
+;
+; (autocmd
+;   ["FileType"]
+;   {:pattern "joker"
+;    :group "joker"
+;    :callback (fn []
+;                (vim.cmd "set syntax=clojure")
+;                (vim.cmd "runtime! indent/clojure.vim"))})
 
 ;; Маппинги символов BQN для файлов соответствующего типа.
 (autocmd

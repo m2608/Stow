@@ -1,14 +1,13 @@
-(local core (require "aniseed.core"))
-(local nvim (require "aniseed.nvim"))
+(local core (require "nfnl.core"))
 
 {1 "glacambre/firenvim"
- :lazy (not nvim.g.started_by_firenvim)
+ :lazy (not vim.g.started_by_firenvim)
  :build
  (fn []
-   ((. nvim.fn "firenvim#install") 0))
+   ((. vim.fn "firenvim#install") 0))
  :config
  (fn []
-   (core.assoc nvim.g "firenvim_config"
+   (core.assoc vim.g "firenvim_config"
                {:globalSettings
                 {:alt "all"}
                 :localSettings

@@ -1,9 +1,8 @@
-(local core (require "aniseed.core"))
-(local nvim (require "aniseed.nvim"))
+(local core (require "nfnl.core"))
 
 {1 "kkharji/lispdocs.nvim"
  :lazy true
  :dependencies ["kkharji/sqlite.lua"]
  :config
  (fn []
-   (core.assoc nvim.g "lispdocs_mappings" 0))}
+   (core.assoc vim.g "lispdocs_mappings" 0))}

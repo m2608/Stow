@@ -1,9 +1,8 @@
-(local nvim (require :aniseed.nvim))
-(local core (require :aniseed.core))
+(local core (require "nfnl.core"))
 
 {1 "folke/which-key.nvim"
  :config
  (fn []
-   (core.assoc nvim.o :timeout true)
-   (core.assoc nvim.o :timeoutlen 300)
+   (core.assoc vim.o :timeout true)
+   (core.assoc vim.o :timeoutlen 300)
    ((. (require "which-key") :setup) {}))}

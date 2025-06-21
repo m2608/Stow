@@ -1,1 +1,1 @@
-"nvim-tree/nvim-web-devicons"
+{1 "nvim-tree/nvim-web-devicons"}

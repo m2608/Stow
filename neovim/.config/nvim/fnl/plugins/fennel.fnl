@@ -1,1 +1,1 @@
-"bakpakin/fennel.vim"
+{1 "bakpakin/fennel.vim"}

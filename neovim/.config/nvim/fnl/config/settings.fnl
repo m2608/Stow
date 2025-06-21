@@ -1,8 +1,6 @@
-(module settings
-  {autoload
-    {core :aniseed.core
-     str :aniseed.string
-     nvim :aniseed.nvim}})
+(local {: autoload} (require "nfnl.module"))
+(local core (autoload "nfnl.core"))
+(local str  (autoload "nfnl.str"))
 
 (fn file-exists? [filename]
   "Проверяет, существует ли файл."
@@ -50,15 +48,15 @@
                [:mouse ""]
                ;; задаем маппинги для использования команд, если включена русская системная раскладка
                ;; код ниже экранирует специальные символы и объединяет все в строку
-               [:langmap (table.concat
-                           (core.map
-                             (fn [m] (core.reduce
-                                       (fn [m escaped-char]
-                                         (string.gsub m escaped-char (.. "\\" escaped-char)))
-                                       m
-                                       ["\\" "\"" "|" "," ";"]))
-                             lang-mappings)
-                           ",")]
+               ; [:langmap (table.concat
+               ;             (core.map
+               ;               (fn [m] (core.reduce
+               ;                         (fn [m escaped-char]
+               ;                           (string.gsub m escaped-char (.. "\\" escaped-char)))
+               ;                         m
+               ;                         ["\\" "\"" "|" "," ";"]))
+               ;               lang-mappings)
+               ;             ",")]
                [:ignorecase true]
                [:smartcase true]
                ;; отключаем перенос длинных строк
@@ -68,13 +66,13 @@
                ;; показывать только меню при автодополнении (не показывать окно предпросмотра)
                [:completeopt "menu"]
                ;; команда :find будет искать файлы также и в подкаталогах
-               [:path (.. (core.get nvim.o "path") "**")]
+               ; [:path (.. (core.get nvim.o "path") "**")]
                ;; шрифт для графического режима
                [:guifont "APL386 Unicode:h16"]]]
   (each [_ option (ipairs options)]
     (let [name (. option 1)
           value (. option 2)]
-      (core.assoc nvim.o name value))))
+      (core.assoc vim.o name value))))
 
 (let [commands
       [;; заменять табуляции пробелами для всех файлов, кроме Makefile
@@ -95,11 +93,11 @@
        ;; показываем диагностическое сообщение при задержке курсора на строке
        ;; "autocmd CursorHold * lua vim.diagnostic.open_float()"
        ;; отключаем линтер для REPL Conjure (баг в nvim https://github.com/Olical/conjure/pull/420)
-       "autocmd BufNewFile conjure-log-* lua vim.diagnostic.disable(0)"
+       "autocmd BufNewFile conjure-log-* lua vim.diagnostic.enable(false)"
        ;; отключаем сворачивание для файлов hurl
        "autocmd Syntax hurl setlocal foldmethod=manual"]]
   (each [_ cmd (ipairs commands)]
-    (nvim.command cmd)))
+    (vim.cmd cmd)))
 
 
 ;; Хак для определения фона терминала в tmux.
@@ -117,14 +115,15 @@
     (vim.cmd.colorscheme "illyria"))
 
   ;; Цветовая схема для nvim-gtk.
-  (core.get nvim.g :GtkGuiLoaded nil)
+  (core.get vim.g :GtkGuiLoaded nil)
   (vim.cmd.colorscheme "nano-theme")
 
   ;; Настройка цветовой схемы в соответствие со схемой терминала.
   (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
     (when (file-exists? colorscheme-filename)
       ; (core.assoc nvim.g :base16colorspace 256)
-      (nvim.command (.. "source" colorscheme-filename)))))
+      (vim.cmd (.. "source" colorscheme-filename))))
+  )
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,
@@ -136,7 +135,7 @@
    :float {:source "always" :border "single"}})
 
 ;; Настройки nvim-gtk.
-(when (core.get nvim.g :GtkGuiLoaded nil)
+(when (core.get vim.g :GtkGuiLoaded nil)
   (let [hostname (vim.fn.hostname)
         gui-options [["Font" "APL386 Unicode 18"]
                      ["Option" "Popupmenu" 1]
@@ -146,5 +145,7 @@
       (vim.rpcnotify 1 "Gui" (unpack option)))))
 
 ;; На рабочем компе меняем путь к python.
-(when (string.find (nvim.fn.hostname) "usd[-]mazonix1")
-  (core.assoc nvim.g :python3_host_prog (.. (nvim.fn.getenv "HOME") "/.local/bin/python3.11")))
+; (when (string.find (vim.fn.hostname) "usd[-]mazonix1")
+;   (core.assoc vim.g :python3_host_prog (.. (vim.fn.getenv "HOME") "/.local/bin/python3.11")))
+
+; (vim.filetype.add {:extension {"jk" "joker"}})

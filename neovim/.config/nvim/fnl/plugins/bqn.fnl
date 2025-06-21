@@ -1,5 +1,4 @@
-(local core (require "aniseed.core"))
-(local nvim (require "aniseed.nvim"))
+(local core (require "nfnl.core"))
 
 {1 "mlochbaum/BQN"
  :ft "bqn"

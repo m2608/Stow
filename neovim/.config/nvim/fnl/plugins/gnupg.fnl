@@ -1,1 +1,1 @@
-"jamessan/vim-gnupg"
+{1 "jamessan/vim-gnupg"}

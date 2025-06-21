@@ -1,5 +1,4 @@
-(local core (require "aniseed.core"))
-(local nvim (require "aniseed.nvim"))
+(local core (require "nfnl.core"))
 
 {1 "jpalardy/vim-slime"
  :lazy true
@@ -9,7 +8,7 @@
                                                    :target_pane "{last}"}]
                           ["slime_dont_ask_default" 1]]]
                  (each [_ option (ipairs options)]
-                   (core.assoc nvim.g (unpack option)))))
+                   (tset vim.g (unpack option)))))
  :cmd ["SlimeConfig"
        "SlimeSend"
        "SlimeSend0"

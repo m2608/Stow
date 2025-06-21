@@ -1,8 +1,6 @@
-(module pipe
-  {autoload
-    {core :aniseed.core
-     str :aniseed.string
-     nvim :anissed.nvim}})
+(local {: autoload} (require "nfnl.module"))
+(local core (require "nfnl.core"))
+(local str (require "nfnl.string"))
 
 ; Функция прогоняет список строк через пайп указанной команды.
 (fn pipe-lines

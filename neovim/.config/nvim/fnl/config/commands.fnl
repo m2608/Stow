@@ -1,9 +1,5 @@
-(module commands
-  {autoload
-    {nvim :aniseed.nvim}})
-
 (fn cmd [...]
-  (nvim.command ...))
+  (vim.cmd ...))
 
 ;; Команды для кодирования и декодирования base64 и URL.
 (cmd (.. "command! -range URLencode :<line1>,<line2>"
