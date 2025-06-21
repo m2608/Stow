@@ -147,5 +147,3 @@
 ;; На рабочем компе меняем путь к python.
 ; (when (string.find (vim.fn.hostname) "usd[-]mazonix1")
 ;   (core.assoc vim.g :python3_host_prog (.. (vim.fn.getenv "HOME") "/.local/bin/python3.11")))
-
-; (vim.filetype.add {:extension {"jk" "joker"}})

@@ -33,25 +33,6 @@
   {:pattern "*.hurl"
    :command "setlocal commentstring=#\\ %s"})
 
-; (augroup "joker" {:clear true})
-;
-; (autocmd
-;   ["BufRead" "BufNewFile"]
-;   {:pattern "*.jk"
-;    :group "joker"
-;    :callback (fn []
-;                (vim.cmd "set filetype=joker")
-;                (vim.cmd "set syntax=clojure")
-;                (vim.cmd "runtime! indent/clojure.vim"))})
-;
-; (autocmd
-;   ["FileType"]
-;   {:pattern "joker"
-;    :group "joker"
-;    :callback (fn []
-;                (vim.cmd "set syntax=clojure")
-;                (vim.cmd "runtime! indent/clojure.vim"))})
-
 ;; Маппинги символов BQN для файлов соответствующего типа.
 (autocmd
   ["FileType"]

@@ -5,4 +5,5 @@
 (require "config.commands")
 (require "config.autocmds")
 (require "config.keymaps")
+(require "config.filetypes")
 (require "config.pipe")
