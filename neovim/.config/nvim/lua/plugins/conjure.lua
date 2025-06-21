@@ -1,7 +1,7 @@
 -- [nfnl] fnl/plugins/conjure.fnl
 local core = require("nfnl.core")
 local function _1_()
-  vim.g["conjure#filetype#joker"] = "conjure.client.joker.stdio"
+  vim.g["conjure#filetypes"] = {"clojure", "fennel", "janet", "hy", "scheme", "lua", "lisp", "python", "joker"}
   return nil
 end
 local function _2_()
