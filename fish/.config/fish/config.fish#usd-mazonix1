@@ -13,6 +13,7 @@ set PATH \
     $HOME/.local/opt/android-cmdline-tools/bin \
     $HOME/.local/bin \
     $HOME/perl5/bin \
+    /opt/cprocsp/bin/amd64 \
     /opt/metasploit-framework/bin \
     /opt/Tensor/Saby \
     /usr/local/bin \
