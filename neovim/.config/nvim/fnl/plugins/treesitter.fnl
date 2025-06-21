@@ -28,6 +28,5 @@
         {:enable true
          :keymaps
          {"af" "@function.outer"
-          "if" "@function.inner"}}}})
-     ; (vim.treesitter.language.register "clojure" "joker")
-     ))}
+          "if" "@function.inner"}}}}))
+   (vim.treesitter.language.register "clojure" "joker"))}
