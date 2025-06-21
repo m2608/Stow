@@ -4,7 +4,7 @@
  :lazy false
  :init
  (fn []
-   (tset vim.g "conjure#filetype#joker" "conjure.client.joker.stdio"))
+   (tset vim.g "conjure#filetypes" ["clojure" "fennel" "janet" "hy" "scheme" "lua" "lisp" "python" "joker"]))
  :config
  (fn []
    (let [options [["conjure#mapping#prefix" ","]
