@@ -7,6 +7,7 @@ setenv GOPATH $HOME/.gocode
 set PATH \
     $HOME/.cargo/bin \
     $HOME/.qlot/bin \
+    $HOME/.atuin/bin \
     $GOPATH/bin \
     $HOME/.local/opt/go/bin/ \
     $HOME/.local/opt/python-3.11/bin \
@@ -46,5 +47,6 @@ abbr hurl-proxy "hurl --proxy socks://127.0.0.1:5555"
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
 
 zoxide init fish | source
+atuin init fish | source
 
 source $HOME/.config/grc/grc.fish

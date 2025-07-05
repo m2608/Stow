@@ -26,23 +26,22 @@ alias mosh "MOSH_ESCAPE_KEY=(printf '\x1f') /usr/local/bin/mosh"
 alias hiew 'wineconsole $HOME/.local/opt/hiew/hiew32.exe'
 alias joker "rlwrap $HOME/.local/bin/joker --no-readline"
 
-set xfreerdp (which xfreerdp)
+set xfreerdp (which xfreerdp3)
 if test -n "$xfreerdp"
-    alias xfreerdp "$xfreerdp \
-        +fonts               \
-        +bitmap-cache        \
-        +glyph-cache         \
-        +clipboard           \
-        +auto-reconnect      \
-        /audio-mode:1        \
-        /compression-level:2 \
-        /monitors:1          \
-        /window-position:0x0 \
-        /bpp:15              \
-        /dynamic-resolution"
+    alias xfreerdp "xfreerdp3 \
+    +clipboard                \
+    +auto-reconnect           \
+    /audio-mode:1             \
+    /bpp:15                   \
+    /cache:bitmap:on,glyph:on \
+    /compression-level:2      \
+    /monitors:1               \
+    /window-position:0x0      \
+    /dynamic-resolution"
 end
 
 
 zoxide init fish | source
+atuin  init fish --disable-up-arrow | source
 
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
