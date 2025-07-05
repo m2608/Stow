@@ -39,6 +39,10 @@ mw=$(echo $size | cut -d 'x' -f 1)
 mh=$(echo $size | cut -d 'x' -f 2)
 
 while true; do 
+    if ! xset q 1> /dev/null 2> /dev/null; then
+        break
+    fi
+
     xkb-switch -p | tr a-z A-Z
     xkb-switch --wait
 done | dzen2 \
