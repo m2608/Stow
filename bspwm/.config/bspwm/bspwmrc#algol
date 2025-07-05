@@ -31,7 +31,7 @@ xrdb -merge ~/.Xresources
 sysctl hw.snd.default_unit=1
 
 # Индикатор языка.
-pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
+$HOME/.local/bin/layout.sh &
 
 # Менеджер буфера обмена.
 clipmenud &
