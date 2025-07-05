@@ -13,7 +13,7 @@ function format_jobs -d "Format jobs list for prompt"
     end
 
     if test -n "$jobs"
-        echo " ["(string join " " $jobs)"]"
+        echo "["(string join " " $jobs)"] "
     else
         echo ""
     end
@@ -73,11 +73,13 @@ function fish_prompt --description 'Write out the prompt'
     set -l statusb_color (set_color $bold_flag $fish_color_status)
     set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
 
+    echo -n -s (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $prompt_status $suffix " "
+end
+
+
+function fish_right_prompt --description 'Right prompt'
     # List of jobs (if any)
     set -l jobs (format_jobs "$normal" (set_color $fish_color_quote))
-
-    # Last command execution time.
-    set -l duration (format_duration $CMD_DURATION)
 
     # Username.
     set -l user (set_color $fish_color_user)(whoami | cut -d '@' -f 1)
@@ -87,5 +89,8 @@ function fish_prompt --description 'Write out the prompt'
     set icon (set_color $color_host)(printf "⯂")
     set host (set_color $fish_color_host)(hostname | cut -d '.' -f 1)
 
-    echo -n -s $user $icon $host ' ' (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $jobs " "[$duration] " "$prompt_status $suffix " "
+    # Last command execution time.
+    set -l duration (format_duration $CMD_DURATION)
+
+    echo -n -s "[$duration] " $jobs $user $icon $host
 end
