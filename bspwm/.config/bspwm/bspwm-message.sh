@@ -3,7 +3,7 @@
 test -n "$1" || exit 0
 
 # check for required tools
-command -v dzen2 || exit 1
+command -v dzen2 > /dev/null || exit 1
 magick=$(command -v magick || command -v convert) || exit 1
 
 get_resource() {
