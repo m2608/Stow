@@ -56,3 +56,9 @@ clipper &
 
 # Запускаем службы, если они еще не запущены.
 pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
+
+# zeal
+$HOME/.local/bin/zeal &
+
+# Плагин.
+/opt/Tensor/Saby/saby &
