@@ -4,7 +4,7 @@ super + Escape
 
 # запуск dmenu
 super + p
-    dmenu_path | dmenu | sh
+    dmenu_path | dmenu | fish
 
 # калькулятор
 super + c
