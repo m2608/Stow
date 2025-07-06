@@ -2,8 +2,6 @@ setenv PAGER nvimpager
 # setenv MANPAGER "sh -c 'col -bx | bat --pager less -l man -p'"
 setenv LC_COLLATE C
 
-setenv GOPATH $HOME/.gocode
-
 set PATH \
     $HOME/.cargo/bin \
     $HOME/.qlot/bin \
