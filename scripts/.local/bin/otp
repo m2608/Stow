@@ -40,12 +40,15 @@ fi
 # быть в формате base32
 . "$otp_data"
 
+# значение по умолчанию
+: "${totp:='SHA1'}"
+
 case "$action" in
     export)
-        printf "otpauth://totp/%s:%s?secret=%s&issuer=%s\n" "$issuer" "$username" "$seed" "$issuer" \
+        printf "otpauth://totp/%s:%s?secret=%s&issuer=%s&algorithm=%s\n" "$issuer" "$username" "$seed" "$issuer" "$totp" \
             | qrencode -t ANSI256UTF8
         ;;
     generate)
-        oathtool --totp -b `echo $seed | tr -d " "`
+        oathtool --totp=$totp -b `echo $seed | tr -d " "`
         ;;
 esac
