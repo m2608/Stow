@@ -1,0 +1,7 @@
+init: |
+    \set SYNTAX_HL true
+    \set SYNTAX_HL_STYLE algol_nu
+    \set PAGER pspg
+connections:
+    repoman_local: "postgresql://repoman:repoman@127.0.0.1:7432/repoman?sslmode=disable"
+    repoman_test:  "postgresql://repoman:repoman@127.0.0.1:17432/repoman?sslmode=disable"

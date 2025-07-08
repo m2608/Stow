@@ -4,8 +4,8 @@ hostname=$(hostname | cut -d '.' -f 1)
 
 # Настраиваем горячие клавиши.
 pgrep -x sxhkd > /dev/null \
-    || env SXHKD_SHELL=/bin/sh sxhkd -c "$HOME/.config/sxhkd/sxhkdrc"           \
-                "$HOME/.config/sxhkd/sxhkdrc.bspwm"     \
+    || sxhkd -c "$HOME/.config/sxhkd/sxhkdrc" \
+                "$HOME/.config/sxhkd/sxhkdrc.bspwm" \
                 "$HOME/.config/sxhkd/sxhkdrc#$hostname" &
 
 bspc config border_width            2
