@@ -41,6 +41,5 @@ end
 
 
 zoxide init fish | source
-atuin  init fish --disable-up-arrow | source
 
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"

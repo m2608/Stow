@@ -1,15 +1,14 @@
-setenv PAGER nvimpager
 # setenv MANPAGER "sh -c 'col -bx | bat --pager less -l man -p'"
 setenv LC_COLLATE C
 
 set PATH \
     $HOME/.cargo/bin \
     $HOME/.qlot/bin \
-    $HOME/.atuin/bin \
     $GOPATH/bin \
     $HOME/.local/opt/go/bin/ \
     $HOME/.local/opt/python-3.11/bin \
     $HOME/.local/opt/android-cmdline-tools/bin \
+    $HOME/.config/nvm/versions/node/v22.17.0/bin \
     $HOME/.local/bin \
     $HOME/perl5/bin \
     /opt/cprocsp/bin/amd64 \
@@ -22,29 +21,25 @@ set PATH \
     /bin \
     /sbin
 
-set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/\1/')
-if test "$os_name" = "CentOS Linux"
-    set PATH "$HOME/.local/centos-bin:$PATH"
-else if test "$os_name" = "Void"
-    set PATH "$HOME/.local/void-bin:$PATH"
-end
+# set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/\1/')
+# if test "$os_name" = "CentOS Linux"
+#     set PATH "$HOME/.local/centos-bin:$PATH"
+# else if test "$os_name" = "Void"
+#     set PATH "$HOME/.local/void-bin:$PATH"
+# end
 
 alias less 'less -r'
 alias ls lsd
-alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
+# alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
 alias mvi='mpv --config-dir=$HOME/.config/mvi'
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
 # alias alacritty "MESA_GL_VERSION_OVERRIDE=3.3 $HOME/.cargo/bin/alacritty"
-alias i3lock 'i3lock -c 000000 -b'
-alias edir 'python3.11 -m edir'
-alias hiew 'wineconsole $HOME/.local/opt/hiew32demo/hiew32demo.exe'
+# alias edir 'python3.11 -m edir'
+# alias hiew 'wineconsole $HOME/.local/opt/hiew32demo/hiew32demo.exe'
 
 abbr hurl-proxy "hurl --proxy socks://127.0.0.1:5555"
 
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
 
 zoxide init fish | source
-atuin init fish | source
-
-source $HOME/.config/grc/grc.fish
