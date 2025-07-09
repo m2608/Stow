@@ -27,3 +27,5 @@
 @XF86Forward
     mpvipc.sh next
 
+super + backslash
+    xdg-screensaver lock
