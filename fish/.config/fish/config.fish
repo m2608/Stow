@@ -17,6 +17,7 @@ setenv XDG_CACHE_HOME  $HOME/.cache
 # Some terminals (mc) do not support sequences which fish uses by default. 
 # https://github.com/fish-shell/fish-shell/issues/11427
 set -a fish_features no-keyboard-protocols
+set -g fish_greeting ""
 
 bind ctrl-z "jobs > /dev/null && echo && fg"
 
