@@ -47,7 +47,6 @@ end
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
     set -lx __fish_last_status $status # Export for __fish_print_pipestatus.
-    set -l normal (set_color normal)
     set -q fish_color_status
     or set -g fish_color_status --background=red white
 
@@ -73,13 +72,13 @@ function fish_prompt --description 'Write out the prompt'
     set -l statusb_color (set_color $bold_flag $fish_color_status)
     set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
 
-    echo -n -s (set_color $color_cwd) (prompt_pwd) $normal (fish_vcs_prompt) $normal $prompt_status $suffix " "
+    echo -n -s (set_color $color_cwd) (prompt_pwd) (set_color normal) (fish_vcs_prompt) (set_color normal) $prompt_status $suffix " "
 end
 
 
 function fish_right_prompt --description 'Right prompt'
     # List of jobs (if any)
-    set -l jobs (format_jobs "$normal" (set_color $fish_color_quote))
+    set -l jobs (format_jobs (set_color normal) (set_color $fish_color_quote))
 
     # Username.
     set -l user (set_color $fish_color_user)(whoami | cut -d '@' -f 1)
