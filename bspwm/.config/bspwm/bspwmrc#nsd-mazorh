@@ -16,17 +16,11 @@ else
     bspc monitor -d 1 2 3 4 5
 fi
 
-# bspc rule -a Gimp desktop='^8' state=floating follow=on
-# bspc rule -a Chromium desktop='^2'
-# bspc rule -a mplayer2 state=floating
-# bspc rule -a Kupfer.py focus=on
-# bspc rule -a Screenkey manage=off
-
 # Раскладка.
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 
-xbmouse -b 8 xkev -u -e u &
-xbmouse -b 9 xkev -u -e i &
+# xbmouse -b 8 xkev -u -e u &
+# xbmouse -b 9 xkev -u -e i &
 
 # Устанавливаем обои и курсор.
 xsetroot -solid black
@@ -46,16 +40,19 @@ xrdb -merge ~/.Xresources
 stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
 
 # Индикатор языка.
-pgrep -x layout.sh || $HOME/.local/bin/layout.sh &
+$HOME/.local/bin/layout.sh &
 
 # Управление мышью с клавиатуры.
-keynav
+# keynav
+
+# Управление буфером обмена.
+clipmenud &
 
 # Буфер обмена через сокет.
-clipper &
+# clipper &
 
 # Запускаем службы, если они еще не запущены.
-pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
+# pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
 
 # zeal
 $HOME/.local/bin/zeal &
