@@ -12,7 +12,7 @@ title="layout"
 
 # screen width
 sw=$(bspc query -M \
-    | parallel -k -n 1 bspc query -T -m {} \
+    | xargs -I {} bspc query -T -m {} \
     | jq --slurp 'sort_by(.rectangle | .x) | .[0] .rectangle .width')
 
 # get settings from resources
