@@ -1,20 +1,21 @@
-NVIM        := "$(HOME)/.local/bin/nvim"
-HELIX       := "$(HOME)/.local/bin/hx"
-BABASHKA    := "$(HOME)/.local/bin/bb"
-CQ          := "$(HOME)/.local/bin/cq"
-JET         := "$(HOME)/.local/bin/jet"
-MARKSMAN    := "$(HOME)/.local/bin/marksman"
-CLOJURE_LSP := "$(HOME)/.local/bin/clojure-lsp"
-CLJ_KONDO   := "$(HOME)/.local/bin/clj-kondo"
-CLJFMT      := "$(HOME)/.local/bin/cljfmt"
-CLJFMT_JAR  := "$(HOME)/.local/opt/cljfmt/cljfmt.jar"
-BOOTLEG     := "$(HOME)/.local/bin/bootleg"
-KAK_LSP     := "$(HOME)/.local/bin/kak-lsp"
+NVIM           := "$(HOME)/.local/bin/nvim"
+HELIX          := "$(HOME)/.local/bin/hx"
+BABASHKA       := "$(HOME)/.local/bin/bb"
+CQ             := "$(HOME)/.local/bin/cq"
+JET            := "$(HOME)/.local/bin/jet"
+MARKSMAN       := "$(HOME)/.local/bin/marksman"
+CLOJURE_LSP    := "$(HOME)/.local/bin/clojure-lsp"
+CLJ_KONDO      := "$(HOME)/.local/bin/clj-kondo"
+CLJFMT         := "$(HOME)/.local/bin/cljfmt"
+CLJFMT_JAR     := "$(HOME)/.local/opt/cljfmt/cljfmt.jar"
+BOOTLEG        := "$(HOME)/.local/bin/bootleg"
+KAK_LSP        := "$(HOME)/.local/bin/kak-lsp"
+DOCKER_COMPOSE := "$(HOME)/.local/bin/docker-compose"
 
 define get-from-github
-	xh "https://api.github.com/repos/$(1)/releases" \
+	curl "https://api.github.com/repos/$(1)/releases" \
 		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test($(2))) | .browser_download_url' \
-		| xargs -I{} xh -F get "{}"
+		| xargs -n 1 curl -L
 endef
 
 define get-gist
@@ -92,15 +93,25 @@ install-uv:
 	$(call get-from-github,astral-sh/uv,"^uv-x86_64-unknown-linux-gnu[.]tar[.]gz$$") \
 		| tar -C $(HOME)/.local/bin --strip-components=1 --gz -xf -
 
+install-docker-compose:
+	$(call get-from-github,docker/compose,"^docker-compose-linux-x86_64$$") \
+		> $(DOCKER_COMPOSE)
+	chmod +x $(DOCKER_COMPOSE)
+
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
 	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
+
 
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
 
 fetch-iosevka:
 	curl -s 'https://api.github.com/repos/be5invis/Iosevka/releases/latest' | jq -r ".assets[] | .browser_download_url" | grep PkgTTC-Iosevka | xargs -n 1 curl -L -O --fail
+
+install-nnn-plugins:
+	mkdir -p "$(HOME)/.config/nnn/plugins"
+	echo -n autojump dragdrop fzplug preview-tui suedit | xargs -d " " -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
 
 all: symlinks
 
