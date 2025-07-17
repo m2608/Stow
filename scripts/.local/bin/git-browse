@@ -1,0 +1,76 @@
+#!/bin/sh
+
+self=$(basename $0)
+
+if test -z "$1" -o "$1" = "-h" -o "$1" = "--help"; then
+    cat <<EOF
+Usage: $self [-o|-s] <filename> <line>
+    -o | --open     Open GitLab in browser (default)
+    -s | --show     Just show the link
+    -h | --help     Show help
+EOF
+    exit 1
+fi
+
+# Действие по умолчанию.
+action="open"
+
+# Проверяем опции.
+if test "$1" = "-o" -o "$1" = "--open"; then
+    action="open"
+    shift
+elif test "$1" = "-s" -o "$1" = "--show"; then
+    action="show"
+    shift
+fi
+
+if test ! -f "$1"; then
+    echo "$self: file \"$1\" does not exist."
+fi
+
+# Определяем полный путь к файлу
+file=$(readlink -f "$1")
+line="$2"
+
+# Определяем имя файла и каталог.
+filename=$(basename "$file")
+dirname=$(dirname "$file")
+
+cd "$dirname"
+
+if ! git rev-parse 2> /dev/null; then
+    printf "Не удалось найти репозиторий, содержащий файл: %s\n" "$file" 1>&2
+    exit 1
+fi
+
+branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+remote=$(git config branch."$branch".remote || echo "origin")
+giturl=$(git remote get-url "$remote")
+gitpath=$(git rev-parse --show-prefix)
+
+url="${giturl%.git}"
+
+if test "${url#git@}" != "${url}"; then
+    url=$(echo ${url} | cut -c5- | tr ":" "/")
+    url="https://${url}"
+fi
+
+# Кодируем все части пути urlencode (по отдельности).
+gitfile=$(echo "$gitpath$filename" | tr "/" "\n" | jq -Rr @uri | tr "\n" "/" | sed "s|/$||")
+
+commit_hash=$(git log -n1 --format=format:"%H" "${filename}" 2>/dev/null)
+
+url="${url}/blob/${commit_hash:-$branch}/$gitfile"
+
+if test -n "${line}"; then
+    url="${url}#L${line}"
+fi
+
+case "$action" in
+    open)
+        xdg-open "$url"
+        ;;
+    show)
+        echo "$url"
+        ;;
+esac
