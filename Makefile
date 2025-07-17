@@ -111,7 +111,7 @@ fetch-iosevka:
 
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
-	echo -n autojump dragdrop fzplug preview-tui suedit | xargs -d " " -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
+	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit | xargs -n 1 -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
 
 all: symlinks
 
