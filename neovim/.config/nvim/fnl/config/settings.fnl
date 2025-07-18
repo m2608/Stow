@@ -48,27 +48,25 @@
                [:mouse ""]
                ;; задаем маппинги для использования команд, если включена русская системная раскладка
                ;; код ниже экранирует специальные символы и объединяет все в строку
-               ; [:langmap (table.concat
-               ;             (core.map
-               ;               (fn [m] (core.reduce
-               ;                         (fn [m escaped-char]
-               ;                           (string.gsub m escaped-char (.. "\\" escaped-char)))
-               ;                         m
-               ;                         ["\\" "\"" "|" "," ";"]))
-               ;               lang-mappings)
-               ;             ",")]
+               [:langmap (table.concat
+                           (core.map
+                             (fn [m] (core.reduce
+                                       (fn [m escaped-char]
+                                         (string.gsub m escaped-char (.. "\\" escaped-char)))
+                                       m
+                                       ["\\" "\"" "|" "," ";"]))
+                             lang-mappings)
+                           ",")]
                [:ignorecase true]
                [:smartcase true]
                ;; отключаем перенос длинных строк
                [:wrap true]
+               ;; включаем плавную прокрутку перенесенных строк
+               [:smoothscroll true]
                ;; выключаем сворачивание кода
                [:foldenable false]
                ;; показывать только меню при автодополнении (не показывать окно предпросмотра)
-               [:completeopt "menu"]
-               ;; команда :find будет искать файлы также и в подкаталогах
-               ; [:path (.. (core.get nvim.o "path") "**")]
-               ;; шрифт для графического режима
-               [:guifont "APL386 Unicode:h16"]]]
+               [:completeopt "menu"]]]
   (each [_ option (ipairs options)]
     (let [name (. option 1)
           value (. option 2)]
@@ -114,16 +112,11 @@
     (core.assoc ffi.C :t_colors 16)
     (vim.cmd.colorscheme "illyria"))
 
-  ;; Цветовая схема для nvim-gtk.
-  (core.get vim.g :GtkGuiLoaded nil)
-  (vim.cmd.colorscheme "nano-theme")
-
   ;; Настройка цветовой схемы в соответствие со схемой терминала.
   (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
     (when (file-exists? colorscheme-filename)
       ; (core.assoc nvim.g :base16colorspace 256)
-      (vim.cmd (.. "source" colorscheme-filename))))
-  )
+      (vim.cmd (.. "source" colorscheme-filename)))))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,
@@ -133,17 +126,3 @@
   {:virtual_text false
    :signs true
    :float {:source "always" :border "single"}})
-
-;; Настройки nvim-gtk.
-(when (core.get vim.g :GtkGuiLoaded nil)
-  (let [hostname (vim.fn.hostname)
-        gui-options [["Font" "APL386 Unicode 18"]
-                     ["Option" "Popupmenu" 1]
-                     ["Option" "Tabline" 1]
-                     ["Option" "Cmdline" 1]]]
-    (each [_ option (ipairs gui-options)]
-      (vim.rpcnotify 1 "Gui" (unpack option)))))
-
-;; На рабочем компе меняем путь к python.
-; (when (string.find (vim.fn.hostname) "usd[-]mazonix1")
-;   (core.assoc vim.g :python3_host_prog (.. (vim.fn.getenv "HOME") "/.local/bin/python3.11")))
