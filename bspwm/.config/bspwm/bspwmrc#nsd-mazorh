@@ -16,6 +16,9 @@ else
     bspc monitor -d 1 2 3 4 5
 fi
 
+bspc rule -a sbis status=floating
+bspc rule -a zeal status=floating
+
 # Раскладка.
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 
