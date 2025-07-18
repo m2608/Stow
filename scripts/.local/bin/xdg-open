@@ -25,26 +25,50 @@
         :out
         str/trim-newline)))
 
+(defn file
+  "Функция возвращает имя файла, если файл существует."
+  [name]
+  (when (fs/exists? name)
+    name))
+
+(defn schm
+  "Функция проверяет, является ли переданный аргумент схемой."
+  [name]
+  (when (re-matches #"^[a-z]+://.*" name)
+    name))
+
+(defn check-pattern
+  "Проверяет указанную сущность по паттерну. Оба аргумента не должны быть пустыми."
+  [pattern entity]
+  (and pattern entity (re-matches (re-pattern pattern) entity)))
+
 (defn association-matches
   "Проверяет, подходит ли ассоциация под mime тип и соответствует ли ассоциация
   способу запуска (из графического интерфейса или из терминала)."
-  [call-from-gui mimetype association]
-  (and (re-matches (re-pattern (:pattern association)) mimetype)
+  [call-from-gui filename mimetype scheme association]
+  (and (or (check-pattern (:file   association) filename)
+           (check-pattern (:mime   association) mimetype)
+           (check-pattern (:scheme association) scheme))
        (or (nil? (:gui association))
            (= (:gui association) call-from-gui))))
 
 (defn get-association
   "Находит ассоциацию, соответствующую mime типу и способу запуска (из gui или
   из терминала)."
-  [associations mimetype]
-  (let [call-from-gui (gui?)]
-    (first (drop-while (comp not (partial association-matches call-from-gui mimetype))
-                       associations))))
+  [associations argument]
+  (let [filename  (file argument)
+        mimetype  (mime argument)
+        scheme    (schm argument)
+        call-from-gui (gui?)]
+    (first
+      (drop-while
+        (complement (partial association-matches call-from-gui filename mimetype scheme))
+        associations))))
 
 (let [filename-arg (first *command-line-args*)
       associations (read-string (slurp associations-file))
-      selected-ass (get-association associations (mime filename-arg))]
+      selected-ass (get-association associations filename-arg)]
   (when selected-ass
     (binding [filename filename-arg]
       ((if (get selected-ass :detach false) process exec)
-       (eval (:program selected-ass))))))
+       (eval (:prog selected-ass))))))
