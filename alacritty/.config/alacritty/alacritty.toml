@@ -1,8 +1,11 @@
+[general]
+import = ["~/Themes/alacritty/colors/base16-papercolor-light.toml"]
+
 [font]
-size = 26
+size = 14
 
 [font.normal]
-family = "CozetteHiDpi"
+family = "Departure Mono"
 
 [[keyboard.bindings]]
 chars = "\u001B[9;5u"
