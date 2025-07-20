@@ -4,23 +4,6 @@
 (local augroup vim.api.nvim_create_augroup)
 (local autocmd vim.api.nvim_create_autocmd)
 
-;; Настройка Firenvim.
-(autocmd
-  ["UIEnter"]
-  {:callback
-   (fn [event]
-     (let [client (. (vim.api.nvim_get_chan_info vim.v.event.chan) "client")]
-       (when (and client (= client.name "Firenvim"))
-         (each [_ option (ipairs [[:laststatus 0]
-                                  [:columns 200]
-                                  [:lines 50]
-                                  [:background "light"]
-                                  [:guifont "Iosevka:h14"]
-                                  [:cmdheight 0]])]
-           (let [name (. option 1)
-                 value (. option 2)]
-             (core.assoc vim.o name value))))))})
-
 ;; Установка формата для файлов *.bqn.
 (autocmd
   ["BufRead" "BufNewFile"]
