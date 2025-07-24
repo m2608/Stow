@@ -1,0 +1,60 @@
+#!/bin/sh
+
+for tool in pass dmenu xdotool sd; do
+    if ! command -v "$tool" > /dev/null; then
+        echo "Tool \"$tool\" not found in PATH."
+        exit 1
+    fi
+done
+
+# Путь к хранилищу `pass`.
+prefix=${PASSWORD_STORE_DIR-~/.password-store}
+
+# Время ожидания перед вводом пароля.
+delay=3
+
+dmenu="dmenu -l 32"
+xdotool="xdotool sleep $delay type --clearmodifiers --file -"
+
+get_username() {
+    basename "$1" | tr -d "\n"
+}
+
+get_password() {
+    pass show "$1" | head -n 1 | tr -d "\n"
+}
+
+# Формируем список аккаунтов, сохранённых в `pass`.
+account=$(find "$prefix" -name '*.gpg' -printf '%P\n' | sed 's/[.]gpg$//' | sort | $dmenu)
+test -n "$account" || exit
+
+printf "%s" "$account" | xxd
+
+# Набор шаблонов. Возможные плейсхолдеры:
+# - [USERNAME] заменяется на имя пользователя
+# - [PASSWORD] заменяется на пароль.
+# Также плейсхолдеры пропускаются через `printf`, т.е. "\t" заменится на символ табуляции и т.п.
+options='[USERNAME]
+[PASSWORD]
+[USERNAME]\t[PASSWORD]
+[PASSWORD]\t[PASSWORD]'
+
+# Выбираем шаблон для вывода.
+option=$(echo "$options" | $dmenu)
+test -n "$option" || exit
+
+# Если в шаблоне есть имя пользователя, получаем его.
+if echo "$option" | grep -q "[USERNAME]"; then
+    username=$(get_username "$account")
+fi
+
+# Если в шаблоне есть пароль, получаем его.
+if echo "$option" | grep -q "[PASSWORD]"; then
+    password=$(get_password "$account")
+fi
+
+# Формируем строку для вывода.
+output=$(printf "%s" "$option" | sd -F '[USERNAME]' "$username" | sd -F '[PASSWORD]' "$password")
+
+# Подставляем спец. символы и печатаем.
+printf "$output" | $xdotool
