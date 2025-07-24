@@ -42,9 +42,6 @@ xrdb -merge ~/.Xresources
 # Запускаем системный трей.
 stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
 
-# Индикатор языка.
-$HOME/.local/bin/layout.sh &
-
 # Управление мышью с клавиатуры.
 # keynav
 
@@ -54,11 +51,9 @@ clipmenud &
 # Буфер обмена через сокет.
 # clipper &
 
-# Запускаем службы, если они еще не запущены.
-# pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
+# layout
+# $HOME/.local/bin/layout.sh &
+$HOME/.local/bin/sbxkb &
 
 # zeal
 $HOME/.local/bin/zeal &
-
-# Плагин.
-/opt/Tensor/Saby/saby &
