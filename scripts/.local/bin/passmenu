@@ -10,8 +10,8 @@ done
 # Путь к хранилищу `pass`.
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
 
-# Время ожидания перед вводом пароля.
-delay=3
+# Время ожидания перед вводом новой строки.
+delay=1
 
 dmenu="dmenu -l 32"
 xdotool="xdotool sleep $delay type --clearmodifiers --file -"
@@ -37,6 +37,7 @@ printf "%s" "$account" | xxd
 options='[USERNAME]
 [PASSWORD]
 [USERNAME]\t[PASSWORD]
+[USERNAME]\r[PASSWORD]
 [PASSWORD]\t[PASSWORD]'
 
 # Выбираем шаблон для вывода.
@@ -56,5 +57,6 @@ fi
 # Формируем строку для вывода.
 output=$(printf "%s" "$option" | sd -F '[USERNAME]' "$username" | sd -F '[PASSWORD]' "$password")
 
-# Подставляем спец. символы и печатаем.
-printf "$output" | $xdotool
+# Подставляем спец. символы и печатаем. Строка разделяется по 0x0D, чтобы после
+# Enter была задержка.
+printf "$output" | sed 's/\r/\r\x00/' | xargs -0 -n 1 $xdotool
