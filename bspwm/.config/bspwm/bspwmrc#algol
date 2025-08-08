@@ -30,14 +30,21 @@ xrdb -merge ~/.Xresources
 # Вывод звука по умолчанию через HDMI.
 sysctl hw.snd.default_unit=1
 
+# Запускаем системный трей.
+stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
+
 # Индикатор языка.
-$HOME/.local/bin/layout.sh &
+# $HOME/.local/bin/layout.sh &
+sbxkb &
 
 # Менеджер буфера обмена.
 clipmenud &
 
 # Управление мышью с клавиатуры.
 keynav
+
+# Эмуляция третей кнопки мыши и прокрутка трекпоинтом.
+$HOME/.local/bin/middle-scroll.sh
 
 # Запускаем службы, если они еще не запущены.
 pgrep -x runsvdir || runsvdir $HOME/.runsvdir &
