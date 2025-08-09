@@ -1,5 +1,3 @@
-setenv PAGER "nvimpager -p"
-
 setenv LEIN_ROOT 1
 setenv SVDIR $HOME/.runit/service
 setenv WORKON_HOME $HOME/.virtualenvs
