@@ -81,12 +81,12 @@ function fish_right_prompt --description 'Right prompt'
     set -l jobs (format_jobs (set_color normal) (set_color $fish_color_quote))
 
     # Username.
-    set -l user (set_color $fish_color_user)(whoami | cut -d '@' -f 1)
+    set -l user (set_color normal)(whoami | cut -d '@' -f 1)
 
     # Hostname icon and color.
     set -l color_host (hostname | cut -d '.' -f 1 | md5sum | cut -c 1-6)
     set icon (set_color $color_host)(printf "⯂")
-    set host (set_color $fish_color_host)(hostname | cut -d '.' -f 1)
+    set host (set_color normal)(hostname | cut -d '.' -f 1)
 
     # Last command execution time.
     set -l duration (format_duration $CMD_DURATION)
