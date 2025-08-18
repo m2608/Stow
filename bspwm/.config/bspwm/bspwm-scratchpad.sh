@@ -65,6 +65,11 @@ if test -n "$sp_data"; then
 
     if test "$sp_hidden" = "true"; then
         bspc node --focus "$sp_id"
+
+        # изменяем размер окна под текущий размер монитора
+        dx=$(((mon_w - width)  / 2))
+        dy=$(((mon_h - height) / 2))
+        xdotool windowmove $sp_id $dx $dy windowsize $sp_id $width $height
     fi
 else
     # если окна с указанным классом нет - создаем новую ноду
