@@ -1,6 +1,6 @@
 # запуск терминала
 super + Escape
-    alacritty
+    st
 
 # запуск dmenu
 super + p
@@ -12,11 +12,11 @@ super + c
 
 # scratchpad терминал
 super + n
-    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-term"   --command "alacritty --class scratchpad-term"
+    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-term"   --command "st -c scratchpad-term"
 
 # aichat
 super + a
-    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-aichat" --command "alacritty --class scratchpad-aichat -e fish -i -c aichat"
+    exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-aichat" --command "st -c scratchpad-aichat -e fish -i -c aichat"
 
 # показать или скрыть системный трей
 super + t
