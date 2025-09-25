@@ -31,6 +31,7 @@ alias fc-select    "fc-list | sed -r 's/^[^:]+:[ ]+([^,:]+)([,:].*)?/\1/' | sort
 alias jq-record    "jq '[.d, .s] | transpose | map({(.[1].n): .[0]}) | add'"
 alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .[0]}) | add'"
 alias xml-beautify "xmllint --format --encode utf-8 -"
+alias urlencode    "jq -Rr '@uri'"
 
 alias theme-toggle "config.clj toggle ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita Adwaita-dark"
 alias theme-light  "config.clj set    ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita"
