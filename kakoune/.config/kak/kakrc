@@ -5,6 +5,11 @@ colorscheme default
 set-option global tabstop 4
 set-option global indentwidth 4
 
+hook global WinSetOption filetype=(?!makefile).* %{
+    map global insert <tab>   '<a-;><a-gt>'
+    map global insert <s-tab> '<a-;><a-lt>'
+}
+
 add-highlighter global/relative-numbers number-lines -relative
 add-highlighter global/soft-wordwrap    wrap -word -indent
 add-highlighter global/trailing-spaces  regex '\h+$' 0:Error
