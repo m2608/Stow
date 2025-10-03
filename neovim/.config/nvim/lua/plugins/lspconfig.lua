@@ -30,10 +30,9 @@ local function on_attach(client, bufnr)
   return nil
 end
 local function _5_()
-  local lsp = require("lspconfig")
   local servers = {pylsp = {flags = {debounce_text_changes = 150}, single_file_support = true, settings = {pylsp = {plugins = {pyflakes = {enabled = true}, pycodestyle = {enabled = true, ignore = {"E126", "E127", "E128", "E502", "W503"}}}}}}, clojure_lsp = {flags = {debounce_text_changes = 150}}, marksman = {cmd = {"marksman", "server"}, flags = {debounce_text_changes = 150}, single_file_support = true}, clangd = {}}
   for name, config in pairs(servers) do
-    lsp[name].setup(core.merge(config, {on_attach = on_attach}))
+    vim.lsp.config(name, core.merge(config, {on_attach = on_attach}))
   end
   return nil
 end

@@ -39,8 +39,7 @@
 {1 "neovim/nvim-lspconfig"
  :config
  (fn []
-   (let [lsp (require "lspconfig")
-         ;; Список языковых серверов.
+   (let [;; Список языковых серверов.
          servers
          {:pylsp
           {:flags {:debounce_text_changes 150}
@@ -56,7 +55,6 @@
            :single_file_support true}
           :clangd {}}]
      (each [name config (pairs servers)]
-       ((. lsp name :setup)
-        (core.merge config
-                    {:on_attach on-attach})))))}
+       (vim.lsp.config
+         name (core.merge config {:on_attach on-attach})))))}
 
