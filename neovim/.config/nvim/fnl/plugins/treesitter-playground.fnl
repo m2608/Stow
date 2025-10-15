@@ -1,3 +1,4 @@
 {1 "nvim-treesitter/playground"
  :lazy true
- :dependencies ["nvim-treesitter/nvim-treesitter"]}
+ :dependencies ["nvim-treesitter/nvim-treesitter"]
+ :cmd ["TSPlaygroundToggle"]}
