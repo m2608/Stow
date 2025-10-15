@@ -1,7 +1,8 @@
 set PATH \
     $HOME/.local/bin \
     $HOME/.cargo/bin \
-    $HOME/go/bin \
+    $HOME/.npm-global/bin \
+    $HOME/.gocode/bin \
     /usr/local/bin \
     /usr/local/sbin \
     /usr/bin \
