@@ -39,22 +39,15 @@
 {1 "neovim/nvim-lspconfig"
  :config
  (fn []
-   (let [;; Список языковых серверов.
-         servers
-         {:pylsp
-          {:flags {:debounce_text_changes 150}
-           :single_file_support true
-           :settings {:pylsp {:plugins {:pyflakes {:enabled true}
-                                        :pycodestyle {:enabled true
-                                                      :ignore ["E126" "E127" "E128" "E502" "W503"]}}}}}
-          :clojure_lsp
-          {:flags {:debounce_text_changes 150}}
-          :marksman
-          {:cmd ["marksman" "server"]
-           :flags {:debounce_text_changes 150}
-           :single_file_support true}
-          :clangd {}}]
+   (let [servers {:pyright {}
+                  :clojure_lsp {:flags {:debounce_text_changes 150}}
+                  :marksman {:cmd ["marksman" "server"]
+                             :flags {:debounce_text_changes 150}
+                             :single_file_support true}
+                  :clangd {}}]
+     (vim.lsp.set_log_level "debug")
      (each [name config (pairs servers)]
        (vim.lsp.config
-         name (core.merge config {:on_attach on-attach})))))}
+         name (core.merge config {:on_attach on-attach}))
+       (vim.lsp.enable name))))}
 
