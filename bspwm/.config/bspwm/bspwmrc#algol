@@ -13,9 +13,8 @@ xbmouse -b 9 xkev -u -s -e r &
 xsetroot -solid black
 xsetroot -cursor_name left_ptr
 
-# отключаем хранитель экрана
-xset -dpms
-xset s off
+# Таймер отключения экрана в секундах.
+xset dpms 1500 1500
 
 # Добавляем шрифты из домашней папки.
 xset +fp $HOME/.fonts
