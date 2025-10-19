@@ -63,7 +63,7 @@ install-marksman:
 	chmod +x $(MARKSMAN)
 
 install-clojure-lsp:
-	$(call get-from-github,clojure-lsp/clojure-lsp,"^clojure-lsp-native-linux-amd64.zip$$") \
+	$(call get-from-github,clojure-lsp/clojure-lsp,"^clojure-lsp-native-static-linux-amd64.zip$$") \
 		| bsdtar -xO - > $(CLOJURE_LSP);
 	chmod +x $(CLOJURE_LSP)
 
