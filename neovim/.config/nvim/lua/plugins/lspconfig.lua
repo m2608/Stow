@@ -30,8 +30,7 @@ local function on_attach(client, bufnr)
   return nil
 end
 local function _5_()
-  local servers = {pyright = {}, clojure_lsp = {flags = {debounce_text_changes = 150}}, marksman = {cmd = {"marksman", "server"}, flags = {debounce_text_changes = 150}, single_file_support = true}, clangd = {}}
-  vim.lsp.set_log_level("debug")
+  local servers = {pyright = {}, clojure_lsp = {flags = {completion = {["analysis-type"] = "slow-but-accurate"}}, single_file_support = true}, marksman = {cmd = {"marksman", "server"}, flags = {debounce_text_changes = 150}, single_file_support = true}, clangd = {}}
   for name, config in pairs(servers) do
     vim.lsp.config(name, core.merge(config, {on_attach = on_attach}))
     vim.lsp.enable(name)

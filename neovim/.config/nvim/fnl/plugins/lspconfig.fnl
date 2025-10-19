@@ -40,12 +40,12 @@
  :config
  (fn []
    (let [servers {:pyright {}
-                  :clojure_lsp {:flags {:debounce_text_changes 150}}
+                  :clojure_lsp {:flags {:completion {:analysis-type :slow-but-accurate}}
+                                :single_file_support true}
                   :marksman {:cmd ["marksman" "server"]
                              :flags {:debounce_text_changes 150}
                              :single_file_support true}
                   :clangd {}}]
-     (vim.lsp.set_log_level "debug")
      (each [name config (pairs servers)]
        (vim.lsp.config
          name (core.merge config {:on_attach on-attach}))
