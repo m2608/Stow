@@ -85,7 +85,7 @@ function fish_right_prompt --description 'Right prompt'
 
     # Hostname icon and color.
     set -l color_host (hostname | cut -d '.' -f 1 | md5sum | cut -c 1-6)
-    set icon (set_color $color_host)(printf "⯂")
+    set icon (set_color $color_host)(printf "•")
     set host (set_color normal)(hostname | cut -d '.' -f 1)
 
     # Last command execution time.
