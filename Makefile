@@ -106,8 +106,14 @@ install-scripts:
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
 
-fetch-iosevka:
-	curl -s 'https://api.github.com/repos/be5invis/Iosevka/releases/latest' | jq -r ".assets[] | .browser_download_url" | grep PkgTTC-Iosevka | xargs -n 1 curl -L -O --fail
+fetch-fonts:
+	curl -s "https://api.github.com/repos/be5invis/Iosevka/releases" \
+		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test("PkgTTF-Iosevka.*[.]zip$$")) | .browser_download_url' \
+		| xargs -n 1 curl -L -O --fail
+	curl -s "https://api.github.com/repos/ahatem/IoskeleyMono/releases" \
+		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name == "IoskeleyMono-TTF-Hinted.zip") | .browser_download_url' \
+		| xargs -n 1 curl -L -O --fail
+	curl -L -O --fail "https://rubjo.github.io/victor-mono/VictorMonoAll.zip"
 
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
