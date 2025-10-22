@@ -1,1 +1,2 @@
-{1 "fourjay/vim-hurl"}
+{1 "fourjay/vim-hurl"
+ :ft ["hurl"]}
