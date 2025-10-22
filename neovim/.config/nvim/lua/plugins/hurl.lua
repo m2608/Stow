@@ -1,2 +1,2 @@
 -- [nfnl] fnl/plugins/hurl.fnl
-return {"fourjay/vim-hurl"}
+return {"fourjay/vim-hurl", ft = {"hurl"}}
