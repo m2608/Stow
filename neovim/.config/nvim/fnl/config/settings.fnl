@@ -72,6 +72,9 @@
           value (. option 2)]
       (core.assoc vim.o name value))))
 
+;; отключаем netrw
+(core.assoc vim.g :loaded_netrwPlugin 1)
+
 (let [commands
       [;; заменять табуляции пробелами для всех файлов, кроме Makefile
        "autocmd FileType make setlocal noexpandtab"
