@@ -64,12 +64,12 @@ install-marksman:
 
 install-clojure-lsp:
 	$(call get-from-github,clojure-lsp/clojure-lsp,"^clojure-lsp-native-static-linux-amd64.zip$$") \
-		| bsdtar -xO - > $(CLOJURE_LSP);
+		| bsdtar -xO -f - > $(CLOJURE_LSP);
 	chmod +x $(CLOJURE_LSP)
 
 install-clj-kondo:
 	$(call get-from-github,clj-kondo/clj-kondo,"^clj-kondo-[0-9.]+-linux-amd64.zip$$") \
-		| bsdtar -xO - > $(CLJ_KONDO);
+		| bsdtar -xO -f - > $(CLJ_KONDO);
 	chmod +x $(CLJ_KONDO)
 
 install-cljfmt:
