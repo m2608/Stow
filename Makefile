@@ -118,6 +118,7 @@ fetch-fonts:
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
 	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit | xargs -n 1 -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
+	chmod +x "$(HOME)/.config/nnn/plugins/*"
 
 all: symlinks
 
