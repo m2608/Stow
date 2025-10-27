@@ -15,12 +15,12 @@ setenv XDG_CACHE_HOME  $HOME/.cache
 
 # Some terminals (mc) do not support sequences which fish uses by default. 
 # https://github.com/fish-shell/fish-shell/issues/11427
-set -a fish_features no-keyboard-protocols
+# set -a fish_features no-keyboard-protocols
 set -g fish_greeting ""
 
 bind ctrl-z "jobs > /dev/null && echo && fg"
 
-if test (uname) = "FreeBSD"
+if string match -q -e freebsd (status buildinfo)
     alias cal "cal -M"
 else
     alias cal "cal -m"
@@ -32,10 +32,10 @@ alias jq-record    "jq '[.d, .s] | transpose | map({(.[1].n): .[0]}) | add'"
 alias jq-recordset "jq '[.d, [.s]] | combinations | transpose | map({(.[1].n): .[0]}) | add'"
 alias xml-beautify "xmllint --format --encode utf-8 -"
 alias urlencode    "jq -Rr '@uri'"
-
 alias theme-toggle "config.clj toggle ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita Adwaita-dark"
 alias theme-light  "config.clj set    ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita"
 alias theme-dark   "config.clj set    ~/.config/gtk-3.0/settings.ini Settings gtk-theme-name Adwaita-dark"
+alias ssh-kh       "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 # Let's set some variables for nnn.
 set cmd (command -v nnn)
@@ -50,13 +50,15 @@ end
 # Lazygit requires basename to be set in $EDITOR variable.
 set cmd (command -v lazygit)
 if test -n "$cmd"
-    alias lazygit "env EDITOR="(basename $EDITOR)" $cmd"
+    alias lazygit "env EDITOR="(path basename $EDITOR)" $cmd"
 end
 
 alias oil "nvim -c 'Oil'"
 alias nrepl "clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version \"1.3.0\"} cider/cider-nrepl {:mvn/version \"0.50.3\"}}}' -M -m nrepl.cmdline --interactive"
 
-set host_config (status dirname)"$fold_config/config.fish#"(hostname | sed 's/\..*//')
+set short_hostname (string replace -r '[.].*' '' $hostname)
+set current_dir (status dirname)
+set host_config "$current_dir/config.fish#$short_hostname"
 
 if test -e "$host_config"
     source "$host_config"
