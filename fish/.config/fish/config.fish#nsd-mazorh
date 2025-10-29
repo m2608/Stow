@@ -29,6 +29,7 @@ alias ls lsd
 alias mvi='mpv --config-dir=$HOME/.config/mvi'
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
+alias ch "clickhouse local"
 # alias alacritty "MESA_GL_VERSION_OVERRIDE=3.3 $HOME/.cargo/bin/alacritty"
 # alias hiew 'wineconsole $HOME/.local/opt/hiew32demo/hiew32demo.exe'
 
