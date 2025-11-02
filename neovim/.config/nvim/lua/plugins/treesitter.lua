@@ -12,4 +12,4 @@ local function _2_()
   end
   return vim.treesitter.language.register("clojure", "joker")
 end
-return {"nvim-treesitter/nvim-treesitter", cond = ((1 == vim.fn.executable("clang")) and (1 == vim.fn.executable("tree-sitter"))), build = _1_, config = _2_}
+return {"nvim-treesitter/nvim-treesitter", event = "VeryLazy", cond = ((1 == vim.fn.executable("clang")) and (1 == vim.fn.executable("tree-sitter"))), build = _1_, config = _2_}

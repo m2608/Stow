@@ -1,5 +1,5 @@
 {1 "nvim-treesitter/nvim-treesitter"
-
+ :event "VeryLazy"
  ;; Проверяем наличие компилятора и tree-sitter.
  :cond
  (and (= 1 (vim.fn.executable "clang"))
