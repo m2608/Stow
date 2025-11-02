@@ -1,2 +1,2 @@
 -- [nfnl] fnl/plugins/nano.fnl
-return {"ronisbr/nano-theme.nvim", lazy = true, cmd = {"colorscheme nano-theme"}}
+return {"ronisbr/nano-theme.nvim", lazy = true, event = "VeryLazy"}
