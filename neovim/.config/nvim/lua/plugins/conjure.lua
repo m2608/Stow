@@ -1,7 +1,8 @@
 -- [nfnl] fnl/plugins/conjure.fnl
 local core = require("nfnl.core")
+local filetypes = {"clojure", "fennel", "janet", "hy", "scheme", "lua", "lisp", "python", "joker"}
 local function _1_()
-  vim.g["conjure#filetypes"] = {"clojure", "fennel", "janet", "hy", "scheme", "lua", "lisp", "python", "joker"}
+  vim.g["conjure#filetypes"] = filetypes
   return nil
 end
 local function _2_()
@@ -13,4 +14,4 @@ local function _2_()
   end
   return nil
 end
-return {"Olical/conjure", init = _1_, config = _2_, lazy = false}
+return {"Olical/conjure", ft = filetypes, init = _1_, config = _2_}
