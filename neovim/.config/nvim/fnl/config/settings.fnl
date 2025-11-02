@@ -19,7 +19,8 @@
       ;; Последовательность задания опций может быть важна, так что используем массив, а не хешмэп, при обходе
       ;; которого последовательность не гарантируется. Например, если установить опцию "iminsert" перед "keymap",
       ;; при установке "keymap", значение "iminsert" будет переопределено.
-      options [;; поддержка true color
+      options [;; поддержка true color, если хотим использовать тему терминала, то
+               ;; её нужно отключить - сейчас она отключается в автокомманде
                [:termguicolors true]
                ;; размер табуляции - 4 пробела
                [:tabstop 4]
@@ -101,25 +102,16 @@
     (vim.cmd cmd)))
 
 
+
 ;; Хак для определения фона терминала в tmux.
 ; (when (= (os.getenv "TERM") "tmux-256color")
 ;   (vim.uv.fs_write 2 "\27Ptmux;\27\27]11;?\7\27\\" -1 nil))
 
-(if
-  (= (os.getenv "COOL_RETRO_TERM") "1")
-  ;; Для Cool Retro Term выбираем какую-нибудь простую схему и устанавливаем
-  ;; режим 16 цветов. Чтобы это работало, нужно при запуске CRT установить
-  ;; переменную COOL_RETRO_TERM=1.
-  (let [ffi (require "ffi")]
-    (ffi.cdef "int t_colors")
-    (core.assoc ffi.C :t_colors 16)
-    (vim.cmd.colorscheme "illyria"))
-
-  ;; Настройка цветовой схемы в соответствие со схемой терминала.
-  (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
-    (when (file-exists? colorscheme-filename)
-      ; (core.assoc nvim.g :base16colorspace 256)
-      (vim.cmd (.. "source" colorscheme-filename)))))
+;; Настройка цветовой схемы в соответствие со схемой терминала.
+(let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
+  (if (file-exists? colorscheme-filename)
+    (vim.cmd (.. "source" colorscheme-filename))
+    (vim.cmd.colorscheme "default")))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,

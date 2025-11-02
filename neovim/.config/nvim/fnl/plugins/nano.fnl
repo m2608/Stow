@@ -1,2 +1,3 @@
 {1 "ronisbr/nano-theme.nvim"
- :lazy false}
+ :lazy true
+ :cmd ["colorscheme nano-theme"]}

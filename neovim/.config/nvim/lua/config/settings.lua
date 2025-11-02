@@ -35,16 +35,12 @@ do
     vim.cmd(cmd)
   end
 end
-if (os.getenv("COOL_RETRO_TERM") == "1") then
-  local ffi = require("ffi")
-  ffi.cdef("int t_colors")
-  core.assoc(ffi.C, "t_colors", 16)
-  vim.cmd.colorscheme("illyria")
-else
+do
   local colorscheme_filename = (os.getenv("HOME") .. "/.vimrc_background")
   if file_exists_3f(colorscheme_filename) then
     vim.cmd(("source" .. colorscheme_filename))
   else
+    vim.cmd.colorscheme("default")
   end
 end
 return vim.diagnostic.config({signs = true, float = {source = "always", border = "single"}, virtual_text = false})
