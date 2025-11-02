@@ -32,11 +32,13 @@
                          (vim.api.nvim_buf_set_option bufnr ...))
         buf-set-keymap (fn [...]
                          (vim.api.nvim_buf_set_keymap bufnr ...))]
-    (buf-set-option "omnifunc" "v:lua.vim.lsp.omnifunc")
+    ;; (buf-set-option "omnifunc" "v:lua.vim.lsp.omnifunc")
     (each [_ mapping (ipairs mappings)]
       (buf-set-keymap (unpack mapping)))))
 
 {1 "neovim/nvim-lspconfig"
+ :lazy true
+ :ft ["c" "clojure" "cpp" "edn" "markdown" "markdown.mdx" "python"]
  :config
  (fn []
    (let [servers {:pyright {}

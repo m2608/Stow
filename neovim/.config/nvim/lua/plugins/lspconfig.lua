@@ -23,7 +23,6 @@ local function on_attach(client, bufnr)
     return vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
   buf_set_keymap = _4_
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
   for _, mapping in ipairs(mappings) do
     buf_set_keymap(unpack(mapping))
   end
@@ -37,4 +36,4 @@ local function _5_()
   end
   return nil
 end
-return {"neovim/nvim-lspconfig", config = _5_}
+return {"neovim/nvim-lspconfig", lazy = true, ft = {"c", "clojure", "cpp", "edn", "markdown", "markdown.mdx", "python"}, config = _5_}
