@@ -40,10 +40,21 @@ function clojuredocs -d "View clojuredocs"
 
     set style (background)
 
+    set jq_command '.vars
+        | map(select("\(.ns)/\(.name)" == "{}"))
+        | first
+        | [
+            "## Documentation",
+            (foreach .arglists[] as $args (0; . + 1; "\(.). (\($args))")),
+            "\(.doc)",
+            (foreach .examples[]? as $example (0; . + 1; "## Example \(.)\n```clojure\n\($example | .body)\n```"))
+        ] | join("\n\n")
+    '
+
     cat "$filename" \
-    | jq -r '.vars | map("\\(.ns)/\\(.name)") | .[]' \
+    | jq -r '.vars | map("\(.ns)/\(.name)") | .[]' \
     | fzf \
-        --preview "jq -r '.vars | map(select(\"\\(.ns)/\\(.name)\" == \"'{}'\")) | first | [\"## Documentation\n\n\\(.doc)\", (foreach .examples[]? as \$example (0; . + 1; \"## Example \\(.)\n\n```clojure\\n\\(\$example | .body)\\n```\"))] | join(\"\\n\\n\")' '$filename' | rich --markdown --force-terminal -" \
+        --preview "jq -r '$jq_command' '$filename' | rich --markdown --force-terminal -" \
         --preview-window "up:80%"            \
         --bind "up:preview-up"               \
         --bind "down:preview-down"           \
