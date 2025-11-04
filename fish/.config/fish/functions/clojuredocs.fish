@@ -43,9 +43,10 @@ function clojuredocs -d "View clojuredocs"
     set jq_command '.vars
         | map(select("\(.ns)/\(.name)" == "{}"))
         | first
+        | .name as $name
         | [
             "## Documentation",
-            (foreach .arglists[] as $args (0; . + 1; "\(.). (\($args))")),
+            (foreach .arglists[] as $args (0; . + 1; "\(.). (\($name) \($args))")),
             "\(.doc)",
             (foreach .examples[]? as $example (0; . + 1; "## Example \(.)\n```clojure\n\($example | .body)\n```"))
         ] | join("\n\n")
@@ -61,5 +62,8 @@ function clojuredocs -d "View clojuredocs"
         --bind "page-up:preview-page-up"     \
         --bind "page-down:preview-page-down" \
         --bind "home:preview-top"            \
-        --bind "end:preview-bottom"                      
+        --bind "end:preview-bottom"
+
+    # Всегда возвращаем 0 статус, даже если ничего не было выбрано.
+    return 0
 end
