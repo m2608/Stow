@@ -40,7 +40,9 @@ do
   if file_exists_3f(colorscheme_filename) then
     vim.cmd(("source" .. colorscheme_filename))
   else
+    core.assoc(vim.o, "termguicolors", false)
     vim.cmd.colorscheme("default")
+    vim.api.nvim_set_hl(0, "Visual", {ctermfg = 0, ctermbg = 7})
   end
 end
 return vim.diagnostic.config({signs = true, float = {source = "always", border = "single"}, virtual_text = false})

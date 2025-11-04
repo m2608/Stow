@@ -20,7 +20,7 @@
       ;; которого последовательность не гарантируется. Например, если установить опцию "iminsert" перед "keymap",
       ;; при установке "keymap", значение "iminsert" будет переопределено.
       options [;; поддержка true color, если хотим использовать тему терминала, то
-               ;; её нужно отключить - сейчас она отключается в автокомманде
+               ;; её нужно отключить
                [:termguicolors true]
                ;; размер табуляции - 4 пробела
                [:tabstop 4]
@@ -107,11 +107,15 @@
 ; (when (= (os.getenv "TERM") "tmux-256color")
 ;   (vim.uv.fs_write 2 "\27Ptmux;\27\27]11;?\7\27\\" -1 nil))
 
-;; Настройка цветовой схемы в соответствие со схемой терминала.
+
 (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
   (if (file-exists? colorscheme-filename)
     (vim.cmd (.. "source" colorscheme-filename))
-    (vim.cmd.colorscheme "default")))
+    (do
+      ;; Настройка цветовой схемы в соответствие со схемой терминала.
+      (core.assoc vim.o "termguicolors" false)
+      (vim.cmd.colorscheme "default")
+      (vim.api.nvim_set_hl 0 "Visual" {:ctermfg 0 :ctermbg 7}))))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,

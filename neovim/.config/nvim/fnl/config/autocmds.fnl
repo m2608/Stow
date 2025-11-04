@@ -44,16 +44,3 @@
    :pattern "markdown"
    :callback (fn [e]
                (set vim.opt_local.conceallevel 2))})
-
-;; автокомманда для патчинга цветовой схемы; чтобы она сработала, схема должна
-;; устанавливаться где-то в конфиге - т.е. даже если мы хотим использовать
-;; дефолтную схему, нужно явно её задать
-(augroup "colorscheme-patch" {:clear true})
-(autocmd
-  "ColorScheme"
-  {:group "colorscheme-patch"
-   :pattern "default"
-   :callback (fn []
-               (core.assoc vim.o "termguicolors" false)
-               (vim.api.nvim_set_hl 0 "Visual" {:ctermfg 0 :ctermbg 15}))})
-

@@ -22,10 +22,4 @@ local function _4_(e)
   vim.opt_local.conceallevel = 2
   return nil
 end
-autocmd("Filetype", {group = "markdown-conceal", pattern = "markdown", callback = _4_})
-augroup("colorscheme-patch", {clear = true})
-local function _5_()
-  core.assoc(vim.o, "termguicolors", false)
-  return vim.api.nvim_set_hl(0, "Visual", {ctermfg = 0, ctermbg = 15})
-end
-return autocmd("ColorScheme", {group = "colorscheme-patch", pattern = "default", callback = _5_})
+return autocmd("Filetype", {group = "markdown-conceal", pattern = "markdown", callback = _4_})
