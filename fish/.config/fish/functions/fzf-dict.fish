@@ -9,7 +9,7 @@ function fzf-dict -d "View json dictionary with fzf"
         | jq -r .key \
         | fzf                                    \
             --query "$query"                     \
-            --preview "jq -r 'select(.key == \"'{}'\") | .value' '$filename' | html2text -from_encoding utf-8 | glow --style=$style" \
+            --preview "jq -r 'select(.key == \"'{}'\") | .value' '$filename' | html2text -from_encoding utf-8 | rich --markdown --force-terminal -" \
             --preview-window "up:80%"            \
             --bind "up:preview-up"               \
             --bind "down:preview-down"           \
