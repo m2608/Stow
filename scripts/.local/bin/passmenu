@@ -13,7 +13,7 @@ prefix=${PASSWORD_STORE_DIR-~/.password-store}
 # Время ожидания перед вводом новой строки.
 delay=1
 
-dmenu="dmenu -l 32"
+dmenu="dmenu -i -l 32"
 xdotool="xdotool sleep $delay type --clearmodifiers --file -"
 
 get_username() {
