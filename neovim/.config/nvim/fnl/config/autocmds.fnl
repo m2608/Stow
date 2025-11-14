@@ -44,3 +44,14 @@
    :pattern "markdown"
    :callback (fn [e]
                (set vim.opt_local.conceallevel 2))})
+
+;; автокоманда нужна для патчинга цветового выделения, когда используются цвета
+;; терминала
+(augroup "colorscheme-patch" {:clear true})
+(autocmd
+  "ColorScheme"
+  {:group "colorscheme-patch"
+   :pattern "default"
+   :callback (fn [e]
+               (when (not vim.o["termguicolors"])
+                 (vim.api.nvim_set_hl 0 "Visual" {:ctermfg 0 :ctermbg 7})))})

@@ -1,6 +1,6 @@
 -- [nfnl] fnl/config/autocmds.fnl
 local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -22,4 +22,9 @@ local function _4_(e)
   vim.opt_local.conceallevel = 2
   return nil
 end
-return autocmd("Filetype", {group = "markdown-conceal", pattern = "markdown", callback = _4_})
+autocmd("Filetype", {group = "markdown-conceal", pattern = "markdown", callback = _4_})
+augroup("colorscheme-patch", {clear = true})
+local function _5_(e)
+  return vim.api.nvim_set_hl(0, "Visual", {ctermfg = 0, ctermbg = 7})
+end
+return autocmd("ColorScheme", {group = "colorscheme-patch", pattern = "default", callback = _5_})

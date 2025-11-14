@@ -107,7 +107,6 @@
 ; (when (= (os.getenv "TERM") "tmux-256color")
 ;   (vim.uv.fs_write 2 "\27Ptmux;\27\27]11;?\7\27\\" -1 nil))
 
-
 (let [colorscheme-filename (.. (os.getenv "HOME") "/.vimrc_background")]
   (if (file-exists? colorscheme-filename)
     (vim.cmd (.. "source" colorscheme-filename))
