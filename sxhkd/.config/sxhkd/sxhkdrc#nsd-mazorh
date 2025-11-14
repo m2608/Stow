@@ -27,5 +27,14 @@
 @XF86Forward
     mpvipc.sh next
 
-super + backslash
+super + Scroll_Lock
     xdg-screensaver lock
+
+super + backslash
+    latex2unicode
+
+super + shift + p
+    passmenu
+
+Print
+    shot

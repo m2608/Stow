@@ -21,5 +21,8 @@
 Print
     flameshot gui
 
-super + backslash
+super + Scroll_Lock
     xtrlock -f -b
+
+super + backslash
+    latex2unicode
