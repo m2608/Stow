@@ -5,7 +5,6 @@ set PATH \
     $HOME/.local/opt/go/bin/ \
     $HOME/.cargo/bin \
     $HOME/.local/bin \
-    $HOME/.config/nvm/versions/node/v22.17.0/bin \
     /opt/Tensor/Saby \
     /usr/local/bin \
     /usr/local/sbin \
@@ -18,10 +17,12 @@ set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/
 if test "$os_name" = "Red Hat Enterprise Linux"
     set PATH "$HOME/.local/bin.rh:$PATH"
 else if test "$os_name" = "Void"
-    set PATH "$HOME/.local/bin.void:$PATH"
+    setenv NODE_PATH (npm root -g)
+    set PATH "$HOME/.local/bin.void:$HOME/.npm-global/bin:$PATH"
 end
 
 setenv NNN_ARCHMNT ratarmount
+setenv VAULT_ADDR "https://csr-vault.sbis.ru"
 
 alias less 'less -r'
 alias ls lsd
