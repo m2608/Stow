@@ -43,6 +43,7 @@ if test -n "$cmd"
     setenv NNN_PLUG ";:fzplug;z:autojump;p:preview-tui;t:preview-tabbed;d:dragdrop;c:rsynccp;e:suedit"
     setenv NNN_OPTS "aAcdu"
     setenv NNN_FIFO "/tmp/nnn.fifo"
+    setenv NNN_PREVIEWIMGPROG $HOME/.local/bin/show-sixel.sh
 
     alias nnn "LANG=ru_RU.UTF-8 PAGER='nvimpager -p' NO_COLOR=1 $cmd"
 end
