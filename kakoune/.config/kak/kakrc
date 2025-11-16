@@ -54,13 +54,15 @@ define-command surround %{
 
 	surround-info "char to surround"
 
-	on-key %{ execute-keys %sh{
-    	bb -o '
+	on-key %{ bb %{
     		(let [key (System/getenv "kak_key")
     		      [b e] (get {
     		      	"("    ["( "         " )"]
     		      	")"    ["("           ")"]
     		      	"b"    ["("           ")"]
+    		      	"{"    ["{ "         " }"]
+    		      	"}"    ["{"           "}"]
+    		      	"B"    ["{"           "}"]
     		      	"["    ["[ "         " ]"]
     		      	"]"    ["["           "]"]
     		      	"r"    ["["           "]"]
@@ -71,8 +73,7 @@ define-command surround %{
     		      	"q"    ["\u0027" "\u0027"]
     		      	"Q"    ["\u0022" "\u0022"]
     		      } key [key key])]
-    			(str "i" b "<esc>" "a" e "<esc>" ","))
-    	'
+    			(str "execute-keys '" "i" b "<esc>" "a" e "<esc>" ",'"))
 	}}
 }
 
