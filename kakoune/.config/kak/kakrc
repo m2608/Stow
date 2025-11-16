@@ -22,6 +22,22 @@ evaluate-commands %sh{
     printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
 }
 
+define-command bb -params 1.. -docstring %{
+    bb [args...] code: Execute provided babashka code.
+} %{
+    evaluate-commands %sh{
+        args=""
+        while test $# -gt 1; do
+            args="$args $1"
+            shift
+        done
+
+        chunk="$1"
+
+        exec bb -o -e "$chunk" $args
+    }
+}
+
 define-command surround-info -params 1 -hidden %{
 	info -title %arg{1} "b,(,):  parentheses block
 B,{,}:  braces block
@@ -75,6 +91,87 @@ define-command surround-change %{
     }
 }
 
+# Код взят из этого плагина (кеширование пароля мне не нужно, так что я позаимствовал
+# только одну функцию): https://github.com/occivink/kakoune-sudo-write
+define-command -hidden sudo-write-without-password %{
+    eval -save-regs r %{
+        eval -draft -save-regs 't|"' %{
+            reg t %val{buffile}
+            exec -save-regs '' '%y'
+            edit -scratch '*sudo-write-tmp*'
+            exec <a-P>
+            reg | %{
+                if ! sudo -n tee "$kak_main_reg_t" >/dev/null 2>&1; then
+                    printf "fail 'Error occured.'"
+                fi
+            }
+            exec '|<ret>'
+            exec -save-regs '' '%"ry'
+            delete-buffer! '*sudo-write-tmp*'
+        }
+        eval %reg{r}
+    }
+}
+
+define-command -hidden sudo-write-with-password %{
+
+    prompt -password "Password:" %{
+        # Выполняем блок с сохранением регистра `r`.
+        eval -save-regs r %{
+            # Выполняем блок с сохранением регистров `t`, `f`, `"`, `|`.
+            eval -draft -save-regs 'tf|"' %{
+                # Кладём в регистр `t` имя файла. В блоке ниже, где выполняется
+                # `sudo`, переменная $kak_buffile недоступна, поэтому кладём
+                # значение в регистр.
+                reg t %val{buffile}
+                # Кладём в регистр `f` имя временного файла и сохраняем туда содержимое буфера.
+                reg f %sh{ mktemp }
+                write! %reg{f}
+
+                # Создаем временный буфер и помещаем туда пароль с помощью вставки из
+                # регистра `"`.
+                edit -scratch '*sudo-password-tmp*'
+                reg '"' "%val{text}"
+                exec <a-P>
+
+                # Кладём в регистр `|` команду. Команда, содержащаяся в этом регистре, будет
+                # автоматически использована при выполнении `|<ret>`.
+                reg | %{
+                    if ! sudo -S -- dd if="$kak_main_reg_f" of="$kak_main_reg_t" > /dev/null 2>&1; then
+                        printf 'fail "Error occured."'
+                    fi
+                    rm -f "$kak_main_reg_f"
+                }
+                # Прогоняем содержимое буфера через определённую выше команду.
+                exec '|<ret>'
+                # Сохраняем то, что вернул скрипт в регистр `r`.
+                exec -save-regs '' '%"ry'
+                # Удаляем временный буфер с паролем.
+                delete-buffer! '*sudo-password-tmp*'
+            }
+            # Выполняем то, что вернул скрипт.
+            eval %reg{r}
+        }
+    }
+}
+
+define-command sudo-write %{
+    # Проверяем, установлено ли sudo.
+    evaluate-commands %sh{
+        if ! which -s sudo; then
+            printf "fail 'sudo binary not found.'"
+        fi
+    }
+
+    evaluate-commands %sh{
+        if sudo -n true; then
+            printf "sudo-write-without-password"
+        else
+            printf 'sudo-write-with-password'
+        fi
+    }
+}
+
 plug "andreyorst/plug.kak" noload
 plug "andreyorst/fzf.kak"
 plug "https://git.sr.ht/~nasmevka/repl.kak"
@@ -117,7 +214,6 @@ declare-user-mode slime
 map global normal <\> ":enter-user-mode slime<ret>" -docstring "enter slime mode"
 map global slime <s> "<a-|>tmux load-buffer - ; tmux paste-buffer -t $(tmux display-message -p '#{session_name}:#{window_index}').$(($(tmux display-message -p '#{pane_index}')+1))<ret>" -docstring "send to neighbour tmux pane"
 
-eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
 
 hook global WinSetOption filetype=(clojure) %{
