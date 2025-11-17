@@ -4,8 +4,8 @@
          '[babashka.fs :as fs]
          '[babashka.process :refer [shell]])
 
-(def themes-base (str (System/getenv "HOME") "/Themes/st-resources/Xresources"))
-(def themes-pref "base16-")
+(def themes-base (str (System/getenv "HOME") "/Themes/output/base16-st-resources/Xresources"))
+(def themes-pref "")
 
 (def help
   (let [script (System/getProperty "babashka.file")]
