@@ -1,5 +1,5 @@
-neovim/.config/nvim/lazy-lock.json
-kakoune/.config/kak/plugins/*
 .clj-kondo/
+.config/kak/plugins/*
+.config/nvim/lazy-lock.json
+.emacs~
 .lsp/
-emacs/.emacs~
