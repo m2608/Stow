@@ -1,0 +1,32 @@
+set PATH \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    $HOME/.gocode/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/bin \
+    /usr/sbin \
+    /bin \
+    /sbin
+
+alias ls lsd
+alias joker "rlwrap $HOME/.local/bin/joker --no-readline"
+
+set xfreerdp (command -v xfreerdp3)
+if test -n "$xfreerdp"
+    alias xfreerdp "xfreerdp3 \
+    +clipboard                \
+    +auto-reconnect           \
+    +decorations              \
+    +dynamic-resolution       \
+    /audio-mode:1             \
+    /bpp:16                   \
+    /cache:bitmap:on,glyph:on \
+    /compression-level:2      \
+    /monitors:1               \
+"
+end
+
+set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
+
+zoxide init fish | source
