@@ -1,0 +1,227 @@
+# bb -i '(->> *input* (map (fn [line] (if-let [m (re-matches #"(.*):\s+(.*)" line)] [(keyword (nth m 1)) (nth m 2)]))) (into {}) ((juxt :st.background :st.foreground)) (map (fn [rgb] (->> (-> rgb (clojure.string/split #":") second (clojure.string/split #"/")) (map (fn [x] (Integer/parseInt x 16)))))))'
+
+colorscheme default
+
+set-option global tabstop 4
+set-option global indentwidth 4
+
+hook global WinSetOption filetype=(?!makefile).* %{
+    map global insert <tab>   '<a-;><a-gt>'
+    map global insert <s-tab> '<a-;><a-lt>'
+}
+
+add-highlighter global/relative-numbers number-lines -relative
+add-highlighter global/soft-wordwrap    wrap -word -indent
+add-highlighter global/trailing-spaces  regex '\h+$' 0:Error
+
+evaluate-commands %sh{
+    plugins="$kak_config/plugins"
+    mkdir -p "$plugins"
+    [ ! -e "$plugins/plug.kak" ] && \
+        git clone -q https://github.com/andreyorst/plug.kak.git "$plugins/plug.kak"
+    printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
+}
+
+define-command bb -params 1.. -docstring %{
+    bb [args...] code: Execute provided babashka code.
+} %{
+    evaluate-commands %sh{
+        args=""
+        while test $# -gt 1; do
+            args="$args $1"
+            shift
+        done
+
+        chunk="$1"
+
+        exec bb -o -e "$chunk" $args
+    }
+}
+
+define-command surround-info -params 1 -hidden %{
+	info -title %arg{1} "b,(,):  parentheses block
+B,{,}:  braces block
+r,[,]:  bracket block
+a,<,>:  angle block
+"",Q:    double quote string
+',q:    single quote string
+`,g:    grave quote string
+others: pressed character
+"
+}
+
+define-command surround %{
+
+	surround-info "char to surround"
+
+	on-key %{ bb %{
+    		(let [key (System/getenv "kak_key")
+    		      [b e] (get {
+    		      	"("    ["( "         " )"]
+    		      	")"    ["("           ")"]
+    		      	"b"    ["("           ")"]
+    		      	"{"    ["{ "         " }"]
+    		      	"}"    ["{"           "}"]
+    		      	"B"    ["{"           "}"]
+    		      	"["    ["[ "         " ]"]
+    		      	"]"    ["["           "]"]
+    		      	"r"    ["["           "]"]
+    		      	"<lt>" ["<lt> "   " <gt>"]
+    		      	"<gt>" ["<lt>"     "<gt>"]
+    		      	"a"    ["<lt>"     "<gt>"]
+    		      	"g"    ["`"           "`"]
+    		      	"q"    ["\u0027" "\u0027"]
+    		      	"Q"    ["\u0022" "\u0022"]
+    		      } key [key key])]
+    			(str "execute-keys '" "i" b "<esc>" "a" e "<esc>" ",'"))
+	}}
+}
+
+define-command surround-delete %{
+    surround-info "char to delete surround"
+    on-key %{
+        execute-keys "<a-a>%val{key}<a-S>d,"
+    }
+}
+
+define-command surround-change %{
+    surround-info "char to change surround"
+    on-key %{
+        execute-keys "<a-a>%val{key}<a-S>d"
+        execute-keys "G.H:surround<ret>"
+    }
+}
+
+# Код взят из этого плагина (кеширование пароля мне не нужно, так что я позаимствовал
+# только одну функцию): https://github.com/occivink/kakoune-sudo-write
+define-command -hidden sudo-write-without-password %{
+    eval -save-regs r %{
+        eval -draft -save-regs 't|"' %{
+            reg t %val{buffile}
+            exec -save-regs '' '%y'
+            edit -scratch '*sudo-write-tmp*'
+            exec <a-P>
+            reg | %{
+                if ! sudo -n tee "$kak_main_reg_t" >/dev/null 2>&1; then
+                    printf "fail 'Error occured.'"
+                fi
+            }
+            exec '|<ret>'
+            exec -save-regs '' '%"ry'
+            delete-buffer! '*sudo-write-tmp*'
+        }
+        eval %reg{r}
+    }
+}
+
+define-command -hidden sudo-write-with-password %{
+
+    prompt -password "Password:" %{
+        # Выполняем блок с сохранением регистра `r`.
+        eval -save-regs r %{
+            # Выполняем блок с сохранением регистров `t`, `f`, `"`, `|`.
+            eval -draft -save-regs 'tf|"' %{
+                # Кладём в регистр `t` имя файла. В блоке ниже, где выполняется
+                # `sudo`, переменная $kak_buffile недоступна, поэтому кладём
+                # значение в регистр.
+                reg t %val{buffile}
+                # Кладём в регистр `f` имя временного файла и сохраняем туда содержимое буфера.
+                reg f %sh{ mktemp }
+                write! %reg{f}
+
+                # Создаем временный буфер и помещаем туда пароль с помощью вставки из
+                # регистра `"`.
+                edit -scratch '*sudo-password-tmp*'
+                reg '"' "%val{text}"
+                exec <a-P>
+
+                # Кладём в регистр `|` команду. Команда, содержащаяся в этом регистре, будет
+                # автоматически использована при выполнении `|<ret>`.
+                reg | %{
+                    if ! sudo -S -- dd if="$kak_main_reg_f" of="$kak_main_reg_t" > /dev/null 2>&1; then
+                        printf 'fail "Error occured."'
+                    fi
+                    rm -f "$kak_main_reg_f"
+                }
+                # Прогоняем содержимое буфера через определённую выше команду.
+                exec '|<ret>'
+                # Сохраняем то, что вернул скрипт в регистр `r`.
+                exec -save-regs '' '%"ry'
+                # Удаляем временный буфер с паролем.
+                delete-buffer! '*sudo-password-tmp*'
+            }
+            # Выполняем то, что вернул скрипт.
+            eval %reg{r}
+        }
+    }
+}
+
+define-command sudo-write %{
+    # Проверяем, установлено ли sudo.
+    evaluate-commands %sh{
+        if ! which -s sudo; then
+            printf "fail 'sudo binary not found.'"
+        fi
+    }
+
+    evaluate-commands %sh{
+        if sudo -n true; then
+            printf "sudo-write-without-password"
+        else
+            printf 'sudo-write-with-password'
+        fi
+    }
+}
+
+plug "andreyorst/plug.kak" noload
+plug "andreyorst/fzf.kak"
+plug "https://git.sr.ht/~nasmevka/repl.kak"
+
+map global normal <F2> ":w<ret>"
+map global insert <F2> "<a-;>:w<ret>"
+
+map global insert "<c-a>" "<home>"
+map global insert "<c-e>" "<end>"
+map global insert "<c-b>" "<left>"
+map global insert "<c-f>" "<right>"
+map global insert "<a-b>" "<s-left>"
+map global insert "<a-f>" "<s-right>"
+
+# Used for completion:
+# map global insert "<c-p>" "<up>"
+# map global insert "<c-n>" "<down>"
+
+declare-user-mode leader
+map global normal <space> ":enter-user-mode leader<ret>" -docstring "enter leader mode"
+map global leader <y> "<a-|>xclip -selection clipboard<ret>" -docstring "yank to system clipboard"
+map global leader <p> "<a-!>xclip -o -selection clipboard<ret>" -docstring "paste from system clipboard"
+map global leader <P> "!xclip -o -selection clipboard<ret>" -docstring "paste from system clipboard on the previous line"
+map global leader <c> ":comment-block<ret>" -docstring "comment block"
+map global leader <Y> '<a-|>nop %{printf "\e]52;;%s\e\\" $(printf "%s" "$kak_main_reg_dquote" | base64 | tr -d "\n") > /dev/tty}<ret>' -docstring "yank using OSC52"
+map global leader <f> ':prompt -menu -shell-script-candidates %{ fd -t f } \"\" %{ edit %val{text} }<ret>' -docstring "find files"
+
+declare-user-mode match
+map global normal <m> ":enter-user-mode match<ret>" -docstring "enter match mode"
+map global match <m> "m" -docstring "select to next matching char"
+map global match <M> "M" -docstring "extend to next matching char"
+map global match <a-m> "<a-m>" -docstring "select to previous matching char"
+map global match <a-M> "<a-M>" -docstring "extend to previous matching char"
+map global match <s> ":surround<ret>" -docstring "add surrounding chars to selection"
+map global match <d> ":surround-delete<ret>" -docstring "delete surrounding chars"
+map global match <c> ":surround-change<ret>" -docstring "change surrounding chars"
+
+
+declare-user-mode slime
+map global normal <\> ":enter-user-mode slime<ret>" -docstring "enter slime mode"
+map global slime <s> "<a-|>tmux load-buffer - ; tmux paste-buffer -t $(tmux display-message -p '#{session_name}:#{window_index}').$(($(tmux display-message -p '#{pane_index}')+1))<ret>" -docstring "send to neighbour tmux pane"
+
+eval %sh{kak-lsp --kakoune -s $kak_session}
+lsp-enable
+
+hook global WinSetOption filetype=(clojure) %{
+  set-option window formatcmd "cljfmt fix -"
+}
+
+hook global WinSetOption filetype=(sql) %{
+  set-option window formatcmd "sleek"
+}

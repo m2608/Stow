@@ -23,7 +23,7 @@ define get-gist
 endef
 
 symlinks:
-	stow --target=$(HOME) --restow */
+	stow --target=$(HOME) --restow --no-folding stowed
 
 install-fish:
 	$(call get-from-github,fish-shell/fish-shell,"^fish-static-amd64-[0-9.]+.tar.xz$$") \
