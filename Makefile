@@ -98,10 +98,14 @@ install-docker-compose:
 		> $(DOCKER_COMPOSE)
 	chmod +x $(DOCKER_COMPOSE)
 
+install-markdown-oxide:
+	cargo install --locked --git https://github.com/Feel-ix-343/markdown-oxide.git markdown-oxide
+
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
 	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
 
+install-cargo-essentials: install-markdown-oxide
 
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
