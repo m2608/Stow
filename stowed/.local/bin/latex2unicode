@@ -1,13 +1,17 @@
 #!/bin/sh
 
+clipboard=$(xclip -o -selection clipboard)
+
 sed -n -r '/^[-]+$/,//p' "$0" \
     | sed '1d'                \
-    | dmenu -l 32             \
+    | dmenu -i -l 32          \
     | tr -s ' ' ' '           \
     | cut -d ' ' -f 2         \
     | tr -d '\n'              \
     | xclip -selection clipboard \
 && xdotool key ctrl+shift+v
+
+printf "%s" "$clipboard" | xclip -i -selection clipboard
 
 exit 0
 
