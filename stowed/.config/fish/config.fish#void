@@ -13,6 +13,7 @@ set PATH \
     /usr/lib/jvm/default-jre/bin
 
 setenv PAGER nvimpager
+setenv NODE_PATH (npm root -g)
 
 alias ls lsd
 alias nnn "PAGER='nvimpager -p' "(which nnn)
