@@ -44,7 +44,7 @@
    (let [servers {:pyright {}
                   :clojure_lsp {:flags {:completion {:analysis-type :slow-but-accurate}}
                                 :single_file_support true}
-                  :marksman {:cmd ["marksman" "server"]
+                  :markdown {:cmd ["markdown-oxide"]
                              :flags {:debounce_text_changes 150}
                              :single_file_support true}
                   :clangd {}}]

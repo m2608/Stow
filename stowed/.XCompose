@@ -1,4 +1,4 @@
-include "%L"
+# include "%L"
 
 <Multi_key> <equal> <minus>         : "✘"       U2718   # HEAVY BALLOT X
 <Multi_key> <equal> <plus>          : "✔"       U2714   # HEAVY CHECK MARK
@@ -371,15 +371,15 @@ include "%L"
 <Multi_key> <bar> <y> : "𝕪" U1D56A # Mathematical Double-Str uck Small Y
 <Multi_key> <bar> <z> : "𝕫" U1D56B # Mathematical Double-Str uck Small Z
 
-<Multi_key> <bar> <0> : "𝟡" U1D7E1 # mathematical double-str uck digit nine
-<Multi_key> <bar> <0> : "𝟠" U1D7E0 # mathematical double-str uck digit eight
-<Multi_key> <bar> <0> : "𝟟" U1D7DF # mathematical double-str uck digit seven
-<Multi_key> <bar> <0> : "𝟞" U1D7DE # mathematical double-str uck digit six
-<Multi_key> <bar> <0> : "𝟝" U1D7DD # mathematical double-str uck digit five
-<Multi_key> <bar> <0> : "𝟜" U1D7DC # mathematical double-str uck digit four
-<Multi_key> <bar> <0> : "𝟛" U1D7DB # mathematical double-str uck digit three
-<Multi_key> <bar> <0> : "𝟚" U1D7DA # mathematical double-str uck digit two
-<Multi_key> <bar> <0> : "𝟙" U1D7D9 # mathematical double-str uck digit one
+<Multi_key> <bar> <9> : "𝟡" U1D7E1 # mathematical double-str uck digit nine
+<Multi_key> <bar> <8> : "𝟠" U1D7E0 # mathematical double-str uck digit eight
+<Multi_key> <bar> <7> : "𝟟" U1D7DF # mathematical double-str uck digit seven
+<Multi_key> <bar> <6> : "𝟞" U1D7DE # mathematical double-str uck digit six
+<Multi_key> <bar> <5> : "𝟝" U1D7DD # mathematical double-str uck digit five
+<Multi_key> <bar> <4> : "𝟜" U1D7DC # mathematical double-str uck digit four
+<Multi_key> <bar> <3> : "𝟛" U1D7DB # mathematical double-str uck digit three
+<Multi_key> <bar> <2> : "𝟚" U1D7DA # mathematical double-str uck digit two
+<Multi_key> <bar> <1> : "𝟙" U1D7D9 # mathematical double-str uck digit one
 <Multi_key> <bar> <0> : "𝟘" U1D7D8 # mathematical double-str uck digit zero
 
 <Multi_key> <numbersign> <9> : "🯹" U1FBF9 # segmented digit ni ne
@@ -487,3 +487,25 @@ include "%L"
 <Multi_key> <f> <w> <bar>           : "｜" UFF5C # fullwidth vertical line
 <Multi_key> <f> <w> <braceright>    : "｝" UFF5D # fullwidth right curly bracket
 <Multi_key> <f> <w> <asciitilde>    : "～" UFF5E # fullwidth tilde
+
+<Multi_key> <m> <b> <0>             : "𝟎" U1D7CE # Mathematical Bold Digit Zero
+<Multi_key> <m> <b> <1>             : "𝟏" U1D7CF # Mathematical Bold Digit One
+<Multi_key> <m> <b> <2>             : "𝟐" U1D7D0 # Mathematical Bold Digit Two
+<Multi_key> <m> <b> <3>             : "𝟑" U1D7D1 # Mathematical Bold Digit Three
+<Multi_key> <m> <b> <4>             : "𝟒" U1D7D2 # Mathematical Bold Digit Four
+<Multi_key> <m> <b> <5>             : "𝟓" U1D7D3 # Mathematical Bold Digit Five
+<Multi_key> <m> <b> <6>             : "𝟔" U1D7D4 # Mathematical Bold Digit Six
+<Multi_key> <m> <b> <7>             : "𝟕" U1D7D5 # Mathematical Bold Digit Seven
+<Multi_key> <m> <b> <8>             : "𝟖" U1D7D6 # Mathematical Bold Digit Eight
+<Multi_key> <m> <b> <9>             : "𝟗" U1D7D7 # Mathematical Bold Digit Nine
+
+<Multi_key> <m> <m> <0>             : "𝟶" U1D7F6 # Mathematical Monospace Digit Zero
+<Multi_key> <m> <m> <1>             : "𝟷" U1D7F7 # Mathematical Monospace Digit One
+<Multi_key> <m> <m> <2>             : "𝟸" U1D7F8 # Mathematical Monospace Digit Two
+<Multi_key> <m> <m> <3>             : "𝟹" U1D7F9 # Mathematical Monospace Digit Three
+<Multi_key> <m> <m> <4>             : "𝟺" U1D7FA # Mathematical Monospace Digit Four
+<Multi_key> <m> <m> <5>             : "𝟻" U1D7FB # Mathematical Monospace Digit Five
+<Multi_key> <m> <m> <6>             : "𝟼" U1D7FC # Mathematical Monospace Digit Six
+<Multi_key> <m> <m> <7>             : "𝟽" U1D7FD # Mathematical Monospace Digit Seven
+<Multi_key> <m> <m> <8>             : "𝟾" U1D7FE # Mathematical Monospace Digit Eight
+<Multi_key> <m> <m> <9>             : "𝟿" U1D7FF # Mathematical Monospace Digit Nine

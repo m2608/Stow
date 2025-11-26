@@ -55,7 +55,9 @@ function clojuredocs -d "View clojuredocs"
     cat "$filename" \
     | jq -r '.vars | map("\(.ns)/\(.name)") | .[]' \
     | fzf \
-        --preview "jq -r '$jq_command' '$filename' | rich --markdown --force-terminal -" \
+        --ansi \
+        --color=base16 \
+        --preview "jq -r '$jq_command' '$filename' | pandoc -f markdown -t ansi -" \
         --preview-window "up:80%"            \
         --bind "up:preview-up"               \
         --bind "down:preview-down"           \

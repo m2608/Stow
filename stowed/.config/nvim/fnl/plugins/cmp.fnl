@@ -11,6 +11,7 @@
  :config (fn []
            (let [cmp (require "cmp")]
              (cmp.setup {:sources (cmp.config.sources (core.map (fn [n] {:name n}) ["conjure" "nvim_lsp" "buffer" "latex_symbols"]))
+                         :completion {:autocomplete false}
                          :mapping {
                              "<C-n>"   (cmp.mapping.select_next_item {:behavior cmp.SelectBehavior.Select})
                              "<C-p>"   (cmp.mapping.select_prev_item {:behavior cmp.SelectBehavior.Select})
