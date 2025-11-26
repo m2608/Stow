@@ -107,6 +107,10 @@ install-scripts:
 
 install-cargo-essentials: install-markdown-oxide
 
+install-obsidian:
+	curl https://obsidian.md/download | xmllint --html --xpath '//a[i[@icon-name="arrow-down-circle"]]/@href' - 2> /dev/null | sed -r 's/^[ ]*href="(.*)"$/\\1/' | sed -n -r '/Obsidian-[0-9.]+[.]AppImage$/p' | xargs curl -O $(HOME)/.local/bin/obsidian
+	chmod +x $(HOME)/.local/bin/obsidian
+
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
 
@@ -118,6 +122,10 @@ fetch-fonts:
 		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name == "IoskeleyMono-TTF-Hinted.zip") | .browser_download_url' \
 		| xargs -n 1 curl -L -O --fail
 	curl -L -O --fail "https://rubjo.github.io/victor-mono/VictorMonoAll.zip"
+	curl -s "https://api.github.com/repos/jenskutilek/sudo-font/releases" \
+		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test("sudo[.]zip$$")) | .browser_download_url' \
+		| xargs -n 1 curl -L -O --fail
+
 
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
