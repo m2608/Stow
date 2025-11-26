@@ -18,13 +18,35 @@ local function _2_(event)
 end
 autocmd({"FileType"}, {pattern = "bqn", callback = _2_})
 augroup("markdown-conceal", {clear = true})
-local function _4_(e)
+local function _4_()
   vim.opt_local.conceallevel = 2
   return nil
 end
 autocmd("Filetype", {group = "markdown-conceal", pattern = "markdown", callback = _4_})
 augroup("colorscheme-patch", {clear = true})
-local function _5_(e)
-  return vim.api.nvim_set_hl(0, "Visual", {ctermfg = 0, ctermbg = 7})
+local function _5_()
+  if not core.get(vim.o, "termguicolors") then
+    return vim.api.nvim_set_hl(0, "Visual", {ctermfg = 0, ctermbg = 7})
+  else
+    return nil
+  end
 end
-return autocmd("ColorScheme", {group = "colorscheme-patch", pattern = "default", callback = _5_})
+autocmd("ColorScheme", {group = "colorscheme-patch", pattern = "default", callback = _5_})
+augroup("age-encryption", {clear = true})
+local function _7_()
+  local options = {backup = false, swapfile = false, undofile = false, writebackup = false}
+  for k, v in pairs(options) do
+    vim.opt_local[k] = v
+  end
+  return nil
+end
+autocmd({"BufReadPre", "FileReadPre", "BufNewFile"}, {group = "age-encryption", pattern = "*.age", callback = _7_})
+local function _8_()
+  return vim.cmd("silent % !age -d -i ~/.ssh/id_ed25519")
+end
+autocmd({"BufReadPost", "FileReadPost"}, {group = "age-encryption", pattern = "*.age", callback = _8_})
+local function _9_()
+  return vim.cmd("silent % !age -e -R ~/.ssh/id_ed25519.pub -a")
+end
+autocmd({"BufWritePre", "FileWritePre"}, {group = "age-encryption", pattern = "*.age", callback = _9_})
+return autocmd({"BufWritePost", "FileWritePost"}, {group = "age-encryption", pattern = "*.age", command = "silent u"})

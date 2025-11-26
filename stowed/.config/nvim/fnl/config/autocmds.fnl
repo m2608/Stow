@@ -42,7 +42,7 @@
   "Filetype"
   {:group "markdown-conceal"
    :pattern "markdown"
-   :callback (fn [e]
+   :callback (fn []
                (set vim.opt_local.conceallevel 2))})
 
 ;; автокоманда нужна для патчинга цветового выделения, когда используются цвета
@@ -52,6 +52,46 @@
   "ColorScheme"
   {:group "colorscheme-patch"
    :pattern "default"
-   :callback (fn [e]
-               (when (not vim.o["termguicolors"])
+   :callback (fn []
+               (when (not (core.get vim.o "termguicolors"))
                  (vim.api.nvim_set_hl 0 "Visual" {:ctermfg 0 :ctermbg 7})))})
+
+;; группа для прозрачного шифрования файлов ключами ssh с помощью утилиты "age"
+(augroup "age-encryption" {:clear true})
+
+;; при открытии зашифрованных файлов нужно отключить все временные файлы, которые
+;; потенциально могут хранить расшифрованное содержимое
+(autocmd
+  ["BufReadPre" "FileReadPre" "BufNewFile"]
+  {:group "age-encryption"
+   :pattern "*.age"
+   :callback (fn []
+               (let [options {:swapfile false
+                              :undofile false
+                              :backup false
+                              :writebackup false}]
+                 (each [k v (pairs options)]
+                   (tset vim.opt_local k v))))})
+
+;; после чтения файла - расшифровываем его приватным ключём
+(autocmd
+  ["BufReadPost" "FileReadPost"]
+  {:group "age-encryption"
+   :pattern "*.age"
+   :callback (fn []
+			   (vim.cmd "silent % !age -d -i ~/.ssh/id_ed25519"))})
+
+;; перед записью файла - зашифровываем на публичном ключе
+(autocmd
+  ["BufWritePre" "FileWritePre"]
+  {:group "age-encryption"
+   :pattern "*.age"
+   :callback (fn []
+			   (vim.cmd "silent % !age -e -R ~/.ssh/id_ed25519.pub -a"))})
+
+;; после записи файла возвращаем в буфер расшифрованный вид
+(autocmd
+  ["BufWritePost" "FileWritePost"]
+  {:group "age-encryption"
+   :pattern "*.age"
+   :command "silent u"})

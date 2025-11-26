@@ -14,4 +14,3 @@
   {:pattern "joker"
    :group "joker"
    :command "runtime! indent/clojure.vim"})
-
