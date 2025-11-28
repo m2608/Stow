@@ -12,6 +12,11 @@ BOOTLEG        := "$(HOME)/.local/bin/bootleg"
 KAK_LSP        := "$(HOME)/.local/bin/kak-lsp"
 DOCKER_COMPOSE := "$(HOME)/.local/bin/docker-compose"
 
+define get-github-url
+	curl "https://api.github.com/repos/$(1)/releases" \
+		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test($(2))) | .browser_download_url'
+endef
+
 define get-from-github
 	curl "https://api.github.com/repos/$(1)/releases" \
 		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test($(2))) | .browser_download_url' \
@@ -101,6 +106,10 @@ install-docker-compose:
 install-markdown-oxide:
 	cargo install --locked --git https://github.com/Feel-ix-343/markdown-oxide.git markdown-oxide
 
+install-syncthing:
+	$(call get-from-github,syncthing/syncthing,"^syncthing-linux-amd64.*[.]tar[.]gz$$") \
+		| tar -C $(HOME)/.local/bin --wildcards --strip-components=1 --gz -xf - 'syncthing*/syncthing'
+
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
 	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
@@ -114,18 +123,30 @@ install-obsidian:
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
 
-fetch-fonts:
-	curl -s "https://api.github.com/repos/be5invis/Iosevka/releases" \
-		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test("PkgTTF-Iosevka.*[.]zip$$")) | .browser_download_url' \
-		| xargs -n 1 curl -L -O --fail
-	curl -s "https://api.github.com/repos/ahatem/IoskeleyMono/releases" \
-		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name == "IoskeleyMono-TTF-Hinted.zip") | .browser_download_url' \
-		| xargs -n 1 curl -L -O --fail
-	curl -L -O --fail "https://rubjo.github.io/victor-mono/VictorMonoAll.zip"
-	curl -s "https://api.github.com/repos/jenskutilek/sudo-font/releases" \
-		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test("sudo[.]zip$$")) | .browser_download_url' \
+fetch-font-iosevka:
+	$(call get-github-url,be5invis/Iosevka,"PkgTTF-Iosevka.*[.]zip$$") \
 		| xargs -n 1 curl -L -O --fail
 
+fetch-font-pragmasevka:
+	$(call get-github-url,shytikov/pragmasevka,"^Pragmasevka_NF[.]zip$$") \
+		| xargs -n 1 curl -L -O --fail
+
+fetch-font-ioskeley:
+	$(call get-github-url,ahatem/IoskeleyMono,"^IoskeleyMono-TTF-Hinted.zip$$") \
+		| xargs -n 1 curl -L -O --fail
+
+fetch-font-victor:
+	curl -L -O --fail "https://rubjo.github.io/victor-mono/VictorMonoAll.zip"
+
+fetch-font-sudo:
+	$(call get-github-url,jenskutilek/sudo-font,"^sudo[.]zip$$") \
+		| xargs -n 1 curl -L -O --fail
+
+fetch-font-departure:
+	$(call get-github-url,rektdeckard/departure-mono,"^DepartureMono.*[.]zip$$") \
+		| xargs -n 1 curl -L -O --fail
+
+fetch-fonts: fetch-font-iosevka fetch-font-pragmasevka fetch-font-ioskeley fetch-font-victor fetch-font-sudo fetch-font-departure
 
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
