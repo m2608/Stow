@@ -30,15 +30,22 @@ endef
 symlinks:
 	stow --target=$(HOME) --restow --no-folding stowed
 
+install-make:
+	$(MAKE) -f makefiles/make.mk
+
 install-fish:
 	$(call get-from-github,fish-shell/fish-shell,"^fish-static-amd64-[0-9.]+.tar.xz$$") \
 		| tar -C $(HOME)/.local/bin/ --xz -xf -
 
-fisher:
+install-fish-plugins:
 	fish -c 'curl -sL https://git.io/fisher | source \
 		&& fisher install jorgebucaran/fisher        \
 		&& fisher install orefalo/grc                \
 		&& fisher install PatrickF1/fzf.fish'
+
+install-fzf:
+	$(call get-from-github,junegunn/fzf,"^fzf-[0-9.]+-linux_amd64.tar.gz$$") \
+		| tar -C $(HOME)/.local/bin/ --gz -xf -
 
 install-nvim:
 	$(call get-from-github,neovim/neovim-releases,"^nvim-linux-x86_64[.]appimage$$") > $(NVIM);
@@ -109,6 +116,11 @@ install-markdown-oxide:
 install-syncthing:
 	$(call get-from-github,syncthing/syncthing,"^syncthing-linux-amd64.*[.]tar[.]gz$$") \
 		| tar -C $(HOME)/.local/bin --wildcards --strip-components=1 --gz -xf - 'syncthing*/syncthing'
+
+install-sysz:
+	$(call get-from-github,joehillen/sysz,"^sysz$$") \
+		> $(HOME)/.local/bin/sysz
+	chmod +x $(HOME)/.local/bin/sysz
 
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
