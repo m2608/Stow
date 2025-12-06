@@ -12,6 +12,8 @@ set PATH \
 alias ls lsd
 alias joker "rlwrap $HOME/.local/bin/joker --no-readline"
 
+set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/\1/')
+
 set xfreerdp (command -v xfreerdp3)
 if test -n "$xfreerdp"
     alias xfreerdp "xfreerdp3 \
@@ -30,3 +32,7 @@ end
 set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
 
 zoxide init fish | source
+
+if test "$os_name" = "Void"
+    source /usr/share/grc/grc.fish
+end
