@@ -121,6 +121,12 @@ install-sysz:
 		> $(HOME)/.local/bin/sysz
 	chmod +x $(HOME)/.local/bin/sysz
 
+install-lazydocker:
+	$(call get-from-github,jesseduffield/lazydocker,"^lazydocker_[0-9.]+_Linux_x86_64.tar.gz$$") \
+		| tar -C $(HOME)/.local/bin --gz -xf - lazydocker
+	chmod +x $(HOME)/.local/bin/lazydocker
+
+
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
 	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
