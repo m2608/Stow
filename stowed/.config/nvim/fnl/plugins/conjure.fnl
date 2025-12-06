@@ -1,6 +1,6 @@
 (local core (require "nfnl.core"))
 
-(let [filetypes ["clojure" "fennel" "janet" "hy" "scheme" "lua" "lisp" "python" "joker"]]
+(let [filetypes ["clojure" "fennel" "janet" "hy" "scheme" "lua" "lisp" "python" "janet" "joker"]]
   {1 "Olical/conjure"
    :ft filetypes
    :init
