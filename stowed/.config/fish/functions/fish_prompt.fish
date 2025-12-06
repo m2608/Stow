@@ -52,7 +52,20 @@ function fish_prompt --description 'Write out the prompt'
 
     # Color the prompt differently when we're root
     set -l color_cwd $fish_color_cwd
-    set -l suffix '>'
+    set -l prefix ""
+    set -l suffix ">"
+
+    set -l container ""
+    for envfile in "/run/.containerenv" "/run/.dockerenv"
+        if test -f "$envfile"
+            set container (cat "$envfile" | sed -n -r 's/^name="(.*)"$/\1/p')
+        end
+    end
+
+    if test -n "$container"
+        set prefix "⌈$container⌋"
+    end
+
     if functions -q fish_is_root_user; and fish_is_root_user
         if set -q fish_color_cwd_root
             set color_cwd $fish_color_cwd_root
@@ -72,7 +85,7 @@ function fish_prompt --description 'Write out the prompt'
     set -l statusb_color (set_color $bold_flag $fish_color_status)
     set -l prompt_status (__fish_print_pipestatus "[" "]" "|" "$status_color" "$statusb_color" $last_pipestatus)
 
-    echo -n -s (set_color $color_cwd) (prompt_pwd) (set_color normal) (fish_vcs_prompt) (set_color normal) $prompt_status $suffix " "
+    echo -n -s (set_color normal) $prefix (set_color $color_cwd) (prompt_pwd) (set_color normal) (fish_vcs_prompt) (set_color normal) $prompt_status $suffix " "
 end
 
 
@@ -84,9 +97,10 @@ function fish_right_prompt --description 'Right prompt'
     set -l user (set_color normal)(whoami | cut -d '@' -f 1)
 
     # Hostname icon and color.
-    set -l color_host (hostname | cut -d '.' -f 1 | md5sum | cut -c 1-6)
-    set icon (set_color $color_host)(printf "•")
-    set host (set_color normal)(hostname | cut -d '.' -f 1)
+    set -l short_hostname (echo "$hostname" | cut -d "." -f 1)
+    set -l color_host (echo "$short_hostname" | md5sum | cut -c 1-6)
+    set -l icon (set_color $color_host)(printf "•")
+    set -l host (set_color normal)"$short_hostname"
 
     # Last command execution time.
     set -l duration (format_duration $CMD_DURATION)
