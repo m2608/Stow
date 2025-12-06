@@ -12,26 +12,28 @@ BOOTLEG        := "$(HOME)/.local/bin/bootleg"
 KAK_LSP        := "$(HOME)/.local/bin/kak-lsp"
 DOCKER_COMPOSE := "$(HOME)/.local/bin/docker-compose"
 
-define get-github-url
-	curl "https://api.github.com/repos/$(1)/releases" \
-		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test($(2))) | .browser_download_url'
-endef
+include makefiles/functions.mk
 
-define get-from-github
-	curl "https://api.github.com/repos/$(1)/releases" \
-		| jq -r '[.[] | select(.prerelease==false)] | sort_by(.created_at) | reverse | .[0] .assets[] | select(.name | test($(2))) | .browser_download_url' \
-		| xargs -n 1 curl -L
-endef
+#
+# GNU tools
+#
 
-define get-gist
-	curl -Ls $(1) | jq -r '.files["$(2)"] .content' > $(3)
-endef
+install-make:
+	$(MAKE) -f makefiles/gnu.mk NAME=make CONFIGURE_PARAMS="--with-guile"
+
+install-stow:
+	$(MAKE) -f makefiles/gnu.mk NAME=stow
+
+#
+# stowed config files
+#
 
 symlinks:
 	stow --target=$(HOME) --restow --no-folding stowed
 
-install-make:
-	$(MAKE) -f makefiles/make.mk
+delete:
+	stow --target=$(HOME) --delete */
+
 
 install-fish:
 	$(call get-from-github,fish-shell/fish-shell,"^fish-static-amd64-[0-9.]+.tar.xz$$") \
@@ -150,5 +152,3 @@ install-nnn-plugins:
 
 all: symlinks
 
-delete:
-	stow --target=$(HOME) --delete */
