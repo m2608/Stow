@@ -37,10 +37,9 @@ install-fish:
 	$(call get-from-github,fish-shell/fish-shell,"^fish-static-amd64-[0-9.]+.tar.xz$$") \
 		| tar -C $(HOME)/.local/bin/ --xz -xf -
 
-install-fish-plugins:
+install-fish-plugins: install-fzf
 	fish -c 'curl -sL https://git.io/fisher | source \
 		&& fisher install jorgebucaran/fisher        \
-		&& fisher install orefalo/grc                \
 		&& fisher install PatrickF1/fzf.fish'
 
 install-fzf:
@@ -135,30 +134,8 @@ install-obsidian:
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
 
-fetch-font-iosevka:
-	$(call get-github-url,be5invis/Iosevka,"PkgTTF-Iosevka.*[.]zip$$") \
-		| xargs -n 1 curl -L -O --fail
-
-fetch-font-pragmasevka:
-	$(call get-github-url,shytikov/pragmasevka,"^Pragmasevka_NF[.]zip$$") \
-		| xargs -n 1 curl -L -O --fail
-
-fetch-font-ioskeley:
-	$(call get-github-url,ahatem/IoskeleyMono,"^IoskeleyMono-TTF-Hinted.zip$$") \
-		| xargs -n 1 curl -L -O --fail
-
-fetch-font-victor:
-	curl -L -O --fail "https://rubjo.github.io/victor-mono/VictorMonoAll.zip"
-
-fetch-font-sudo:
-	$(call get-github-url,jenskutilek/sudo-font,"^sudo[.]zip$$") \
-		| xargs -n 1 curl -L -O --fail
-
-fetch-font-departure:
-	$(call get-github-url,rektdeckard/departure-mono,"^DepartureMono.*[.]zip$$") \
-		| xargs -n 1 curl -L -O --fail
-
-fetch-fonts: fetch-font-iosevka fetch-font-pragmasevka fetch-font-ioskeley fetch-font-victor fetch-font-sudo fetch-font-departure
+fetch-fonts:
+	$(MAKE) -f makefiles/fonts.mk
 
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
