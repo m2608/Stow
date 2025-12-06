@@ -1,6 +1,5 @@
-CURRENT_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
-
-include $(CURRENT_FOLDER)/functions.mk
+MAKEFILE_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
+include $(MAKEFILE_FOLDER)/functions.mk
 
 fetch-iosevka:
 	$(call get-github-url,be5invis/Iosevka,"PkgTTF-Iosevka.*[.]zip$$") \

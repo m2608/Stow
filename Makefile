@@ -1,18 +1,12 @@
 NVIM           := "$(HOME)/.local/bin/nvim"
 HELIX          := "$(HOME)/.local/bin/hx"
-BABASHKA       := "$(HOME)/.local/bin/bb"
-CQ             := "$(HOME)/.local/bin/cq"
-JET            := "$(HOME)/.local/bin/jet"
 MARKSMAN       := "$(HOME)/.local/bin/marksman"
-CLOJURE_LSP    := "$(HOME)/.local/bin/clojure-lsp"
-CLJ_KONDO      := "$(HOME)/.local/bin/clj-kondo"
-CLJFMT         := "$(HOME)/.local/bin/cljfmt"
-CLJFMT_JAR     := "$(HOME)/.local/opt/cljfmt/cljfmt.jar"
 BOOTLEG        := "$(HOME)/.local/bin/bootleg"
 KAK_LSP        := "$(HOME)/.local/bin/kak-lsp"
 DOCKER_COMPOSE := "$(HOME)/.local/bin/docker-compose"
 
-include makefiles/functions.mk
+MAKEFILE_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
+include $(MAKEFILE_FOLDER)/makefiles/functions.mk
 
 #
 # GNU tools
@@ -25,7 +19,7 @@ install-stow:
 	$(MAKE) -f makefiles/gnu.mk NAME=stow
 
 #
-# stowed config files
+# Stowed config files
 #
 
 symlinks:
@@ -33,6 +27,20 @@ symlinks:
 
 delete:
 	stow --target=$(HOME) --delete */
+
+#
+# Fonts
+#
+
+fetch-fonts:
+	$(MAKE) -f makefiles/fonts.mk
+
+#
+# Clojure tools
+#
+
+clojure-tools:
+	$(MAKE) -f makefiles/clojure-tools.mk
 
 
 install-fish:
@@ -56,41 +64,10 @@ install-hx:
 	$(call get-from-github,helix-editor/helix,"[.]AppImage$$") > $(HELIX);
 	chmod +x $(HELIX)
 
-install-bb:
-	$(call get-from-github,babashka/babashka,"^babashka-[0-9.]+-linux-amd64-static.tar.gz$$") \
-		| tar --gz --to-stdout -xf - > $(BABASHKA);
-	chmod +x $(BABASHKA)
-
-install-cq:
-	$(call get-from-github,markus-wa/cq,"^cq-native-linux$$") > $(CQ);
-	chmod +x $(CQ)
-
-install-jet:
-	$(call get-from-github,borkdude/jet,"^jet-[0-9.]+-linux-amd64.tar.gz$$") \
-		| tar --gz --to-stdout -xf - > $(JET);
-	chmod +x $(JET)
-
 install-marksman:
 	$(call get-from-github,artempyanykh/marksman,"^marksman-linux-x64$$") \
 		 > $(MARKSMAN);
 	chmod +x $(MARKSMAN)
-
-install-clojure-lsp:
-	$(call get-from-github,clojure-lsp/clojure-lsp,"^clojure-lsp-native-static-linux-amd64.zip$$") \
-		| bsdtar -xO -f - > $(CLOJURE_LSP);
-	chmod +x $(CLOJURE_LSP)
-
-install-clj-kondo:
-	$(call get-from-github,clj-kondo/clj-kondo,"^clj-kondo-[0-9.]+-linux-amd64.zip$$") \
-		| bsdtar -xO -f - > $(CLJ_KONDO);
-	chmod +x $(CLJ_KONDO)
-
-install-cljfmt:
-	mkdir -p `dirname $(CLJFMT_JAR)`;
-	$(call get-from-github,weavejester/cljfmt,"^cljfmt-[0-9.]+-standalone.jar$$") \
-		> $(CLJFMT_JAR);
-	printf "#!/bin/sh\n\njava -jar $(CLJFMT_JAR) $$\@\n" > $(CLJFMT); 
-	chmod +x $(CLJFMT)
 
 install-bootleg:
 	$(call get-from-github,retrogradeorbit/bootleg,"^bootleg-[0-9.]+-linux-amd64.tgz$$") \
@@ -123,11 +100,23 @@ install-sysz:
 		> $(HOME)/.local/bin/sysz
 	chmod +x $(HOME)/.local/bin/sysz
 
+#
+# Lazy tools
+#
+
+install-lazydocker:
+	$(call get-from-github,jesseduffield/lazygit,"^lazygit_[0-9.]+_Linux_x86_64.tar.gz$$") \
+		| tar -C $(HOME)/.local/bin --gz -xf - lazygit
+	chmod +x $(HOME)/.local/bin/lazygit
+
 install-lazydocker:
 	$(call get-from-github,jesseduffield/lazydocker,"^lazydocker_[0-9.]+_Linux_x86_64.tar.gz$$") \
 		| tar -C $(HOME)/.local/bin --gz -xf - lazydocker
 	chmod +x $(HOME)/.local/bin/lazydocker
 
+#
+# My own scripts.
+#
 
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
@@ -141,9 +130,6 @@ install-obsidian:
 
 setup-nfnl:
 	cd "$(HOME)/.config/nvim" && nvim '+lua require("nfnl.api")["compile-all-files"]()'
-
-fetch-fonts:
-	$(MAKE) -f makefiles/fonts.mk
 
 install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
