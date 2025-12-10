@@ -1,5 +1,5 @@
 {1 "ojroques/vim-oscyank"
- :lazy true
+ :lazy false
  :cmd ["OSCYank"
        "OSCYankReg"
        "OSCYankRegister"

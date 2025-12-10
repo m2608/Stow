@@ -51,5 +51,17 @@
 (cmd (.. "command! -range GitLab "
          "execute 'silent ! git browse \"' . expand('%') . '\" ' . <line1> | checktime | redraw!"))
 
+;; Эта команда просто показывает ссылку.
 (cmd (.. "command! -range GitLabShow "
          "execute '! git browse -s \"' . expand('%') . '\" ' . <line1>"))
+
+;; Команда копирует ссылку на GitLab в буфер обмена (через OSC52).
+(vim.api.nvim_create_user_command
+  "GitLabYank"
+  (fn []
+    (let [command ["git" "browse" "-s" (vim.fn.expand "%") (tostring (vim.fn.line "."))]]
+      (vim.system command {:text true}
+                  (fn [o]
+                    (let [output (string.gsub (. o :stdout) "[\n]+$" "")]
+                      (vim.schedule (fn [] (vim.call "OSCYank" output))))))))
+  {:nargs 0})

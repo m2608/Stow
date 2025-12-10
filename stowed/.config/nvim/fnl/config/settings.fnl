@@ -1,6 +1,5 @@
 (local {: autoload} (require "nfnl.module"))
 (local core (autoload "nfnl.core"))
-(local str  (autoload "nfnl.str"))
 
 (fn file-exists? [filename]
   "Проверяет, существует ли файл."
@@ -100,8 +99,6 @@
        "autocmd Syntax hurl setlocal foldmethod=manual"]]
   (each [_ cmd (ipairs commands)]
     (vim.cmd cmd)))
-
-
 
 ;; Хак для определения фона терминала в tmux.
 ; (when (= (os.getenv "TERM") "tmux-256color")

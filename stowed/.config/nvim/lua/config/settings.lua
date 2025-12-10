@@ -2,7 +2,6 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
-local str = autoload("nfnl.str")
 local function file_exists_3f(filename)
   local file = io.open(filename)
   local exists = (file ~= nil)
