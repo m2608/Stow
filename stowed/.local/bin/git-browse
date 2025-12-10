@@ -7,6 +7,7 @@ if test -z "$1" -o "$1" = "-h" -o "$1" = "--help"; then
 Usage: $self [-o|-s] <filename> <line>
     -o | --open     Open GitLab in browser (default)
     -s | --show     Just show the link
+    -y | --yank     Yank with OSC52
     -h | --help     Show help
 EOF
     exit 1
@@ -21,6 +22,9 @@ if test "$1" = "-o" -o "$1" = "--open"; then
     shift
 elif test "$1" = "-s" -o "$1" = "--show"; then
     action="show"
+    shift
+elif test "$1" = "-y" -o "$1" = "--yank"; then
+    action="yank"
     shift
 fi
 
@@ -72,5 +76,8 @@ case "$action" in
         ;;
     show)
         echo "$url"
+        ;;
+    yank)
+        printf "\033]52;c;%s\007" $(echo "$url" | base64 | tr -d "\n")
         ;;
 esac
