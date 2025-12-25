@@ -7,7 +7,8 @@ setenv FZF_DEFAULT_OPTS "--no-mouse --color=bw --bind=ctrl-j:accept,ctrl-k:kill-
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
 setenv GOPATH $HOME/.gocode
-setenv JANET_PATH $HOME/.jpm/lib
+setenv JANET_TREE $HOME/.jpm
+setenv JANET_PATH $JANET_TREE/lib
 
 setenv XDG_DATA_HOME   $HOME/.local/share
 setenv XDG_CONFIG_HOME $HOME/.config
@@ -58,6 +59,7 @@ end
 
 alias oil "nvim -c 'Oil'"
 alias nrepl "clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version \"1.3.0\"} cider/cider-nrepl {:mvn/version \"0.50.3\"}}}' -M -m nrepl.cmdline --interactive"
+alias janet-netrepl "janet -e '(import spork/netrepl) (netrepl/server)'"
 
 set short_hostname (string replace -r '[.].*' '' $hostname)
 set current_dir (status dirname)
@@ -66,3 +68,6 @@ set host_config "$current_dir/config.fish#$short_hostname"
 if test -e "$host_config"
     source "$host_config"
 end
+
+set fish_cursor_insert block blink
+fish_user_key_bindings
