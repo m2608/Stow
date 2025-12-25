@@ -75,7 +75,7 @@ theme - set color theme
 (defn update-st
   "Reloads `st` config from resource database."
   []
-  (shell "pkill" "-USR1" "-x" "st"))
+  (shell "pkill" "-USR1" "-a" "-x" "st"))
   
 (let [[option value] *command-line-args*]
   (when (nil? value)
