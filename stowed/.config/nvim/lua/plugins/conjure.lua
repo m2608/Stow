@@ -1,6 +1,6 @@
 -- [nfnl] fnl/plugins/conjure.fnl
 local core = require("nfnl.core")
-local filetypes = {"clojure", "fennel", "janet", "hy", "scheme", "lua", "lisp", "python", "janet", "joker"}
+local filetypes = {"clojure", "fennel", "janet", "hy", "scheme", "lua", "lisp", "python", "joker"}
 local function _1_()
   vim.g["conjure#filetypes"] = filetypes
   return nil
