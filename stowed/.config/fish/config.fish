@@ -23,8 +23,6 @@ setenv QT_SCALE_FACTOR 1.5
 # set -a fish_features no-keyboard-protocols
 set -g fish_greeting ""
 
-bind ctrl-z "jobs > /dev/null && echo && fg"
-
 if string match -q -e freebsd (status buildinfo)
     alias cal "cal -M"
 else
@@ -71,3 +69,4 @@ end
 
 set fish_cursor_insert block blink
 fish_user_key_bindings
+
