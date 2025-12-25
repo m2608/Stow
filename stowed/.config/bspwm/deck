@@ -1,0 +1,83 @@
+#!/usr/bin/env bb
+
+(require '[babashka.process :refer [shell]]
+         '[clojure.string :as str])
+
+(defn get-nodes
+  "Получает список тайловых окон на текущем мониторе."
+  []
+  (let [command ["bspc" "query" "-N" "-d" "focused" "-n" ".tiled.window"]]
+    (->> (shell command {:out :string})
+         :out
+         str/split-lines
+         (map #(Integer/parseInt (subs % 2) 16)))))
+
+(defn swap-nodes
+  "Меняет ноды местами в дереве."
+  [n1 n2]
+  (shell ["bspc" "node" n1 "-s" n2]))
+
+(defn set-node-flag
+  "Устанавливает флаг для ноды."
+  [flag value node]
+  (shell ["bspc" "node" node "--flag" (format "%s=%s" flag value)]))
+
+(def hide-node (partial set-node-flag "hidden" "on"))
+(def show-node (partial set-node-flag "hidden" "off"))
+
+(defn get-layout
+  "Возвращает layout текущего рабочего стола.
+  - Для \"monocle\" всегда возвращает \"monocle\".
+  - Для \"tiled\" возвращает layout из имени рабочего стола (например, для рабочего стола \"1:deck\" вернёт :deck). Если в имени рабочего стола нет такого тега, вернёт :tiled."
+  []
+  (let [{desktop-name :name layout :layout :as data}
+        (-> ["bspc" "query" "-T" "-d" "focused"]
+            (shell {:out :string})
+            :out
+            (json/parse-string keyword))]
+    (case layout
+      "monocle" :monocle
+      "tiled" (let [[_ tag] (str/split desktop-name #":" 2)]
+                (if tag (keyword tag) :tiled))
+      nil)))
+
+(defn init-deck
+  "Инициализирует раскладку окон: показывает мастер и первое слейв-окно, скрывает остальные."
+  []
+  (let [[m h & t] (get-nodes)]
+    ;; Показываем мастер-ноду и первую ноду дека.
+    (doseq [n [m h]]
+      (show-node n))
+    ;; Скрываем все остальные ноды дека.
+    (doseq [n t]
+      (hide-node n))))
+
+(defn cycle-nodes
+  "Перемещает указанные ноды циклически."
+  [nodes]
+  (let [[h & t] nodes]
+    (doseq [n t]
+      (swap-nodes h n))))
+
+(defn cycle-deck
+  "Перемещает слейв-ноды циклически в указанном направлении, при этом видимой всегда остается
+  первая нода."
+  [direction]
+  (let [[_ & [old-h & _ :as deck]] (get-nodes)
+        new-h (if (= direction :right) (second deck) (last deck))]
+    (show-node new-h)
+    (hide-node old-h)
+    (cycle-nodes ((if (= direction :right) identity reverse) deck))))
+
+(defn show-all
+  "Показывает все ноды на текущем мониторе."
+  []
+  (doseq [n (get-nodes)]
+    (show-node n)))
+
+(if-let [[command] *command-line-args*]
+  (case command
+    "cycle-left"  (cycle-deck :left)
+    "cycle-right" (cycle-deck :right)
+    "show" (show-all))
+  (init-deck))
