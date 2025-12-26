@@ -1,5 +1,6 @@
 (local {: autoload} (require "nfnl.module"))
 (local core (autoload "nfnl.core"))
+(local str (autoload "nfnl.string"))
 
 (local augroup vim.api.nvim_create_augroup)
 (local autocmd vim.api.nvim_create_autocmd)
@@ -95,3 +96,19 @@
   {:group "age-encryption"
    :pattern "*.age"
    :command "silent u"})
+
+
+(augroup "out" {:clear true})
+(autocmd
+  ["BufReadCmd"]
+  {:group "out"
+   :pattern "out://*"
+   :callback (fn [args]
+               (let [bufopt (. vim.bo args.buf)
+                     output (-> args.match (string.gsub "^out://" "") vim.fn.expand vim.fn.system (str.split "\n"))]
+                 (each [k v (pairs {:buftype "nofile"
+                                    :bufhidden "wipe"
+                                    :swapfile false
+                                    :modifiable true})]
+                   (tset bufopt k v))
+                 (vim.api.nvim_buf_set_lines args.buf 0 -1 false output)))})

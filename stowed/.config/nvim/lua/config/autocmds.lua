@@ -2,6 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_.autoload
 local core = autoload("nfnl.core")
+local str = autoload("nfnl.string")
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 autocmd({"BufRead", "BufNewFile"}, {pattern = "*.bqn", command = "setf bqn"})
@@ -49,4 +50,14 @@ local function _9_()
   return vim.cmd("silent % !age -e -R ~/.ssh/id_ed25519.pub -a")
 end
 autocmd({"BufWritePre", "FileWritePre"}, {group = "age-encryption", pattern = "*.age", callback = _9_})
-return autocmd({"BufWritePost", "FileWritePost"}, {group = "age-encryption", pattern = "*.age", command = "silent u"})
+autocmd({"BufWritePost", "FileWritePost"}, {group = "age-encryption", pattern = "*.age", command = "silent u"})
+augroup("out", {clear = true})
+local function _10_(args)
+  local bufopt = vim.bo[args.buf]
+  local output = str.split(vim.fn.system(vim.fn.expand(string.gsub(args.match, "^out://", ""))), "\n")
+  for k, v in pairs({buftype = "nofile", bufhidden = "wipe", modifiable = true, swapfile = false}) do
+    bufopt[k] = v
+  end
+  return vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, output)
+end
+return autocmd({"BufReadCmd"}, {group = "out", pattern = "out://*", callback = _10_})
