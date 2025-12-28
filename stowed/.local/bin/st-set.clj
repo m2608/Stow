@@ -75,7 +75,10 @@ theme - set color theme
 (defn update-st
   "Reloads `st` config from resource database."
   []
-  (shell "pkill" "-USR1" "-a" "-x" "st"))
+  (apply shell
+         (if (re-find #"FreeBSD" (:out (shell "uname -a" {:out :string})))
+           ["pkill" "-USR1" "-a" "-x" "st"]
+           ["pkill" "-USR1"      "-x" "st"])))
   
 (let [[option value] *command-line-args*]
   (when (nil? value)
