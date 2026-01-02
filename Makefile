@@ -109,6 +109,9 @@ install-sysz:
 		> $(HOME)/.local/bin/sysz
 	chmod +x $(HOME)/.local/bin/sysz
 
+install-xxd:
+	$(MAKE) -f makefiles/xxd.mk
+
 #
 # Lazy tools
 #
