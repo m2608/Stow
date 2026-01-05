@@ -1,7 +1,7 @@
 MAKEFILE_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
 include $(MAKEFILE_FOLDER)/functions.mk
 
-PREFIX       := $(HOME)/.local
+PREFIX       ?= $(HOME)/.local
 TEMP_FOLDER  := .build
 CLONE_FOLDER := $(TEMP_FOLDER)/janet
 REPOSITORY   := "https://github.com/janet-lang/janet"
