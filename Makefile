@@ -4,6 +4,8 @@ include $(MAKEFILE_FOLDER)/makefiles/functions.mk
 ARCH := $(shell uname -m | tr A-Z a-z)
 OS   := $(shell uname -s | tr A-Z a-z)
 
+all: symlinks
+
 #
 # GNU tools
 #
@@ -264,5 +266,4 @@ install-nnn-plugins: install-nnn
 	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit | xargs -n 1 -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
 	chmod +x "$(HOME)/.config/nnn/plugins/*"
 
-all: symlinks
 
