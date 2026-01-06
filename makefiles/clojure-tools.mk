@@ -1,10 +1,10 @@
 MAKEFILE_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
 include $(MAKEFILE_FOLDER)/functions.mk
 
-ARCH := $(shell uname -m | tr A-Z a-z)
+ARCH := $(shell uname -m | tr A-Z a-z | sed 's/x86_64/amd64/')
 OS   := $(shell uname -s | tr A-Z a-z)
 
-all: babashka cq jet clojure-lsp clj-kondo cljfmt
+all: babashka cq jet clojure-lsp clj-kondo cljfmt joker
 
 babashka: BABASHKA := "$(HOME)/.local/bin/bb"
 babashka:
@@ -68,3 +68,17 @@ cljfmt:
 		> $(CLJFMT_JAR);
 	printf "#!/bin/sh\n\njava -jar $(CLJFMT_JAR) $$\@\n" > $(CLJFMT); 
 	chmod +x $(CLJFMT)
+
+joker: JOKER := "$(HOME)/.local/bin/joker"
+joker:
+ifneq ($(OS),$(filter $(OS),freebsd linux))
+	$(error "Unsupported OS: $(OS)")
+endif
+
+ifneq ($(ARCH),$(filter $(ARCH),amd64))
+	$(error "Unsupported arch: $(ARCH)")
+endif
+
+	$(call get-from-github,candid82/joker,"^joker-$(OS)-$(ARCH)[.]zip$$") \
+		| bsdtar -xO -f - > "$(JOKER)";
+	chmod +x "$(JOKER)"
