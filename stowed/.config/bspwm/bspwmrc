@@ -1,7 +1,12 @@
 #!/bin/sh
 
-hostname=$(hostname | cut -d '.' -f 1)
+if command -v hostname > /dev/null; then
+    hostname=$(hostname)
+elif command -v hostnamectl > /dev/null; then
+    hostname=$(hostnamectl hostname)
+fi
 
+hostname=$(echo "$hostname" | cut -d '.' -f 1)
 
 # Настраиваем горячие клавиши.
 pgrep -x sxhkd > /dev/null \
