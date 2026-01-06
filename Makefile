@@ -16,6 +16,9 @@ install-make:
 install-stow:
 	$(MAKE) -f $(MAKEFILE_FOLDER)/makefiles/gnu.mk NAME=stow
 
+install-libarchive:
+	$(MAKE) -f $(MAKEFILE_FOLDER)/makefiles/gnu.mk NAME=libarchive BASE="https://libarchive.org/downloads" XPATH="//a/@href"
+
 #
 # Stowed config files
 #
@@ -202,6 +205,7 @@ install-scripts:
 #
 
 install-cargo-tools: install-markdown-oxide
+	cargo install --locked age-plugin-yubikey
 	cargo install --locked git-delta
 	cargo install --locked dysk
 	cargo install --locked htmlq
