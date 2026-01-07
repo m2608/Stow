@@ -8,6 +8,8 @@ fi
 
 hostname=$(echo "$hostname" | cut -d '.' -f 1)
 
+current_folder=$(dirname "$0")
+
 # Настраиваем горячие клавиши.
 pgrep -x sxhkd > /dev/null \
     || SXHKD_SHELL="/bin/sh" sxhkd -c "$HOME/.config/sxhkd/sxhkdrc" \
@@ -34,4 +36,4 @@ bspc config ignore_ewmh_focus       true
 
 bspc rule -a firefox focus=off follow=off
 
-exec "$HOME/.config/bspwm/bspwmrc#$hostname"
+exec "${current_folder}/bspwmrc#${hostname}"

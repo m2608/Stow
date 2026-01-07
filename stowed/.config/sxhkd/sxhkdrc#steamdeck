@@ -1,0 +1,11 @@
+# уменьшить громкость
+@XF86AudioLowerVolume
+    $HOME/.config/bspwm/bspwm-volume.wpctl.sh down
+
+# увеличить громкость
+@XF86AudioRaiseVolume
+    $HOME/.config/bspwm/bspwm-volume.wpctl.sh up
+
+# замьютить
+@XF86AudioMute
+    $HOME/.config/bspwm/bspwm-volume.wpctl.sh mute
