@@ -44,6 +44,15 @@ clojure-tools:
 	$(MAKE) -f $(MAKEFILE_FOLDER)/makefiles/clojure-tools.mk
 
 #
+# Image Magick
+#
+
+magick: MAGICK := "$(HOME)/.local/bin/magick"
+magick:
+	curl -L "https://imagemagick.org/archive/binaries/magick" > $(MAGICK);
+	chmod +x $(MAGICK)
+
+#
 # Editors
 #
 
