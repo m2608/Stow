@@ -1,7 +1,7 @@
 MAKEFILE_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
 include $(MAKEFILE_FOLDER)/makefiles/functions.mk
 
-ARCH := $(shell uname -m | tr A-Z a-z)
+ARCH := $(shell uname -m | tr A-Z a-z | sed 's/x86_64/amd64/')
 OS   := $(shell uname -s | tr A-Z a-z)
 
 all: symlinks
