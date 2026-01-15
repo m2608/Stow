@@ -36,6 +36,4 @@ alias ch "clickhouse local"
 
 abbr hurl-proxy "hurl --proxy socks://127.0.0.1:5555"
 
-set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "ctrl-o:execute(xdg-open {} &> /dev/tty)"
-
 zoxide init fish | source
