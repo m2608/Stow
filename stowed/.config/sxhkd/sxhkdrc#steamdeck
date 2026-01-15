@@ -9,3 +9,6 @@
 # замьютить
 @XF86AudioMute
     $HOME/.config/bspwm/bspwm-volume.wpctl.sh mute
+
+super + Scroll_Lock
+    lock    
