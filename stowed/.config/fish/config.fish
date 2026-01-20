@@ -7,8 +7,6 @@ setenv FZF_DEFAULT_OPTS "--no-mouse --color=bw --bind=ctrl-j:accept,ctrl-k:kill-
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 
 setenv GOPATH $HOME/.gocode
-setenv JANET_TREE $HOME/.jpm
-setenv JANET_PATH $JANET_TREE/lib
 
 setenv XDG_DATA_HOME   $HOME/.local/share
 setenv XDG_CONFIG_HOME $HOME/.config
@@ -16,7 +14,7 @@ setenv XDG_STATE_HOME  $HOME/.local/state
 setenv XDG_CACHE_HOME  $HOME/.cache
 
 # Scale factor for QT apps.
-setenv QT_SCALE_FACTOR 1.5
+# setenv QT_SCALE_FACTOR 1.5
 
 # Some terminals (mc) do not support sequences which fish uses by default. 
 # https://github.com/fish-shell/fish-shell/issues/11427
