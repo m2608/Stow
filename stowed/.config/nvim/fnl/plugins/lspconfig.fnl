@@ -44,6 +44,7 @@
    (let [servers {:pyright {}
                   :clojure_lsp {:flags {:completion {:analysis-type :slow-but-accurate}}
                                 :single_file_support true}
+                  :fennel {:cmd "fennel-ls"}
                   :markdown {:cmd ["markdown-oxide"]
                              :flags {:debounce_text_changes 150}
                              :single_file_support true}
