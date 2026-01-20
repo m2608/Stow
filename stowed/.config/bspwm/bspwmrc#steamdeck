@@ -1,0 +1,23 @@
+#!/bin/sh
+
+xrandr --output eDP --auto
+xrandr --output DisplayPort-0 --auto
+xrandr --output eDP --right-of DisplayPort-0
+xrandr --output eDP --off
+xrandr --output DisplayPort-0 --dpi 120
+
+# Рабочие столы.
+bspc monitor DisplayPort-0 -d 1 2 3 4 5
+
+# Раскладка.
+setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+
+# Таймер отключения экрана в секундах.
+xset dpms 2000 2000 2000
+
+# Добавляем шрифты из домашней папки.
+xset +fp $HOME/.fonts
+xset fp rehash
+
+# Загружаем ресурсы.
+xrdb -merge ~/.Xresources

@@ -28,7 +28,10 @@ fontfile=$(fc-match -f "%{file}" "$font")
 fontsize=$(fc-match -f "%{size}" "$font")
 
 # get screen dpi
-dpi=$(xdpyinfo | sed -n -r '/^[ ]*resolution:[ ]+[0-9]+x[0-9]+ dots/ s/^[ ]*resolution:[ ]+([0-9]+)x([0-9]+) dots .*/(\1+\2)\/2/p' | bc)
+resolution=$(xdpyinfo | sed -n -r '/^[ ]*resolution:[ ]+[0-9]+x[0-9]+ dots/ s/^[ ]*resolution:[ ]+([0-9]+x[0-9]+) dots .*/\1/p')
+rx=$(echo $resolution | cut -d x -f 1)
+ry=$(echo $resolution | cut -d x -f 2)
+dpi=$(((rx+ry)/2))
 
 # message size
 size=$("$magick" -density $dpi -font "$fontfile" -pointsize $fontsize label:"$message" -format "%wx%h" info:)

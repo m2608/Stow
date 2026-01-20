@@ -2,7 +2,8 @@ fish_add_path $HOME/.local/bin $HOME/.cargo/bin
 
 setenv EDITOR (command -v nvim)
 
-setenv FZF_DEFAULT_OPTS "--no-mouse --color=bw --bind=ctrl-j:accept,ctrl-k:kill-line"
+setenv FZF_DEFAULT_OPTS   "--no-mouse --color=bw --bind=ctrl-j:accept,ctrl-k:kill-line"
+setenv FZF_DIRECTORY_OPTS "--bind 'ctrl-e:execute($EDITOR {} &> /dev/tty)' --bind 'ctrl-o:execute(xdg-open {} &> /dev/tty)'"
 
 setenv JQ_COLORS "0;39:0;39:0;39:0;39:0;32:1;39:1;39"
 

@@ -10,8 +10,9 @@ CONFIGURE_PARAMS ?= ""
 
 PREFIX   := $(HOME)/.local
 MAKEFILE := $(lastword $(MAKEFILE_LIST))
-BASE     := "https://ftp.gnu.org/gnu/$(NAME)/"
-TARBALL  := $(shell curl -sL "$(BASE)" | xmllint --html --xpath '//tr[td[2][a]]/td[2]/a/@href' - | grep -E '"$(NAME)-[0-9.]+[.]tar[.]gz"' | sed -r 's/^[ ]*href="//' | sed -r 's/"$$//' | sort -V | tail -n 1)
+BASE     ?= "https://ftp.gnu.org/gnu/$(NAME)/"
+XPATH    ?= "//tr[td[2][a]]/td[2]/a/@href"
+TARBALL  := $(shell curl -sL "$(BASE)" | xmllint --html --xpath "$(XPATH)" - | sed -r -n 's/^[ ]*href="(.*[.]tar[.]gz)"/\1/p' | sort -V | tail -n 1)
 SRC_DIR  := $(shell basename "$(TARBALL)" ".tar.gz")
 
 all: install

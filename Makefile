@@ -1,7 +1,7 @@
 MAKEFILE_FOLDER := $(shell dirname $(lastword $(MAKEFILE_LIST)))
 include $(MAKEFILE_FOLDER)/makefiles/functions.mk
 
-ARCH := $(shell uname -m | tr A-Z a-z)
+ARCH := $(shell uname -m | tr A-Z a-z | sed 's/x86_64/amd64/')
 OS   := $(shell uname -s | tr A-Z a-z)
 
 all: symlinks
@@ -15,6 +15,9 @@ install-make:
 
 install-stow:
 	$(MAKE) -f $(MAKEFILE_FOLDER)/makefiles/gnu.mk NAME=stow
+
+install-libarchive:
+	$(MAKE) -f $(MAKEFILE_FOLDER)/makefiles/gnu.mk NAME=libarchive BASE="https://libarchive.org/downloads" XPATH="//a/@href"
 
 #
 # Stowed config files
@@ -39,6 +42,15 @@ fetch-fonts:
 
 clojure-tools:
 	$(MAKE) -f $(MAKEFILE_FOLDER)/makefiles/clojure-tools.mk
+
+#
+# Image Magick
+#
+
+magick: MAGICK := "$(HOME)/.local/bin/magick"
+magick:
+	curl -L "https://imagemagick.org/archive/binaries/magick" > $(MAGICK);
+	chmod +x $(MAGICK)
 
 #
 # Editors
@@ -202,6 +214,7 @@ install-scripts:
 #
 
 install-cargo-tools: install-markdown-oxide
+	cargo install --locked age-plugin-yubikey
 	cargo install --locked git-delta
 	cargo install --locked dysk
 	cargo install --locked htmlq
