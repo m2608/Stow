@@ -21,4 +21,13 @@ local function _1_()
   end
   return vim.system(command, {text = true}, _2_)
 end
-return vim.api.nvim_create_user_command("GitLabYank", _1_, {nargs = 0})
+vim.api.nvim_create_user_command("GitLabYank", _1_, {nargs = 0})
+local function _4_()
+  local filename = vim.fn.expand("%:p")
+  local _let_5_ = vim.api.nvim_win_get_position(0)
+  local row = _let_5_[1]
+  local col = _let_5_[2]
+  local sixeldata = vim.fn.system(string.format("magick convert \"%s\" sixel:- 2> /dev/null", filename))
+  return vim.fn.chansend(vim.v.stderr, string.format("\27[s\27[%d;%dH%s\27[u", row, (col + 1), sixeldata))
+end
+return vim.api.nvim_create_user_command("SixelView", _4_, {nargs = 0})

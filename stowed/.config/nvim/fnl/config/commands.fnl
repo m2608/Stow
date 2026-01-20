@@ -65,3 +65,14 @@
                     (let [output (string.gsub (. o :stdout) "[\n]+$" "")]
                       (vim.schedule (fn [] (vim.call "OSCYank" output))))))))
   {:nargs 0})
+
+;; Команда для показа изображений в терминале.
+(vim.api.nvim_create_user_command
+  "SixelView"
+  (fn []
+    (let [filename (vim.fn.expand "%:p")
+          [row col] (vim.api.nvim_win_get_position 0)
+          sixeldata (vim.fn.system (string.format "magick convert \"%s\" sixel:- 2> /dev/null" filename))]
+      (vim.fn.chansend vim.v.stderr
+                       (string.format "\27[s\27[%d;%dH%s\27[u" row (+ col 1) sixeldata))))
+  {:nargs 0})
