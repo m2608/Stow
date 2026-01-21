@@ -1,9 +1,9 @@
-# include "%L"
+include "%L"
 
 <Multi_key> <equal> <minus>         : "✘"       U2718   # HEAVY BALLOT X
 <Multi_key> <equal> <plus>          : "✔"       U2714   # HEAVY CHECK MARK
-<Multi_key> <at> <plus>              : "➕"      U2795   # HEAVY PLUS SIGN
-<Multi_key> <at> <minus>             : "➖"      U2796   # HEAVY PLUS SIGN
+<Multi_key> <plus> <plus>           : "➕"      U2795   # HEAVY PLUS SIGN
+<Multi_key> <minus> <minus>         : "➖"      U2796   # HEAVY PLUS SIGN
 <Multi_key> <o> <r>                 : "🔴 "     U1F534  # RED CIRCLE
 <Multi_key> <o> <o>                 : "🟠 "     U1F7E0  # ORANGE CIRCLE
 <Multi_key> <o> <g>                 : "🟢 "     U1F7E2  # GREEN CIRCLE
@@ -18,37 +18,6 @@
 
 <Multi_key> <dead_tilde> <equal>    : "≈"       U2248   # ALMOST EQUAL TO
 <Multi_key> <equal> <dead_tilde>    : "≈"       U2248   # ALMOST EQUAL TO
-
-<Multi_key> <plus> <plus>								: "∑"	U2211 # N-ARY SUMMATION
-<Multi_key> <asterisk> <asterisk>						: "∏"	U220F # N-ARY PRODUCT
-
-<Multi_key> <braceleft> <i> <n>							: "∈"	# ELEMENT OF
-<Multi_key> <braceleft> <n> <i>							: "∋"	# CONTAINS AS MEMBER
-<Multi_key> <braceleft> <slash> <i> <n>					: "∉"	# NOT ELEMENT OF
-<Multi_key> <braceleft> <slash> <n> <i>					: "∌"	# NOT CONTAINS AS MEMBER
-
-<Multi_key> <braceleft> <plus>							: "∪"	# UNION
-<Multi_key> <braceleft> <minus>							: "∖"	# MINUS
-<Multi_key> <braceleft> <asterisk>						: "∩"	# INTERSECTION
-
-<Multi_key> <braceleft> <parenleft>						: "⊂"	# SUBSET OF
-<Multi_key> <braceleft>	<parenright>					: "⊃"	# SUPERSET OF
-<Multi_key> <braceleft> <equal> <parenleft>				: "⊆"	# SUBSET OF OR EQUAL
-<Multi_key> <braceleft>	<equal> <parenright>			: "⊇"	# SUPERSET OF OR EQUAL
-
-<Multi_key> <braceleft> <slash> <parenleft>				: "⊄"	# NOT SUBSET OF
-<Multi_key> <braceleft>	<slash> <parenright>			: "⊅"	# NOT SUPERSET OF
-<Multi_key> <braceleft> <slash> <equal> <parenleft>		: "⊈"	# NOT SUBSET OF AND EQUAL
-<Multi_key> <braceleft>	<slash> <equal> <parenright>	: "⊉"	# NOT SUPERSET OF AND EQUAL
-
-<Multi_key> <E> <E>										: "∃"	# THERE EXISTS
-<Multi_key> <exclam> <E> <E>							: "∄"	# THERE DOES NOT EXIST
-<Multi_key> <A> <A>										: "∀"	# FOR ALL
-<Multi_key> <less> <parenright>							: "∢"	# LET'S SEE
-
-# <Multi_key> <exclam> <exclam>							: "¬"	# LOGICAL NOT
-# <Multi_key> <ampersand> <ampersand>						: "∧"	# LOGICAL AND
-# <Multi_key> <bar> <bar>									: "∨"	# LOGICAL OR
 
 <Multi_key> <d> <f>										: "∂"	U2202 # PARTIAL DIFFERENTIAL
 <Multi_key> <d> <x>										: "∆"	U2206 # INCREMENT
@@ -100,7 +69,6 @@
 <Multi_key> <g> <P>            : "Π"              # GREEK CAPITAL LETTER PI
 <Multi_key> <g> <V>            : "Π"              # GREEK PI SYMBOL
 <Multi_key> <g> <R>            : "Ρ"              # GREEK CAPITAL LETTER RHO
-# <Multi_key> <g> <>           : "Σ"              # GREEK CAPITAL LETTER FINAL SIGMA
 <Multi_key> <g> <S>            : "Σ"              # GREEK CAPITAL LETTER SIGMA
 <Multi_key> <g> <T>            : "Τ"              # GREEK CAPITAL LETTER TAU
 <Multi_key> <g> <U>            : "Υ"              # GREEK CAPITAL LETTER UPSILON
@@ -228,9 +196,6 @@
 <Multi_key> <a> <greater>      : "⍙"   U2359      # APL Delta Underbar
 <Multi_key> <a> <slash>        : "⌿"   U233F      # APL Slash Bar
 <Multi_key> <a> <question>     : "⍠"   U2360      # APL Quad Colon
-# X11 configuration ,for BQN keybindings.
-# Key combinations h-ere use the compose key, then backslash, then the
-# main keypress. Fin.d/replace to configure as desired./0123 
 
 <Multi_key> <b> <grave>        : "˜"
 <Multi_key> <b> <1>            : "˘"
