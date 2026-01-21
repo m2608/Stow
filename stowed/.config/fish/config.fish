@@ -60,7 +60,7 @@ alias janet-netrepl "janet -e '(import spork/netrepl) (netrepl/server)'"
 
 set short_hostname (string replace -r '[.].*' '' $hostname)
 set current_dir (status dirname)
-set host_config "$current_dir/config.fish#$short_hostname"
+set host_config "$current_dir/config#$short_hostname.fish"
 
 if test -e "$host_config"
     source "$host_config"
