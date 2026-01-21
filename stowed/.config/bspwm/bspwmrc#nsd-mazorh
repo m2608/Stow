@@ -43,7 +43,7 @@ xrdb -merge ~/.Xresources
 stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
 
 # Управление мышью с клавиатуры.
-# keynav
+keynav
 
 # Управление буфером обмена.
 clipmenud &
