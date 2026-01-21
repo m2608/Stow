@@ -15,4 +15,5 @@
                     :n {"<C-y>" (. layout :toggle_preview)}}}
 
         :pickers
-        {:buffers {:mappings {:n {"d" (. actions :delete_buffer)}}}}})))}
+        {:buffers {:mappings {:n {"d" (. actions :delete_buffer)}}}
+         :find_files {:no_ignore true}}})))}
