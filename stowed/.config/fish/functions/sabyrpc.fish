@@ -1,4 +1,4 @@
-function sabyrpc_to_json -d "Converts sabyrpc object to json"
+function sabyrpc -d "Converts sabyrpc object to json"
     jq '
         def record_to_json:     [.d, .s]                  | transpose | map({(.[1].n): .[0]}) | add;
 
