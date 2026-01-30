@@ -36,3 +36,8 @@ departure:
 
 apl386:
 	curl -L -O --output-dir $(OUTPUT_FOLDER) https://abrudz.github.io/APL386/APL386.ttf
+
+julia:
+	$(call get-github-url,cormullion/juliamono,"^JuliaMono-ttf[.]zip$$") \
+		| xargs -n 1 curl -s -L --fail \
+		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf' 
