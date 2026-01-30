@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #_xxx (comment
-  exec env NODE_PATH="$HOME/.local/lib/node_modules" nbb "$0" "$@"
+  exec env NODE_PATH="$HOME/.npms/tiddly/node_modules" "$HOME/.npms/tiddly/node_modules/.bin/nbb" "$0" "$@"
 #_xxx )
 
 (ns nbb-tw
