@@ -279,4 +279,12 @@ install-nnn-plugins: install-nnn
 	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit | xargs -n 1 -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
 	chmod +x "$(HOME)/.config/nnn/plugins/*"
 
-
+install-crossmacro: BINARY := $(HOME)/.local/bin/crossmacro
+install-crossmacro: ARCHNAME := $(subst amd64,x86_64,$(ARCH))
+install-crossmacro:
+ifeq ($(ARCH),$(filter $(ARCH),amd64))
+	$(call get-from-github,alper-han/CrossMacro,"^CrossMacro-[0-9.]+-$(ARCHNAME).AppImage$$") > $(BINARY);
+	chmod +x $(BINARY)
+else
+	@echo "Unsupported arch: $(ARCH)"
+endif
