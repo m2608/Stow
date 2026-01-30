@@ -217,11 +217,13 @@ install-cargo-tools: install-markdown-oxide
 	cargo install --locked age-plugin-yubikey
 	cargo install --locked git-delta
 	cargo install --locked dysk
+	cargo install --locked fd-find
 	cargo install --locked htmlq
 	cargo install --locked hurl
 	cargo install --locked jless
 	cargo install --locked lsd
 	cargo install --locked procs
+	cargo install --locked ripgrep
 	cargo install --locked sd
 	cargo install --locked tomq
 	cargo install --locked tree-sitter-cli
