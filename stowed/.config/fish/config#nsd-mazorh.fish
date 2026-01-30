@@ -17,8 +17,7 @@ set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/
 if test "$os_name" = "Red Hat Enterprise Linux"
     set PATH "$HOME/.local/bin.rh:$PATH"
 else if test "$os_name" = "Void"
-    setenv NODE_PATH (npm root -g)
-    set PATH "$HOME/.local/bin.void:$HOME/.npm-global/bin:$PATH"
+    set PATH "$HOME/.local/bin.void:$PATH"
 end
 
 setenv NNN_ARCHMNT ratarmount
