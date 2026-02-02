@@ -1,7 +1,7 @@
 #!/bin/sh
 
 filename="$HOME/Documents/Screenshots/$(date +'%Y-%m-%d %H:%M:%S').png"
-if maim -s "$filename"; then
+if maim -s --nodrag --color 192,0,255 "$filename"; then
     cat "$filename" | xclip -selection clipboard -t image/png
     notify-send "Screenshot saved: $filename"
 fi
