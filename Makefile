@@ -215,6 +215,7 @@ install-scripts:
 
 install-cargo-tools: install-markdown-oxide
 	cargo install --locked age-plugin-yubikey
+	cargo install --locked ast-grep
 	cargo install --locked git-delta
 	cargo install --locked dysk
 	cargo install --locked fd-find
