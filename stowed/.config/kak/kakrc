@@ -218,6 +218,10 @@ map global slime <s> "<a-|>tmux load-buffer - ; tmux paste-buffer -t $(tmux disp
 eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
 
+set-option global modelinefmt "%opt{lsp_modeline} %opt{modelinefmt}"
+map global goto d <esc>:lsp-definition<ret> -docstring 'LSP definition'
+map global goto r <esc>:lsp-references<ret> -docstring 'LSP references'
+
 hook global WinSetOption filetype=(clojure) %{
   set-option window formatcmd "cljfmt fix -"
 }
