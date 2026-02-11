@@ -62,7 +62,7 @@ temperature()
         "Linux")
             path="/sys/devices/platform/coretemp.0"
             if test -d "$path"; then
-                temp=$(cat "$path/hwmon/*/temp1_input" | head -n 1)
+                temp=$(cat "$path"/hwmon/*/temp1_input | head -n 1)
                 temp=$((temp/1000))
             fi
             ;;
@@ -75,7 +75,7 @@ update_status()
 {
     time=$(date +"%d.%m %H:%M")
 
-    command -v xkb-switch && lang=$(xkb-switch | tr 'a-z' 'A-Z')
+    command -v xkb-switch > /dev/null && lang=$(xkb-switch | tr 'a-z' 'A-Z')
 
     batt=$(battery_status)
     temp=$(temperature)
