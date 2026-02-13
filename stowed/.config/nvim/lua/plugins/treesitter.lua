@@ -1,9 +1,13 @@
 -- [nfnl] fnl/plugins/treesitter.fnl
-local function _1_()
-  do
-    local ts = require("nvim-treesitter")
-    ts.setup({highlight = {enable = true, additional_vim_regex_highlighting = {"markdown"}}, indent = {enable = true}, textobjects = {select = {enable = true, keymaps = {af = "@function.outer", ["if"] = "@function.inner"}}}})
+local _local_1_ = require("nfnl.module")
+local autoload = _local_1_.autoload
+local core = autoload("nfnl.core")
+local function _2_()
+  local function _3_()
+    vim.treesitter.start()
+    vim.bo["indentexpr"] = "v:lua.require'nvim-treesitter'.indentexpr()"
+    return nil
   end
-  return vim.treesitter.language.register("clojure", "joker")
+  return vim.api.nvim_create_autocmd({"FileType"}, {pattern = {"clojure", "joker", "fennel", "python"}, callback = _3_})
 end
-return {"nvim-treesitter/nvim-treesitter", cond = ((1 == vim.fn.executable("clang")) and (1 == vim.fn.executable("tree-sitter"))), build = ":TSUpdate", config = _1_}
+return {"nvim-treesitter/nvim-treesitter", cond = ((1 == vim.fn.executable("clang")) and (1 == vim.fn.executable("tree-sitter"))), build = ":TSUpdate", config = _2_}
