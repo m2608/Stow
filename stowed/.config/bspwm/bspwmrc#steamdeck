@@ -19,5 +19,12 @@ xset dpms 2000 2000 2000
 xset +fp $HOME/.fonts
 xset fp rehash
 
+# Устанавливаем обои и курсор.
+xsetroot -solid black
+xsetroot -cursor_name left_ptr
+
+# Чтобы приложения на java нормально отображались.
+wmname LG3D
+
 # Загружаем ресурсы.
 xrdb -merge ~/.Xresources
