@@ -38,7 +38,7 @@
 
 {1 "neovim/nvim-lspconfig"
  :lazy true
- :ft ["c" "clojure" "cpp" "edn" "markdown" "markdown.mdx" "python"]
+ :ft ["c" "clojure" "cpp" "edn" "python" "markdown"]
  :config
  (fn []
    (let [servers {:pyright {}
@@ -47,6 +47,7 @@
                   :fennel {:cmd "fennel-ls"}
                   :markdown {:cmd ["markdown-oxide"]
                              :flags {:debounce_text_changes 150}
+                             :filetypes ["markdown"]
                              :single_file_support true}
                   :clangd {}}]
      (each [name config (pairs servers)]
