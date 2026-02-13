@@ -89,3 +89,6 @@
 (setq calendar-week-start-day 1)
 
 (setq warning-minimum-level :error)
+
+;; fuzzy search в строке команд
+(setq completion-styles '(flex))
