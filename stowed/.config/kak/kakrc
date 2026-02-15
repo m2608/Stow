@@ -176,6 +176,7 @@ define-command sudo-write %{
 plug "andreyorst/plug.kak" noload
 plug "andreyorst/fzf.kak"
 plug "https://git.sr.ht/~nasmevka/repl.kak"
+plug "https://codeberg.org/raiguard/kak-live-grep"
 
 map global normal <F2> ":w<ret>"
 map global insert <F2> "<a-;>:w<ret>"
@@ -199,6 +200,7 @@ map global leader <P> "!xclip -o -selection clipboard<ret>" -docstring "paste fr
 map global leader <c> ":comment-block<ret>" -docstring "comment block"
 map global leader <Y> '<a-|>nop %{printf "\e]52;;%s\e\\" $(printf "%s" "$kak_main_reg_dquote" | base64 | tr -d "\n") > /dev/tty}<ret>' -docstring "yank using OSC52"
 map global leader <f> ':prompt -menu -shell-script-candidates %{ fd -t f } \"\" %{ edit %val{text} }<ret>' -docstring "find files"
+map global leader </> ':live-grep<ret>' -docstring "live grep across the files"
 
 declare-user-mode match
 map global normal <m> ":enter-user-mode match<ret>" -docstring "enter match mode"
@@ -210,12 +212,11 @@ map global match <s> ":surround<ret>" -docstring "add surrounding chars to selec
 map global match <d> ":surround-delete<ret>" -docstring "delete surrounding chars"
 map global match <c> ":surround-change<ret>" -docstring "change surrounding chars"
 
-
 declare-user-mode slime
 map global normal <\> ":enter-user-mode slime<ret>" -docstring "enter slime mode"
 map global slime <s> "<a-|>tmux load-buffer - ; tmux paste-buffer -t $(tmux display-message -p '#{session_name}:#{window_index}').$(($(tmux display-message -p '#{pane_index}')+1))<ret>" -docstring "send to neighbour tmux pane"
 
-eval %sh{kak-lsp --kakoune -s $kak_session}
+#eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
 
 set-option global modelinefmt "%opt{lsp_modeline} %opt{modelinefmt}"
