@@ -18,6 +18,7 @@ function chplay -d "Run REPL for clickhouse local with JSONLines input format"
             --bind "end:preview-bottom" \
             --bind "alt-e:execute(clickhouse local --input-format JSONLines --file '$filename' --query {q} | nvim)" \
             --bind "alt-q:execute(echo {q} | nvim -c 'set ft=sql')" \
+            --bind "alt-w:toggle-preview-wrap" \
             --no-sort \
             --tac \
         | head -1
