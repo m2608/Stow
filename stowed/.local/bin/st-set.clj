@@ -22,6 +22,10 @@ theme - set color theme
   (println help)
   (System/exit 0))
 
+(when (pos? (:exit (shell {:continue :true :out :string :err :string} "xset q")))
+  (println "X server did not respond.")
+  (System/exit 1))
+
 (defn get-resource
   "Parses resource from resource database."
   [name]
