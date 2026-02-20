@@ -44,6 +44,8 @@
                                                            :sorting_strategy "ascending"
                                                            :mappings {:n {"." (. fb-actions
                                                                                  :toggle_hidden)
+                                                                          "g" (. fb-actions
+                                                                                 :toggle_respect_gitignore)
                                                                           "l" (. fb-actions
                                                                                  :open_dir)
                                                                           "h" (. fb-actions
