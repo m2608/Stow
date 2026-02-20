@@ -38,31 +38,48 @@ line="$2"
 
 # Определяем имя файла и каталог.
 filename=$(basename "$file")
-dirname=$(dirname "$file")
 
-cd "$dirname"
+# Определяем путь к корню репозитория. Для большинства команд git этого не нужно, но в случае, если
+# права на файлы в репозитории окажутся какими-то нестандартными, без прямого указания пути к
+# каталогу .git возникнет ошибка. Заодно определяем относительный путь к файлу в репозитории.
+repopath=$(dirname "$file")
+gitpath=""
+while true; do
+    if test -z "$repopath" -o "$repopath" = "/"; then
+        printf "Не удалось найти репозиторий, содержащий файл: %s\n" "$file" 1>&2
+        exit 1
+    fi
 
-if ! git rev-parse 2> /dev/null; then
-    printf "Не удалось найти репозиторий, содержащий файл: %s\n" "$file" 1>&2
-    exit 1
-fi
+    test -d "$repopath/.git" && break
 
-branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-remote=$(git config branch."$branch".remote || echo "origin")
-giturl=$(git remote get-url "$remote")
-gitpath=$(git rev-parse --show-prefix)
+    gitpath=$(basename "$repopath")"/$gitpath"
+    repopath=$(realpath "$repopath/..")
+done
+
+git="git -C "$repopath" --git-dir .git"
+
+# Проверяем возможность чтения репозитория.
+$git rev-parse 2> /dev/null || { printf "Не удалось прочитать данные репозитория \"%s\"\n" "$repopath" 1>&2; exit 1; }
+
+branch=$($git rev-parse --abbrev-ref HEAD 2> /dev/null)
+remote=$($git config branch."$branch".remote || echo "origin")
+giturl=$($git remote get-url "$remote")
 
 url="${giturl%.git}"
 
+# Преобразуем git-ссылку в обычную.
 if test "${url#git@}" != "${url}"; then
     url=$(echo ${url} | cut -c5- | tr ":" "/")
     url="https://${url}"
 fi
 
+# Удаляем учётные данные из URL.
+url=$(echo ${url} | sed -r 's/(http[s]?:\/\/)([^@]*@)(.*)/\1\3/')
+
 # Кодируем все части пути urlencode (по отдельности).
 gitfile=$(echo "$gitpath$filename" | tr "/" "\n" | jq -Rr @uri | tr "\n" "/" | sed "s|/$||")
 
-commit_hash=$(git log -n1 --format=format:"%H" "${filename}" 2>/dev/null)
+commit_hash=$($git log -n1 --format=format:"%H" "${file}" 2>/dev/null)
 
 url="${url}/blob/${commit_hash:-$branch}/$gitfile"
 
