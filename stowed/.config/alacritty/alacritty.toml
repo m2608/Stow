@@ -2,10 +2,10 @@
 import = ["~/Themes/alacritty/colors/base16-papercolor-light.toml"]
 
 [font]
-size = 14
+size = 16
 
 [font.normal]
-family = "Departure Mono"
+family = "Source Code Pro"
 
 [[keyboard.bindings]]
 chars = "\u001B[9;5u"
