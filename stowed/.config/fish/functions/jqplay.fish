@@ -18,6 +18,7 @@ function jqplay -d "Run jq REPL"
             --bind "end:preview-bottom"                                        \
             --bind "alt-e:execute(jq {q} '$filename' | nvim -c 'set ft=json')" \
             --bind "alt-q:execute(echo {q} | nvim -c 'set ft=jq')"             \
+            --bind "alt-w:toggle-preview-wrap"                                 \
             --no-sort                                                          \
             --tac                                                              \
         | head -1
