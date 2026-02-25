@@ -9,7 +9,12 @@
  :config (fn []
            (vim.api.nvim_create_autocmd
              ["FileType"]
-             {:pattern ["clojure" "joker" "fennel" "python"]
+             {:pattern ["clojure"]
+              :callback (fn []
+                          (vim.treesitter.start))})
+           (vim.api.nvim_create_autocmd
+             ["FileType"]
+             {:pattern ["joker" "fennel" "python"]
               :callback (fn []
                           (vim.treesitter.start)
                           (tset vim.bo "indentexpr" "v:lua.require'nvim-treesitter'.indentexpr()"))}))}
