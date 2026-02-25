@@ -216,7 +216,7 @@ declare-user-mode slime
 map global normal <\> ":enter-user-mode slime<ret>" -docstring "enter slime mode"
 map global slime <s> "<a-|>tmux load-buffer - ; tmux paste-buffer -t $(tmux display-message -p '#{session_name}:#{window_index}').$(($(tmux display-message -p '#{pane_index}')+1))<ret>" -docstring "send to neighbour tmux pane"
 
-#eval %sh{kak-lsp --kakoune -s $kak_session}
+eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
 
 set-option global modelinefmt "%opt{lsp_modeline} %opt{modelinefmt}"
