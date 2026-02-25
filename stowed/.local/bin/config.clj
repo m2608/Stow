@@ -11,6 +11,7 @@ Commands:
 get    - get value from a file
 set    - set value in a file
 toggle - toggle between two values
+parse  - show config as json
 "))
     (System/exit 0)))
   
@@ -142,6 +143,9 @@ toggle - toggle between two values
     (let [v (get-in (read-ini filename) [section key])]
       (write-ini filename (assoc-in (read-ini filename) [section key]
                                     (if (and v (= v value)) other-value value))))
+
+    "parse"
+    (println (json/generate-string (read-ini filename)))
     
     (do (println "Unknown command:" command)
         (System/exit 1))))
