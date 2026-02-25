@@ -30,9 +30,8 @@
                                                                     :toggle_preview)}}}
                                :pickers {:buffers {:mappings {:n {"d" (. actions
                                                                          :delete_buffer)}}}
-                                         :find_files {:no_ignore true
-                                                      :follow true
-                                                      :hidden true}}
+                                         :find_files {:follow true
+                                                      :disable_devicons true}}
                                :extensions {:file_browser {:hijack_netrw true
                                                            :grouped true
                                                            :respect_gitignore false
@@ -41,6 +40,7 @@
                                                                      :check_mime_type false}
                                                            :initial_mode "normal"
                                                            :dir_icon " "
+                                                           :disable_devicons true
                                                            :sorting_strategy "ascending"
                                                            :mappings {:n {"." (. fb-actions
                                                                                  :toggle_hidden)

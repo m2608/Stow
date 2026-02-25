@@ -87,7 +87,7 @@
    ["v" "gx" "y | :silent execute '!xdg-open ' . shellescape(expand(@\"), 1)<CR>"]
    ;; горячие клавиши для некоторых команд telescope
    ["n" "<space>f" ":Telescope find_files<CR>"]
-   ["n" "<space>F" ":Telescope file_browser<CR>"]
+   ["n" "<space>F" ":Telescope find_files no_ignore=true hidden=true<CR>"]
    ["n" "<space>b" ":Telescope buffers<CR>"]
    ["n" "<space>/" ":Telescope live_grep<CR>"]
    ["n" "<space>g" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
