@@ -1,3 +1,8 @@
+(local {: filter} (require "nfnl.core"))
+
+(fn starts-with? [s prefix]
+  (= prefix (string.sub s 1 (length prefix))))
+
 (fn cmd [...]
   (vim.cmd ...))
 
@@ -46,25 +51,28 @@
          "print(b64decode(unquote(sys.stdin.read().strip()).encode('utf-8')).decode('utf-8'));"
          "\""))
 
-;; Команда для открытия текущей строки исходного кода в GitLab.
-;; Для работы нужен скрипт git-browse.
-(cmd (.. "command! -range GitLab "
-         "execute 'silent ! git browse \"' . expand('%') . '\" ' . <line1> | checktime | redraw!"))
-
-;; Эта команда просто показывает ссылку.
-(cmd (.. "command! -range GitLabShow "
-         "execute '! git browse -s \"' . expand('%') . '\" ' . <line1>"))
-
-;; Команда копирует ссылку на GitLab в буфер обмена (через OSC52).
+;; Команда для получения ссылки на исходный код в GitLab.
 (vim.api.nvim_create_user_command
-  "GitLabYank"
-  (fn []
-    (let [command ["git" "browse" "-s" (vim.fn.expand "%") (tostring (vim.fn.line "."))]]
-      (vim.system command {:text true}
-                  (fn [o]
-                    (let [output (string.gsub (. o :stdout) "[\n]+$" "")]
-                      (vim.schedule (fn [] (vim.call "OSCYank" output))))))))
-  {:nargs 0})
+  "Gitlab"
+  (fn [opts]
+    (let [path (vim.fn.expand "%")
+          line (vim.fn.line ".")]
+      (case opts.args
+        "open" (vim.system ["git" "browse" "-o" path line])
+        "show" (vim.system ["git" "browse" "-s" path line] {:text true}
+                           (fn [o]
+                             (print o.stdout)))
+        "yank" (vim.system ["git" "browse" "-s" path line] {:text true}
+                           (fn [o]
+                             (let [output (string.gsub (. o :stdout) "[\n]+$" "")]
+                               (vim.schedule (fn [] (vim.call "OSCYank" output))))))
+        _ (print (.. "Unknown subcommand: " opts.args)))))
+
+  {:nargs 1
+   :complete (fn [arglead _ _]
+               (let [subcommands ["open" "show" "yank"]]
+                 (filter (fn [c] (starts-with? c arglead)) subcommands)))
+   :desc "Получить ссылку на исходный код в GitLab"})
 
 ;; Команда для показа изображений в терминале.
 (vim.api.nvim_create_user_command
