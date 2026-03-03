@@ -41,3 +41,11 @@ julia:
 	$(call get-github-url,cormullion/juliamono,"^JuliaMono-ttf[.]zip$$") \
 		| xargs -n 1 curl -s -L --fail \
 		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf'
+
+jetbrains:
+	curl -L https://www.jetbrains.com/lp/mono/ \
+		| xmllint --html --xpath '//a[contains(@class, "button-download-font")]/@href' - 2> /dev/null \
+		| sed -r -n 's/^[ ]*href="(.*)"/\1/p' \
+		| sed -n 1p \
+		| xargs -n 1 curl -L \
+		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf'
