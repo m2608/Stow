@@ -1,0 +1,92 @@
+| name           | default       | freebsd                   | void                    | termux                 | uconsole                   | rhel |
+|----------------|---------------|---------------------------|-------------------------|------------------------|----------------------------|------|
+| age            |               |                           |                         |                        |                            |      |
+| archivemount   |               |                           | repo:fuse-archivemount  | none                   |                            |      |
+| aria2          |               |                           |                         |                        |                            |      |
+| autoconf       |               |                           |                         |                        |                            |      |
+| automake       |               |                           |                         |                        |                            |      |
+| babashka       | make:*        |                           | repo:*                  |                        |                            |      |
+| byacc          | none          |                           |                         |                        | repo:*                     |      |
+| cargo          |               | none                      |                         | none                   |                            |      |
+| clang          |               | none                      |                         |                        |                            |      |
+| clojure        |               |                           |                         | none                   |                            |      |
+| clojure-lsp    | make:*        |                           |                         | none                   |                            |      |
+| cmake          |               |                           |                         |                        |                            |      |
+| cpio           |               | none                      |                         |                        |                            |      |
+| croc           |               |                           |                         |                        | none                       |      |
+| curl           |               |                           |                         |                        |                            |      |
+| doas           | repo:opendoas | repo:*                    |                         | none                   |                            |      |
+| epy            |               | repo:py311-epy-reader     | repo:*                  |                        | none                       |      |
+| fd             |               | repo:fd-find              |                         |                        | repo:fd-find               |      |
+| fish           |               |                           | repo:fish-shell         |                        | make:fish                  |      |
+| fuse           |               |                           |                         | none                   | none                       |      |
+| fuse3          |               | none                      |                         | none                   |                            |      |
+| fzf            |               |                           |                         |                        |                            |      |
+| gcc            |               |                           |                         |                        |                            |      |
+| gdu            |               |                           |                         |                        |                            |      |
+| git            |               |                           |                         |                        |                            |      |
+| glibc-runner   | none          |                           |                         | make:*                 |                            |      |
+| gnupg          |               |                           |                         |                        |                            |      |
+| grc            |               |                           |                         | none                   |                            |      |
+| gron           |               |                           |                         |                        |                            |      |
+| gum            |               |                           |                         |                        | none                       |      |
+| htop           |               |                           |                         |                        |                            |      |
+| hurl           |               |                           |                         | cargo:*                | cargo:*                    |      |
+| janet          |               |                           |                         |                        | make:*                     |      |
+| janet-lsp      | none          | repo:*                    |                         |                        |                            |      |
+| jless          |               |                           |                         |                        | none                       |      |
+| jpm            |               |                           |                         | none                   | none                       |      |
+| jq             |               |                           |                         |                        |                            |      |
+| lazygit        | make:*        |                           | repo:*                  |                        |                            |      |
+| ldns           |               |                           |                         |                        | none                       |      |
+| libevent       | none          |                           |                         |                        | repo:libevent-dev          |      |
+| lsd            |               |                           |                         |                        | cargo:*                    |      |
+| lsof           |               |                           |                         |                        |                            |      |
+| magick         |               | repo:ImageMagick7         | repo:ImageMagick        | repo:imagemagick       | repo:imagemagick           |      |
+| magic-wormhole |               | repo:py311-magic-wormhole |                         | repo:magic-wormhole-rs |                            |      |
+| make           |               | repo:gmake                |                         |                        |                            |      |
+| mc             |               |                           |                         |                        |                            |      |
+| mimeinfo       |               | repo:p5-File-MimeInfo     | repo:perl-File-MimeInfo | none                   | repo:libfile-mimeinfo-perl |      |
+| moreutils      |               |                           |                         |                        |                            |      |
+| mpv            |               |                           |                         |                        |                            |      |
+| mtr            |               | repo:mtr-nox11            |                         | none                   |                            |      |
+| ncurses        |               |                           |                         |                        | repo:ncurses-bin           |      |
+| neovim         |               |                           |                         |                        |                            |      |
+| net-tools      |               | none                      |                         |                        |                            |      |
+| nnn            |               |                           |                         |                        |                            |      |
+| nvi            | none          |                           |                         |                        |                            |      |
+| nvimpager      |               |                           |                         | none                   | none                       |      |
+| p7zip          |               | repo:7-zip                |                         |                        |                            |      |
+| pandoc         |               | repo:hs-pandoc            |                         |                        |                            |      |
+| patch          |               |                           |                         |                        |                            |      |
+| pkg-config     |               | repo:pkgconf              |                         |                        |                            |      |
+| pspg           |               |                           |                         | none                   |                            |      |
+| pv             |               |                           |                         |                        |                            |      |
+| pyright        |               | repo:py311-pyright        |                         | none                   | uv:pyright                 |      |
+| rclone         |               |                           |                         |                        |                            |      |
+| ripgrep        |               |                           |                         |                        |                            |      |
+| rlwrap         |               |                           |                         |                        |                            |      |
+| rsync          |               |                           |                         |                        |                            |      |
+| rust           |               |                           |                         |                        |                            |      |
+| sd             |               |                           |                         |                        | cargo:sd                   |      |
+| socat          |               |                           |                         |                        |                            |      |
+| sq             |               |                           |                         | none                   |                            |      |
+| sqlite3        |               |                           |                         |                        |                            |      |
+| stow           |               |                           |                         |                        |                            |      |
+| strace         |               | none                      |                         |                        |                            |      |
+| syncthing      |               |                           |                         |                        |                            |      |
+| texlive        |               | repo:texlive-base         |                         | repo:texlive-bin       |                            |      |
+| tmux           |               |                           |                         |                        |                            |      |
+| tree-sitter    |               |                           |                         |                        | make:*                     |      |
+| unar           |               |                           |                         |                        |                            |      |
+| unzip          |               |                           |                         |                        |                            |      |
+| usql           |               |                           |                         |                        |                            |      |
+| uv             |               |                           |                         |                        |                            |      |
+| visidata       |               |                           |                         | none                   |                            |      |
+| vpm            | none          |                           | repo:vpm                |                        |                            |      |
+| xh             |               |                           |                         |                        | cargo:*                    |      |
+| xxd            | make:*        | repo:xxd                  |                         |                        |                            |      |
+| yq             |               |                           |                         |                        | make:*                     |      |
+| yt-dlp         |               |                           |                         | repo:python-yt-dlp     | none                       |      |
+| zoxide         |               |                           |                         |                        |                            |      |
+| zstd           |               |                           |                         |                        |                            |      |
