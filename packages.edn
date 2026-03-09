@@ -23,10 +23,12 @@
         :gcc            {:repo "gcc"}
         :gdu            {:repo "gdu"}
         :git            {:repo "git"}
+        :glibc-repo     {:repo {:android "glibc-repo"}}
+        :glibc-runner   {:repo {:android "glibc-runner"}}
         :gnupg          {:repo "gnupg"}
         :grc            {:repo "grc"}
         :gron           {:repo {:freebsd "gron" :void "gron"}}
-        :gum            {:repo {:freebsd "gum" :void "gum"}}}}}
+        :gum            {:repo {:freebsd "gum" :void "gum"}}
         :htop           {:repo "htop"}
         :hurl           {:repo {:freebsd "hurl" :void "hurl"}}
         :janet          {:repo {:freebsd "janet" :void "janet"}
