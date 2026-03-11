@@ -12,5 +12,6 @@ alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_pl
 alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
 
 setenv NNN_ARCHMNT ratarmount
+setenv OLLAMA_HOST 127.0.0.1:11434
 
 zoxide init fish | source
