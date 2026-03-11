@@ -2,7 +2,7 @@ setenv PAGER nvimpager
 
 set PATH \
     $HOME/.local/bin \
-    $HOME/.local/go/bin \
+    $HOME/.cargo/bin \
     $PATH
 
 alias less 'less -r'
@@ -10,3 +10,7 @@ alias ls lsd
 alias vimj 'vim -c "ru macros/justify.vim" -c "normal gqG" -c "normal gg" -c "normal _j" -c "set nonumber" -'
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'
+
+setenv NNN_ARCHMNT ratarmount
+
+zoxide init fish | source
