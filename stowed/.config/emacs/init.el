@@ -56,7 +56,18 @@
 (menu-bar-mode 0)
 
 ;; включаем относительные номера строк
-(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode)
+
+;; включаем стандартное поведение C-w в минибуфере
+(define-key minibuffer-local-completion-map (kbd "C-w") #'backward-kill-word)
+(define-key minibuffer-local-filename-completion-map (kbd "C-w") #'backward-kill-word)
+
+(add-hook
+ 'vterm-mode-hook
+ (lambda ()
+   ;; C-u посылаем в шел
+   (define-key vterm-mode-map (kbd "C-u") #'vterm-send-C-u)))
 
 (define-key global-map (kbd "C-c t") telega-prefix-map)
 
@@ -67,8 +78,7 @@
    ; (define-key telega-msg-button-map "l" nil)
    ; (define-key telega-msg-button-map "x" 'kill-current-buffer)
    (define-key telega-msg-button-map "j" 'next-line)
-   (define-key telega-msg-button-map "k" 'previous-line)
-   ))
+   (define-key telega-msg-button-map "k" 'previous-line)))
 
 (add-hook
  'telega-root-mode-hook
