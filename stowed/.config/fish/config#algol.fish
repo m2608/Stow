@@ -3,6 +3,9 @@ setenv SVDIR $HOME/.runit/service
 setenv WORKON_HOME $HOME/.virtualenvs
 setenv JAVA_CMD /usr/local/openjdk22/bin/java
 
+# Scale factor for QT apps.
+setenv QT_SCALE_FACTOR 1.5
+
 set PATH \
     $HOME/.local/bin \
     $HOME/.cargo/bin \
