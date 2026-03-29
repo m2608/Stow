@@ -26,6 +26,7 @@
 (straight-use-package 'w3m)
 (straight-use-package 'vterm)
 (straight-use-package 'restclient)
+(straight-use-package 'magit)
 (straight-use-package
   '(nano :type git :host github :repo "rougier/nano-emacs"))
 
@@ -60,7 +61,7 @@
 (global-display-line-numbers-mode)
 
 ;; включаем стандартное поведение C-w в минибуфере
-(define-key minibuffer-local-completion-map (kbd "C-w") #'backward-kill-word)
+(define-key minibuffer-local-completion-map          (kbd "C-w") #'backward-kill-word)
 (define-key minibuffer-local-filename-completion-map (kbd "C-w") #'backward-kill-word)
 
 (add-hook
@@ -74,9 +75,6 @@
 (add-hook
  'telega-chat-mode-hook
  (lambda ()
-   ; (define-key telega-msg-button-map "k" nil)
-   ; (define-key telega-msg-button-map "l" nil)
-   ; (define-key telega-msg-button-map "x" 'kill-current-buffer)
    (define-key telega-msg-button-map "j" 'next-line)
    (define-key telega-msg-button-map "k" 'previous-line)))
 
