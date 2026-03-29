@@ -15,6 +15,10 @@ normal = "block"
 x = ["goto_line_start", "select_mode", "goto_line_end_newline"]
 X = ["goto_line_start", "select_mode", "goto_line_end_newline"]
 
+[keys.normal.g]
+k = "goto_file_start"
+j = "goto_file_end"
+
 [keys.normal."\\"]
 
 "s" = ":pipe-to tmux load-buffer - ; tmux paste-buffer -t $(tmux display-message -p '#{session_name}:#{window_index}').$(($(tmux display-message -p '#{pane_index}')+1))"
