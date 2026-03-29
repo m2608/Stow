@@ -38,3 +38,9 @@ super + shift + p
 
 Print
     shot
+
+super + b
+    polybar-msg cmd toggle
+
+super + alt + r
+    polybar-msg cmd quit && sleep 2 ; polybar &
