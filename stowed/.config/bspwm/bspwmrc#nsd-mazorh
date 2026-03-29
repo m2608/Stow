@@ -39,21 +39,13 @@ wmname LG3D
 # Загружаем ресурсы.
 xrdb -merge ~/.Xresources
 
-# Запускаем системный трей.
-stalonetray --skip-taskbar --sticky --window-layer top --window-strut none --window-type toolbar &
-
 # Управление мышью с клавиатуры.
 keynav
 
 # Управление буфером обмена.
 clipmenud &
 
-# Буфер обмена через сокет.
-# clipper &
-
-# layout
-# $HOME/.local/bin/layout.sh &
-$HOME/.local/bin/sbxkb &
-
 # zeal
 $HOME/.local/bin/zeal &
+
+polybar &
