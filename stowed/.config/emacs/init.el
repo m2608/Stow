@@ -27,6 +27,7 @@
 (straight-use-package 'vterm)
 (straight-use-package 'restclient)
 (straight-use-package 'magit)
+(straight-use-package 'cider)
 (straight-use-package
   '(nano :type git :host github :repo "rougier/nano-emacs"))
 
