@@ -2,8 +2,6 @@
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
-(ql:quickload "parse-float")
-
 (in-package :stumpwm)
 (setf *default-package* :stumpwm)
 
@@ -13,20 +11,6 @@
 
 ;; Фокус перемещается за мышью.
 (setf *mouse-focus-policy* :sloppy)
-
-(stumpwm:defcommand
-  change-volume (change) ((:number nil))
-  "Change current audio volume."
-  (multiple-value-bind (_ matches)
-    (cl-ppcre:scan-to-strings ".*volume=(\\d+[.]\\d+):(\\d+[.]\\d+)"
-                              (stumpwm:run-shell-command "exec mixer pcm" t))
-    ;; Определяем среднее значение громкости для двух каналов в процентах, округляем до 5.
-    (let* ((volume (* 5 (round (* 10 (apply '+ (map 'list 'parse-float:parse-float matches))))))
-           (prb-volume (+ volume change))
-           ;; Проверяем, что новое значение громкости находится в диапахоне [0; 100]
-           (new-volume (min (max 0 prb-volume) 100)))
-      (stumpwm:run-shell-command (format nil "mixer pcm.volume=~,2f" (/ new-volume 100)) t)
-      (stumpwm:message (format nil "VOLUME: ~d" new-volume)))))
 
 ;; Команда для запуска SWANK REPL.
 (require :swank)
@@ -65,11 +49,11 @@
           ("s-S-DEL" . "delete")
           ("s-TAB"   . "fother")
           ("s-RET"   . "fullscreen")
-          ("s-ESC"   . "exec alacritty")
-          ("Print"   . "exec flameshot gui")
-          ("XF86AudioRaiseVolume" . "change-volume +5")
-          ("XF86AudioLowerVolume" . "change-volume -5")
-          ("XF86AudioMute"        . "exec toggle-volume.sh")
+          ("s-ESC"   . "exec st")
+          ("Print"   . "exec shot")
+          ("XF86AudioRaiseVolume" . "exec ~/.config/bspwm/bspwm-volume.pactl.sh up")
+          ("XF86AudioLowerVolume" . "exec ~/.config/bspwm/bspwm-volume.pactl.sh down")
+          ("XF86AudioMute"        . "exec ~/.config/bspwm/bspwm-volume.pactl.sh mute")
           ("s-p" . "exec dmenu_run -fn \"Terminus:size=16\" -nb \"#000000\" -nf \"#f0f0f0\" -sb \"#6f6f6f\"")
           ("S-Insert" . "exec clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -"))))
   (loop for shortcut in shortcuts
@@ -88,18 +72,16 @@
 
 ;; Запускаем скрипт синхронно, т.к. нужно добавить шрифты.
 (stumpwm:run-shell-command "~/.stumpwm.d/autostart.sh" t)
-(stumpwm:set-font "-*-terminus-medium-*-*-*-24-*-*-*-*-*-*-*")
+(stumpwm:set-font "-xos4-terminus-medium-r-*-*-32-*")
 
 (defun autostart (&rest rest)
-  ;; Запускаем демонов.
-  (stumpwm:run-shell-command "runsvdir ~/.runsvdir")
   ;; Добавляем переключение окон на доп. кнопки мыши.
   (stumpwm:run-shell-command "xbmouse -b 8 xkev -u -e u")
   (stumpwm:run-shell-command "xbmouse -b 9 xkev -u -e i"))
 
 (defun autostop (&rest rest)
-  ;; Останавливаем демонов.
-  (run-shell-command "~/.stumpwm.d/autostop.sh"))
+  )
 
 (add-hook *start-hook* 'autostart)
+
 (add-hook *quit-hook* 'autostop)
