@@ -17,7 +17,7 @@ pgrep -x sxhkd > /dev/null \
                 "$HOME/.config/sxhkd/sxhkdrc#$hostname" &
 
 bspc config border_width            2
-bspc config window_gap              0
+bspc config window_gap             10
 
 # Не изменять размеры окон для точного соответствия сетке (чтобы не было
 # рамки в терминале).
