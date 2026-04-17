@@ -8,6 +8,10 @@ fi
 
 hostname=$(echo "$hostname" | cut -d '.' -f 1)
 
+if test "$hostname" = "localhost" -a $(uname -o) = "Android"; then
+    hostname=$(getprop ro.product.device)
+fi
+
 current_folder=$(dirname "$0")
 
 # Настраиваем горячие клавиши.
