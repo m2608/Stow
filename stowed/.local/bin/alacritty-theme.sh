@@ -16,4 +16,7 @@ command -v tomq > /dev/null || { echo "tomq tool required"; exit 1; }
 
 test -f "$theme" || { printf "Theme file not found: %s\n" "$theme" ; exit 1; }
 
-tomq --input-files "$config" "$theme" | jq -s '.[0] * .[1]' | tomq --pp -T | sponge "$config"
+tomq --input-files "$config" "$theme" \
+    | jq -s '.[0] * .[1]' \
+    | tomq --pp -T \
+    | sponge "$config"
