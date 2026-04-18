@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Рабочие столы.
+bspc monitor DP-0 -d 1 2 3 4 5
+
+# Раскладка.
+# setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+
+# Устанавливаем обои и курсор.
+# xsetroot -solid black
+# xsetroot -cursor_name left_ptr
+
+# Добавляем шрифты из домашней папки.
+xset +fp $HOME/.fonts
+xset fp rehash
+
+# Загружаем ресурсы.
+xrdb -merge ~/.Xresources
