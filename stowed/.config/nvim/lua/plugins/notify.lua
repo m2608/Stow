@@ -1,2 +1,2 @@
 -- [nfnl] fnl/plugins/notify.fnl
-return {"rcarriga/nvim-notify", config = true}
+return {"rcarriga/nvim-notify", config = true, enabled = false}

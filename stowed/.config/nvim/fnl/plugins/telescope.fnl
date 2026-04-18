@@ -1,4 +1,5 @@
 {1 "nvim-telescope/telescope.nvim"
+ :enabled false
  :tag "v0.2.1"
  :dependencies ["nvim-lua/plenary.nvim"
                 "nvim-telescope/telescope-file-browser.nvim"

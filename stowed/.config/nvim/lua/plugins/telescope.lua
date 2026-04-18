@@ -9,4 +9,4 @@ local function _1_()
   telescope.load_extension("undo")
   return telescope.load_extension("ast_grep")
 end
-return {"nvim-telescope/telescope.nvim", tag = "v0.2.1", dependencies = {"nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim", "debugloop/telescope-undo.nvim", "Marskey/telescope-sg"}, config = _1_}
+return {"nvim-telescope/telescope.nvim", tag = "v0.2.1", dependencies = {"nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim", "debugloop/telescope-undo.nvim", "Marskey/telescope-sg"}, config = _1_, enabled = false}
