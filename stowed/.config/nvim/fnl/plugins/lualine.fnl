@@ -4,7 +4,7 @@
            (let [setup (. (require "lualine") :setup)]
              (setup {:options
                      {:icons_enabled false
-                      :theme "16color"
+                      :theme "auto"
                       :component_separators {:left "|" :right "|"}
                       :section_separators {:left "" :right ""}}
                      :sections

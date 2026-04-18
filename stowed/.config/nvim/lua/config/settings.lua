@@ -20,7 +20,7 @@ do
     end
     return core.reduce(_4_, m, {"\\", "\"", "|", ",", ";"})
   end
-  options = {{"termguicolors", true}, {"tabstop", 4}, {"expandtab", true}, {"shiftwidth", 4}, {"relativenumber", true}, {"number", true}, {"signcolumn", "yes"}, {"splitright", true}, {"splitbelow", true}, {"keymap", "russian-jcukenwin2"}, {"iminsert", 0}, {"imsearch", 0}, {"mouse", ""}, {"langmap", table.concat(core.map(_3_, lang_mappings), ",")}, {"ignorecase", true}, {"smartcase", true}, {"wrap", true}, {"smoothscroll", true}, {"foldenable", false}, {"completeopt", "menu"}}
+  options = {{"tabstop", 4}, {"expandtab", true}, {"shiftwidth", 4}, {"relativenumber", true}, {"number", true}, {"signcolumn", "yes"}, {"splitright", true}, {"splitbelow", true}, {"keymap", "russian-jcukenwin2"}, {"iminsert", 0}, {"imsearch", 0}, {"mouse", ""}, {"langmap", table.concat(core.map(_3_, lang_mappings), ",")}, {"ignorecase", true}, {"smartcase", true}, {"wrap", true}, {"smoothscroll", true}, {"foldenable", false}, {"completeopt", "menu"}}
   for _, option in ipairs(options) do
     local name = option[1]
     local value = option[2]
