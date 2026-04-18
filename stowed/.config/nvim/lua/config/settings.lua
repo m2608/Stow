@@ -20,7 +20,7 @@ do
     end
     return core.reduce(_4_, m, {"\\", "\"", "|", ",", ";"})
   end
-  options = {{"tabstop", 4}, {"expandtab", true}, {"shiftwidth", 4}, {"relativenumber", true}, {"number", true}, {"signcolumn", "yes"}, {"splitright", true}, {"splitbelow", true}, {"keymap", "russian-jcukenwin2"}, {"iminsert", 0}, {"imsearch", 0}, {"mouse", ""}, {"langmap", table.concat(core.map(_3_, lang_mappings), ",")}, {"ignorecase", true}, {"smartcase", true}, {"wrap", true}, {"smoothscroll", true}, {"foldenable", false}, {"completeopt", "menu"}}
+  options = {{"termguicolors", false}, {"tabstop", 4}, {"expandtab", true}, {"shiftwidth", 4}, {"relativenumber", true}, {"number", true}, {"signcolumn", "yes"}, {"splitright", true}, {"splitbelow", true}, {"keymap", "russian-jcukenwin2"}, {"iminsert", 0}, {"imsearch", 0}, {"mouse", ""}, {"langmap", table.concat(core.map(_3_, lang_mappings), ",")}, {"ignorecase", true}, {"smartcase", true}, {"wrap", true}, {"smoothscroll", true}, {"foldenable", false}, {"completeopt", "menu"}}
   for _, option in ipairs(options) do
     local name = option[1]
     local value = option[2]
@@ -42,6 +42,8 @@ do
     core.assoc(vim.o, "termguicolors", false)
     vim.cmd.colorscheme("default")
     vim.api.nvim_set_hl(0, "Visual", {ctermfg = 0, ctermbg = 7})
+    vim.api.nvim_set_hl(0, "TabLine", {ctermbg = 0, ctermfg = 7, bold = false})
+    vim.api.nvim_set_hl(0, "TabLineSel", {ctermbg = 4, ctermfg = 15, bold = false})
   end
 end
 return vim.diagnostic.config({signs = true, float = {source = "always", border = "single"}, virtual_text = false})

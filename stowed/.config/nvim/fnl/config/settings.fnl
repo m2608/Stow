@@ -20,7 +20,7 @@
       ;; при установке "keymap", значение "iminsert" будет переопределено.
       options [;; поддержка true color, если хотим использовать тему терминала, то
                ;; её нужно отключить
-               ;; [:termguicolors true]
+               [:termguicolors false]
                ;; размер табуляции - 4 пробела
                [:tabstop 4]
                ;; заменять табуляции пробелами для всех файлов, кроме Makefile
@@ -111,7 +111,10 @@
       ;; Настройка цветовой схемы в соответствие со схемой терминала.
       (core.assoc vim.o "termguicolors" false)
       (vim.cmd.colorscheme "default")
-      (vim.api.nvim_set_hl 0 "Visual" {:ctermfg 0 :ctermbg 7}))))
+      ;; Фиксы для терминальных схем.
+      (vim.api.nvim_set_hl 0 "Visual"     {:ctermfg 0 :ctermbg 7})
+      (vim.api.nvim_set_hl 0 "TabLine"    {:ctermbg 0 :ctermfg  7 :bold false})
+      (vim.api.nvim_set_hl 0 "TabLineSel" {:ctermbg 4 :ctermfg 15 :bold false}))))
 
 ;; Настройка диагностических сообщений:
 ;; * отключаем отображение сообщений в строках со сработками,

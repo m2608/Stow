@@ -17,4 +17,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 vim.loader.enable()
 
-require("lazy").setup("plugins")
+require("lazy").setup({
+    spec = "plugins",
+    ui = { border = "single" }
+})
