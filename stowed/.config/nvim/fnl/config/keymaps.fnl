@@ -22,7 +22,7 @@
    ["n" "<F8>" ":<C-u>AerialToggle<CR>"]
 
    ;; вызов файлового браузера в каталоге с текущим файлом
-   ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
+   ["n" "<F9>" ":Oil<CR>"]
 
    ;; терминал
    ["n" "<F10>" ":ToggleTerm<CR>"]
@@ -119,8 +119,8 @@
 
    ["n" "<space>f"   ":FzfLua files<CR>"]
    ["n" "<space>b"   ":FzfLua buffers<CR>"]
-   ["n" "<space>/"   ":FzfLua grep<CR>"]
-   ["n" "<space>g"   ":FzfLua grep_curbuf<CR>"]
+   ["n" "<space>/"   ":FzfLua live_grep<CR>"]
+   ["n" "<space>g"   ":FzfLua lgrep_curbuf<CR>"]
    ["n" "<space>d"   ":FzfLua diagnostics_document<CR>"]
    ["n" "<space>s"   ":FzfLua lsp_document_symbols<CR>"]
    ["n" "<space>r"   ":FzfLua lsp_references<CR>"]
