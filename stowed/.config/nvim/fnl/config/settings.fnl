@@ -79,7 +79,7 @@
       [;; заменять табуляции пробелами для всех файлов, кроме Makefile
        "autocmd FileType make setlocal noexpandtab"
        ;; отступы для javascript
-       "autocmd FileType javascript setlocal ts=3 sts=3 sw=3"
+       "autocmd FileType javascript setlocal ts=4 sts=4 sw=4"
        ;; отступы для vue
        "autocmd FileType vue setlocal ts=2 sts=2 sw=2"
        ;; файлы babashka

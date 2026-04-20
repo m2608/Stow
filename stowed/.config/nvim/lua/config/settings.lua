@@ -29,7 +29,7 @@ do
 end
 core.assoc(vim.g, "loaded_netrwPlugin", 1)
 do
-  local commands = {"autocmd FileType make setlocal noexpandtab", "autocmd FileType javascript setlocal ts=3 sts=3 sw=3", "autocmd FileType vue setlocal ts=2 sts=2 sw=2", "autocmd BufRead,BufNewFile *.bb set filetype=clojure", "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif", "autocmd InsertLeave * if pumvisible() == 0|pclose|endif", "highlight lCursor guifg=NONE guibg=Cyan cterm=none ctermfg=none ctermbg=214", "language en_US.UTF-8", "autocmd BufNewFile conjure-log-* lua vim.diagnostic.enable(false)", "autocmd Syntax hurl setlocal foldmethod=manual"}
+  local commands = {"autocmd FileType make setlocal noexpandtab", "autocmd FileType javascript setlocal ts=4 sts=4 sw=4", "autocmd FileType vue setlocal ts=2 sts=2 sw=2", "autocmd BufRead,BufNewFile *.bb set filetype=clojure", "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif", "autocmd InsertLeave * if pumvisible() == 0|pclose|endif", "highlight lCursor guifg=NONE guibg=Cyan cterm=none ctermfg=none ctermbg=214", "language en_US.UTF-8", "autocmd BufNewFile conjure-log-* lua vim.diagnostic.enable(false)", "autocmd Syntax hurl setlocal foldmethod=manual"}
   for _, cmd in ipairs(commands) do
     vim.cmd(cmd)
   end
