@@ -9,29 +9,44 @@ os=$(cat /etc/os-release | sed -n -r 's/^NAME="(.*)"/\1/p')
 packages="curl gcc git"
 make="make"
 build_janet=0
+build_jpm=0
 
 case $os in
     FreeBSD)
         packages="$packages gmake janet jpm"
-        pkg="pkg install"
+        pkg_update="pkg update"
+        pkg_install="pkg install -y"
         make="gmake"
-        ;;
-    Debian*)
-        packages="$packages make"
-        pkg="apt install"
-        build_janet=1
         ;;
     Void*)
         packages="$packages make janet jpm"
-        pkg="xbps-install"
+        pkg_update="xbps-install -S"
+        pkg_install="xbps-install -y"
+        ;;
+    Alpine*)
+        packages="$packages make build-base janet janet-dev"
+        pkg_update="apk update"
+        pkg_install="apk add"
+        build_jpm=1
+    Debian*)
+        packages="$packages make"
+        pkg_update="apt update"
+        pkg_install="apt install -y"
+        build_janet=1
+        build_jpm=1
         ;;
 esac
 
-test -n "$pkg" || { printf "Unknown OS: %s\n" "$os"; exit 1; }
+test -n "$pkg_install" || { printf "Unknown OS: %s\n" "$os"; exit 1; }
 
-$pkg $packages
+$pkg_install $packages
 
 if test $build_janet -ne 0; then
-    "$make" -f "$folder/makefiles/janet.mk" PREFIX=/usr/local
-    "$make" -f "$folder/makefiles/jpm.mk"   PREFIX=/usr/local
+    "$make" -f "$folder/makefiles/janet.mk" PREFIX=/usr
 fi
+
+if test $build_janet -ne 0; then
+    "$make" -f "$folder/makefiles/jpm.mk"   PREFIX=/usr
+fi
+
+jpm install spork
