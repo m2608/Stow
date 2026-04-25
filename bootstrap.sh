@@ -28,6 +28,7 @@ case $os in
         pkg_update="apk update"
         pkg_install="apk add"
         build_jpm=1
+        ;;
     Debian*)
         packages="$packages make"
         pkg_update="apt update"
