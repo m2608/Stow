@@ -46,7 +46,7 @@ if test $build_janet -ne 0; then
     "$make" -f "$folder/makefiles/janet.mk" PREFIX=/usr
 fi
 
-if test $build_janet -ne 0; then
+if test $build_jpm -ne 0;   then
     "$make" -f "$folder/makefiles/jpm.mk"   PREFIX=/usr
 fi
 
