@@ -9,7 +9,7 @@
  :config (fn []
            (vim.api.nvim_create_autocmd
              ["FileType"]
-             {:pattern ["clojure"]
+             {:pattern ["clojure" "janet"]
               :callback (fn []
                           (vim.treesitter.start))})
            (vim.api.nvim_create_autocmd

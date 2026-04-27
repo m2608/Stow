@@ -6,7 +6,7 @@ local function _2_()
   local function _3_()
     return vim.treesitter.start()
   end
-  vim.api.nvim_create_autocmd({"FileType"}, {pattern = {"clojure"}, callback = _3_})
+  vim.api.nvim_create_autocmd({"FileType"}, {pattern = {"clojure", "janet"}, callback = _3_})
   local function _4_()
     vim.treesitter.start()
     vim.bo["indentexpr"] = "v:lua.require'nvim-treesitter'.indentexpr()"
