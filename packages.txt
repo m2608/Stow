@@ -81,7 +81,7 @@
 | syncthing      |                  |               |                           |                         |                        |                            |                     |
 | texlive        |                  |               | repo:texlive-base         |                         | repo:texlive-bin       |                            |                     |
 | tmux           |                  |               |                           |                         |                        | make:*                     | make:*              |
-| tree-sitter    |                  |               |                           |                         |                        | make:*                     |                     |
+| tree-sitter    |                  |               | repo:tree-sitter-cli      |                         |                        | make:*                     |                     |
 | unar           |                  |               |                           |                         |                        |                            |                     |
 | unzip          |                  |               |                           |                         |                        |                            |                     |
 | usql           |                  |               |                           |                         |                        |                            |                     |
