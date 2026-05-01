@@ -9,7 +9,7 @@ case "$(uname)" in
         if test $stat -eq 2; then stat="Charging"; fi
         ;;
     "Linux")
-	path=$(find -L "/sys/class/power_supply" -mindepth 2 -maxdepth 2 -name "capacity" -exec dirname {} \; 2> /dev/null)
+	path=$(find -L "/sys/class/power_supply" -mindepth 1 -maxdepth 1 -name "BAT*" 2> /dev/null)
 	batt=$(cat "$path/capacity")
 	stat=$(cat "$path/status")
         ;;
