@@ -49,9 +49,6 @@ super + {u,i}
 super + shift + {u,i}
     exec $HOME/.config/bspwm/deck cycle-{left,right}
 
-super + d
-    exec $HOME/.config/bspwm/deck toggle
-
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
     exec $HOME/.config/bspwm/bspwm-prevnext.sh {prev,next}
