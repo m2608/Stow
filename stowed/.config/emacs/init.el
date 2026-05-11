@@ -33,6 +33,10 @@
 
 (require 'nano)
 
+(require 'dired-x)
+(setq dired-listing-switches "-alh --group-directories-first")
+(setq dired-omit-files "^[.].*")
+
 ;; используем свою версию библиотеки tdlib
 (setq telega-server-libs-prefix (concat (getenv "HOME") "/.local"))
 ;; нужно для нормального отображения эмодзи
