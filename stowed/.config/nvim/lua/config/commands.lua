@@ -54,4 +54,20 @@ local function _10_()
   local sixeldata = vim.fn.system(string.format("magick convert \"%s\" sixel:- 2> /dev/null", filename))
   return vim.fn.chansend(vim.v.stderr, string.format("\27[s\27[%d;%dH%s\27[u", row, (col + 1), sixeldata))
 end
-return vim.api.nvim_create_user_command("SixelView", _10_, {nargs = 0})
+vim.api.nvim_create_user_command("SixelView", _10_, {nargs = 0})
+local function open_out_split(opts)
+  local file = vim.fn.expand("%:p")
+  local win = vim.api.nvim_get_current_win()
+  local uri = ("out://" .. opts.args .. " " .. file)
+  local bufnr = vim.fn.bufnr(uri)
+  if ((bufnr ~= -1) and vim.api.nvim_buf_is_valid(bufnr)) then
+    local function _12_()
+      return vim.cmd(("edit " .. uri))
+    end
+    vim.api.nvim_buf_call(bufnr, _12_)
+  else
+    vim.cmd(("split " .. uri))
+  end
+  return vim.api.nvim_set_current_win(win)
+end
+return vim.api.nvim_create_user_command("OutSplit", open_out_split, {nargs = 1})

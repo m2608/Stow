@@ -84,3 +84,21 @@
       (vim.fn.chansend vim.v.stderr
                        (string.format "\27[s\27[%d;%dH%s\27[u" row (+ col 1) sixeldata))))
   {:nargs 0})
+
+
+;; Вызывает указанную в качестве аргумента, передаёт текущий файл в качестве аргумента.
+;; Результат выполнения помещает в сплит.
+(vim.api.nvim_create_user_command
+  "OutSplit"
+  (fn open-out-split [opts]
+    (let [file  (vim.fn.expand "%:p")
+          win   (vim.api.nvim_get_current_win)
+          uri   (.. "out://" opts.args " " file)
+          bufnr (vim.fn.bufnr uri)]
+      (if (and (not= bufnr -1) (vim.api.nvim_buf_is_valid bufnr))
+          ;; Обновляем буфер, если он уже существует.
+          (vim.api.nvim_buf_call bufnr (fn [] (vim.cmd (.. "edit " uri))))
+          ;; Создаём сплит, если буфера нет.
+          (vim.cmd (.. "split " uri)))
+      (vim.api.nvim_set_current_win win)))
+  {:nargs 1})
