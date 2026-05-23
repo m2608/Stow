@@ -277,10 +277,13 @@ else
 endif
 
 
-install-nnn-plugins: install-nnn
+install-nnn-plugins: URL_PREFIX := "https://github.com/jarun/nnn/raw/refs/heads/master/plugins"
+install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
-	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit | xargs -n 1 -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
-	chmod +x "$(HOME)/.config/nnn/plugins/*"
+	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit \
+		| tr ' ' '\n' \
+		| xargs -I {} curl -L --output "$(HOME)/.config/nnn/plugins/{}" "$(URL_PREFIX)/{}"
+	chmod +x "$(HOME)/.config/nnn/plugins"/*
 
 install-crossmacro: BINARY := $(HOME)/.local/bin/crossmacro
 install-crossmacro: ARCHNAME := $(subst amd64,x86_64,$(ARCH))
