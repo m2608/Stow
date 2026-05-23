@@ -48,7 +48,7 @@
   {:group "markdown-conceal"
    :pattern "markdown"
    :callback (fn []
-               (set vim.opt_local.conceallevel 2))})
+               (set vim.opt_local.conceallevel 0))})
 
 ;; автокоманда нужна для патчинга цветового выделения, когда используются цвета
 ;; терминала

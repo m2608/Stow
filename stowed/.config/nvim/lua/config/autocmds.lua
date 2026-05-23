@@ -25,7 +25,7 @@ end
 autocmd({"FileType"}, {pattern = "bqn", callback = _3_})
 augroup("markdown-conceal", {clear = true})
 local function _5_()
-  vim.opt_local.conceallevel = 2
+  vim.opt_local.conceallevel = 0
   return nil
 end
 autocmd("Filetype", {group = "markdown-conceal", pattern = "markdown", callback = _5_})
