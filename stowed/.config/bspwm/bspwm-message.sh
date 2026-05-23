@@ -15,8 +15,8 @@ message="$1"
 
 # get settings from resources
 font=$(get_resource "bspwm-message[.]font")
-bg=$(get_resource "bspwm-message[.]background")
-fg=$(get_resource "bspwm-message[.]foreground")
+bg=$(  get_resource "bspwm-message[.]background")
+fg=$(  get_resource "bspwm-message[.]foreground")
 
 # default settings
 : "${font:='Terminus:size=16'}"
