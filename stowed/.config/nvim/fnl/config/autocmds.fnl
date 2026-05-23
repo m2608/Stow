@@ -19,7 +19,7 @@
    :group "hurl"
    :callback (fn [args]
                (vim.cmd "setlocal commentstring=#\\ %s")
-               (vim.keymap.set "n" "<C-CR>" ":OutSplit hurl<CR>" {:silent true}))})
+               (vim.keymap.set "n" "<F5>" ":OutSplit hurl<CR>" {:silent true}))})
 
 ;; Маппинги символов BQN для файлов соответствующего типа.
 (autocmd

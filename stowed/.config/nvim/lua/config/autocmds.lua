@@ -9,7 +9,7 @@ autocmd({"BufRead", "BufNewFile"}, {pattern = "*.bqn", command = "setf bqn"})
 augroup("hurl", {clear = true})
 local function _2_(args)
   vim.cmd("setlocal commentstring=#\\ %s")
-  return vim.keymap.set("n", "<C-CR>", ":OutSplit hurl<CR>", {silent = true})
+  return vim.keymap.set("n", "<F5>", ":OutSplit hurl<CR>", {silent = true})
 end
 autocmd({"BufNewFile", "BufRead"}, {pattern = "*.hurl", group = "hurl", callback = _2_})
 local function _3_(event)
