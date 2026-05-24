@@ -24,5 +24,3 @@ wmname LG3D
 
 # Загружаем ресурсы.
 xrdb -merge ~/.Xresources
-
-polybar &
