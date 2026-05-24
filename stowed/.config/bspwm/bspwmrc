@@ -40,4 +40,8 @@ bspc config ignore_ewmh_focus       true
 
 bspc rule -a firefox focus=off follow=off
 
-exec "${current_folder}/bspwmrc#${hostname}"
+config="${current_folder}/bspwmrc#${hostname}"
+test -f "$config" && exec "$config"
+
+polybar="$HOME/.config/polybar/config#${hostname}.ini"
+test -f "$polybar" && polybar -c "$polybar" &
