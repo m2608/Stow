@@ -15,10 +15,10 @@ super + m
 	bspc desktop -l next
 
 # set the window state
-super + s
-    printf "%s\n%s\n%s\n%s" "tiled" "pseudo_tiled" "floating" "fullscreen" \
-    | dmenu \
-    | xargs -r bspc node -t
+# super + s
+#     printf "%s\n%s\n%s\n%s" "tiled" "pseudo_tiled" "floating" "fullscreen" \
+#     | dmenu \
+#     | xargs -r bspc node -t
 
 
 # set the node flags

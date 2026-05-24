@@ -18,3 +18,6 @@ Print
 
 super + d
     sh $HOME/.config/bspwm/bspwm-display.sh
+
+super + s
+    switch-audio.bb "B10" "Rembrandt"
