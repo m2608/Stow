@@ -66,6 +66,7 @@
   :sqlite         {:debian "sqlite3" :freebsd "sqlite3"}
   :stow           :pkg
   :strace         {:freebsd :skip}
+  :stunnel        :pkg
   :tmux           :pkg
   :tree-sitter    :pkg
   :unar           {:alpine :skip}

@@ -11,7 +11,13 @@
     $HOME/.config/bspwm/bspwm-volume.wpctl.sh mute
 
 super + Scroll_Lock
-    lock    
+    lock
 
 Print
     shot
+
+super + d
+    sh $HOME/.config/bspwm/bspwm-display.sh
+
+super + s
+    switch-audio.bb "B10" "Rembrandt"

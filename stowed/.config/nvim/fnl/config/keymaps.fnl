@@ -128,6 +128,17 @@
    ["n" "<space>u"   ":FzfLua undotree<CR>"]
    ["n" "<Leader>fh" ":FzfLua helptags<CR>"]
    ["n" "<Leader>fd" ":FzfLua lsp_definitions<CR>"]
+   ["n" "<space>a"
+    (fn []
+      (let [fzf (require "fzf-lua")]
+        (fzf.fzf_live
+          "ast-grep run --color never --heading never --pattern <query> . 2> /dev/null"
+          {:exec_empty_query false
+           :actions fzf.defaults.actions.files
+           :fzf_opts {"--multi" true}
+           :keymap {:fzf {"ctrl-q" "select-all+accept"}}
+           :previewer :builtin})))
+    {:noremap true :silent true :desc "FzfLua ast-grep"}]
 
    ;; горячие клавиши для Slime
    ["x" "<Leader>s" "<Plug>SlimeRegionSend" {:noremap false :silent true}]

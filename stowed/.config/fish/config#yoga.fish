@@ -1,3 +1,14 @@
+set PATH \
+    $HOME/.local/bin \
+    $HOME/.cargo/bin \
+    $HOME/.gocode/bin \
+    /usr/local/bin \
+    /usr/local/sbin \
+    /usr/bin \
+    /usr/sbin \
+    /bin \
+    /sbin
+
 setenv PAGER nvimpager
 
 alias ls lsd

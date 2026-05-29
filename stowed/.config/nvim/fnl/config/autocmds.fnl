@@ -12,10 +12,14 @@
    :command "setf bqn"})
 
 ;; Настройка комментариев для hurl.
+(augroup "hurl" {:clear true})
 (autocmd
   ["BufNewFile" "BufRead"]
   {:pattern "*.hurl"
-   :command "setlocal commentstring=#\\ %s"})
+   :group "hurl"
+   :callback (fn [args]
+               (vim.cmd "setlocal commentstring=#\\ %s")
+               (vim.keymap.set "n" "<F5>" ":OutSplit hurl<CR>" {:silent true}))})
 
 ;; Маппинги символов BQN для файлов соответствующего типа.
 (autocmd
@@ -44,7 +48,7 @@
   {:group "markdown-conceal"
    :pattern "markdown"
    :callback (fn []
-               (set vim.opt_local.conceallevel 2))})
+               (set vim.opt_local.conceallevel 0))})
 
 ;; автокоманда нужна для патчинга цветового выделения, когда используются цвета
 ;; терминала

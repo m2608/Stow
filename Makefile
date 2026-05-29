@@ -207,7 +207,9 @@ endif
 
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
-	chmod +x "$(HOME)/.local/bin/b16_themes.clj"
+	chmod +x "$(HOME)/.local/bin/b16_themes.clj";
+	$(call get-gist,https://gist.github.com/m2608/f71e8bb10bb106e1fd922feb3ef3c7bc,sbis_notifications.bb,$(HOME)/.local/bin/sbis_notifications.bb);
+	chmod +x "$(HOME)/.local/bin/sbis_notifications.bb"
 
 #
 # Tools written in Rust
@@ -277,10 +279,13 @@ else
 endif
 
 
-install-nnn-plugins: install-nnn
+install-nnn-plugins: URL_PREFIX := "https://github.com/jarun/nnn/raw/refs/heads/master/plugins"
+install-nnn-plugins:
 	mkdir -p "$(HOME)/.config/nnn/plugins"
-	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit | xargs -n 1 -I {} curl -O -L --output-dir "$(HOME)/.config/nnn/plugins/" "https://github.com/jarun/nnn/raw/refs/heads/master/plugins/{}"
-	chmod +x "$(HOME)/.config/nnn/plugins/*"
+	echo autojump dragdrop fzplug preview-tabbed preview-tui rsynccp suedit \
+		| tr ' ' '\n' \
+		| xargs -I {} curl -L --output "$(HOME)/.config/nnn/plugins/{}" "$(URL_PREFIX)/{}"
+	chmod +x "$(HOME)/.config/nnn/plugins"/*
 
 install-crossmacro: BINARY := $(HOME)/.local/bin/crossmacro
 install-crossmacro: ARCHNAME := $(subst amd64,x86_64,$(ARCH))

@@ -1,6 +1,6 @@
 -- [nfnl] fnl/conjure/client/joker/stdio.fnl
 local _local_1_ = require("conjure.nfnl.module")
-local autoload = _local_1_["autoload"]
+local autoload = _local_1_.autoload
 local a = autoload("conjure.aniseed.core")
 local str = autoload("conjure.aniseed.string")
 local stdio = autoload("conjure.remote.stdio")
