@@ -19,7 +19,7 @@
 #
 
 Print
-    flameshot gui
+    shot
 
 super + Scroll_Lock
     xtrlock -f -b
