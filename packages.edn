@@ -13,6 +13,7 @@
   :babashka       {:default         :skip
                    :default/amd64   :make
                    :default/aarch64 :make
+                   :freebsd         :pkg
                    :void            :pkg}
   :curl           :pkg
   :doas           {:android :skip :rhel :skip :void "opendoas"}
