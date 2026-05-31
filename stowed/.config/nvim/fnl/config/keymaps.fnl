@@ -22,7 +22,8 @@
    ["n" "<F8>" ":<C-u>AerialToggle<CR>"]
 
    ;; вызов файлового браузера в каталоге с текущим файлом
-   ["n" "<F9>" ":Oil --float<CR>"]
+   ;; ["n" "<F9>" ":Oil --float<CR>"]
+   ["n" "<F9>" ":Telescope file_browser<CR>"]
 
    ;; терминал
    ["n" "<F10>" ":ToggleTerm<CR>"]
@@ -106,39 +107,39 @@
    ["v" "gx" "y | :silent execute '!xdg-open ' . shellescape(expand(@\"), 1)<CR>"]
 
    ;; горячие клавиши для некоторых команд telescope
-   ; ["n" "<space>f" ":Telescope find_files<CR>"]
-   ; ["n" "<space>F" ":Telescope find_files no_ignore=true hidden=true<CR>"]
-   ; ["n" "<space>b" ":Telescope buffers<CR>"]
-   ; ["n" "<space>/" ":Telescope live_grep<CR>"]
-   ; ["n" "<space>g" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
-   ; ["n" "<space>d" ":Telescope diagnostics<CR>"]
-   ; ["n" "<space>s" ":Telescope lsp_document_symbols<CR>"]
-   ; ["n" "<space>r" ":Telescope lsp_references<CR>"]
-   ; ["n" "<space>j" ":Telescope jumplist<CR>"]
-   ; ["n" "<space>u" ":Telescope undo<CR>"]
+   ["n" "<space>f" ":Telescope find_files<CR>"]
+   ["n" "<space>F" ":Telescope find_files no_ignore=true hidden=true<CR>"]
+   ["n" "<space>b" ":Telescope buffers<CR>"]
+   ["n" "<space>/" ":Telescope live_grep<CR>"]
+   ["n" "<space>g" ":Telescope current_buffer_fuzzy_find fuzzy=false case_mode=ignore_case<CR>"]
+   ["n" "<space>d" ":Telescope diagnostics<CR>"]
+   ["n" "<space>s" ":Telescope lsp_document_symbols<CR>"]
+   ["n" "<space>r" ":Telescope lsp_references<CR>"]
+   ["n" "<space>j" ":Telescope jumplist<CR>"]
+   ["n" "<space>u" ":Telescope undo<CR>"]
 
-   ["n" "<space>f"   ":FzfLua files<CR>"]
-   ["n" "<space>b"   ":FzfLua buffers<CR>"]
-   ["n" "<space>/"   ":FzfLua live_grep<CR>"]
-   ["n" "<space>g"   ":FzfLua lgrep_curbuf<CR>"]
-   ["n" "<space>d"   ":FzfLua diagnostics_document<CR>"]
-   ["n" "<space>s"   ":FzfLua lsp_document_symbols<CR>"]
-   ["n" "<space>r"   ":FzfLua lsp_references<CR>"]
-   ["n" "<space>j"   ":FzfLua jumps<CR>"]
-   ["n" "<space>u"   ":FzfLua undotree<CR>"]
-   ["n" "<Leader>fh" ":FzfLua helptags<CR>"]
-   ["n" "<Leader>fd" ":FzfLua lsp_definitions<CR>"]
-   ["n" "<space>a"
-    (fn []
-      (let [fzf (require "fzf-lua")]
-        (fzf.fzf_live
-          "ast-grep run --color never --heading never --pattern <query> . 2> /dev/null"
-          {:exec_empty_query false
-           :actions fzf.defaults.actions.files
-           :fzf_opts {"--multi" true}
-           :keymap {:fzf {"ctrl-q" "select-all+accept"}}
-           :previewer :builtin})))
-    {:noremap true :silent true :desc "FzfLua ast-grep"}]
+   ; ["n" "<space>f"   ":FzfLua files<CR>"]
+   ; ["n" "<space>b"   ":FzfLua buffers<CR>"]
+   ; ["n" "<space>/"   ":FzfLua live_grep<CR>"]
+   ; ["n" "<space>g"   ":FzfLua lgrep_curbuf<CR>"]
+   ; ["n" "<space>d"   ":FzfLua diagnostics_document<CR>"]
+   ; ["n" "<space>s"   ":FzfLua lsp_document_symbols<CR>"]
+   ; ["n" "<space>r"   ":FzfLua lsp_references<CR>"]
+   ; ["n" "<space>j"   ":FzfLua jumps<CR>"]
+   ; ["n" "<space>u"   ":FzfLua undotree<CR>"]
+   ; ["n" "<Leader>fh" ":FzfLua helptags<CR>"]
+   ; ["n" "<Leader>fd" ":FzfLua lsp_definitions<CR>"]
+   ; ["n" "<space>a"
+   ;  (fn []
+   ;    (let [fzf (require "fzf-lua")]
+   ;      (fzf.fzf_live
+   ;        "ast-grep run --color never --heading never --pattern <query> . 2> /dev/null"
+   ;        {:exec_empty_query false
+   ;         :actions fzf.defaults.actions.files
+   ;         :fzf_opts {"--multi" true}
+   ;         :keymap {:fzf {"ctrl-q" "select-all+accept"}}
+   ;         :previewer :builtin})))
+   ;  {:noremap true :silent true :desc "FzfLua ast-grep"}]
 
    ;; горячие клавиши для Slime
    ["x" "<Leader>s" "<Plug>SlimeRegionSend" {:noremap false :silent true}]
