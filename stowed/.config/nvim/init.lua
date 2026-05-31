@@ -19,5 +19,7 @@ vim.loader.enable()
 
 require("lazy").setup({
     spec = "plugins",
-    ui = { border = "single" }
-})
+    ui = { border = "single" },
+    change_detection = { enabled = false }
+  }
+)
