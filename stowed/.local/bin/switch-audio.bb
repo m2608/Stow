@@ -59,7 +59,7 @@
 
 (let [short-names *command-line-args*]
   (if (and (seq short-names) (>= (count short-names) 2))
-    (let [sinks (get-sinks ["B10" "Rembrandt" "AAA"])]
+    (let [sinks (get-sinks short-names)]
       (if (seq sinks)
         (do (println (str "[INFO] Sinks found:\n\n" (str/join "\n" (map #(str "- " (:description %)) sinks)) "\n"))
             (let [current-sink-name (get-default-sink-name)
