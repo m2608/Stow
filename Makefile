@@ -208,7 +208,7 @@ endif
 install-scripts:
 	$(call get-gist,https://api.github.com/gists/48185612f371a7a0803ad1c329e59933,b16_themes.clj,$(HOME)/.local/bin/b16_themes.clj);
 	chmod +x "$(HOME)/.local/bin/b16_themes.clj";
-	$(call get-gist,https://gist.github.com/m2608/f71e8bb10bb106e1fd922feb3ef3c7bc,sbis_notifications.bb,$(HOME)/.local/bin/sbis_notifications.bb);
+	$(call get-gist,https://api.github.com/gists/f71e8bb10bb106e1fd922feb3ef3c7bc,sbis_notifications.bb,$(HOME)/.local/bin/sbis_notifications.bb);
 	chmod +x "$(HOME)/.local/bin/sbis_notifications.bb"
 
 #
