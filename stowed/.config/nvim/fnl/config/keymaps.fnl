@@ -23,7 +23,7 @@
 
    ;; вызов файлового браузера в каталоге с текущим файлом
    ;; ["n" "<F9>" ":Oil --float<CR>"]
-   ["n" "<F9>" ":Telescope file_browser<CR>"]
+   ["n" "<F9>" ":Telescope file_browser path=%:h<CR>"]
 
    ;; терминал
    ["n" "<F10>" ":ToggleTerm<CR>"]
@@ -117,6 +117,7 @@
    ["n" "<space>r" ":Telescope lsp_references<CR>"]
    ["n" "<space>j" ":Telescope jumplist<CR>"]
    ["n" "<space>u" ":Telescope undo<CR>"]
+   ["n" "<space>a" ":Telescope ast_grep<CR>"]
 
    ; ["n" "<space>f"   ":FzfLua files<CR>"]
    ; ["n" "<space>b"   ":FzfLua buffers<CR>"]
