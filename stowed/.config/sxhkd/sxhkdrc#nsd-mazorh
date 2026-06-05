@@ -43,4 +43,4 @@ super + b
     bspc config top_padding 0 && polybar-msg cmd toggle
 
 super + alt + r
-    polybar-msg cmd restart
+    $HOME/.config/polybar/polybar-restart.sh
