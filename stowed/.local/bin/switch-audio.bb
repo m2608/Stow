@@ -5,16 +5,6 @@
   '[clojure.string :as str]
   '[cheshire.core :as json])
 
-(defn find-by-short-name
-  "Находит в списке аудиовыход по «короткому имени» (началу описания текстового аудиовыхода)."
-  [sinks short-name]
-  (let [matched-sinks (filter #(str/starts-with? (:description %) short-name) sinks)]
-    (when (seq matched-sinks)
-      (-> matched-sinks
-          first
-          (select-keys [:name :description :index :state])
-          (assoc :short-name short-name)))))
-
 (defn find-sink-by-name
   "Находит в списке аудиовыход по имени."
   [sinks sink-name]
@@ -23,14 +13,15 @@
        first))
 
 (defn get-sinks
-  "Получает список аудиовыходов и оставляет только выходы с указанными «короткими именами»."
-  [short-names]
-  (let [sinks (-> (shell ["pactl" "--format=json" "list" "sinks"] {:out :string})
+  "Получает список аудиовыходов и оставляет только выходы, которые соответствуют шаблону."
+  [pattern-string]
+  (let [pattern (re-pattern pattern-string)
+        sinks (-> (shell ["pactl" "--format=json" "list" "sinks"] {:out :string :err :discard})
                   :out
                   (json/parse-string true))]
-    (->> short-names
-         (map #(find-by-short-name sinks %))
-         (filterv identity))))
+    (->> sinks
+         (filter #(re-find pattern (:description %)))
+         (map #(select-keys % [:name :description :index :state])))))
 
 (defn get-default-sink-name
   "Получает имя установленного в данный момент по умолчанию аудиовыхода."
@@ -57,9 +48,9 @@
       :exit
       zero?))
 
-(let [short-names *command-line-args*]
-  (if (and (seq short-names) (>= (count short-names) 2))
-    (let [sinks (get-sinks short-names)]
+(let [pattern (first *command-line-args*)]
+  (if pattern
+    (let [sinks (get-sinks pattern)]
       (if (seq sinks)
         (do (println (str "[INFO] Sinks found:\n\n" (str/join "\n" (map #(str "- " (:description %)) sinks)) "\n"))
             (let [current-sink-name (get-default-sink-name)
@@ -69,8 +60,8 @@
               (println (format "[INFO] Switching to sink «%s»..." (:description next-sink)))
               (if (switch-to-sink next-sink)
                 (do (println "[INFO] Success")
-                    (shell ["notify-send" (format "Audio output set to «%s»" (:short-name next-sink))]))
+                    (shell ["notify-send" (format "Audio output set to «%s»" (:description next-sink))]))
                 (do (println "[ERROR] Could not switch")
-                    (shell ["notify-send" (format "Can't change audio output to «%s»" (:short-name next-sink))])))))
+                    (shell ["notify-send" (format "Can't change audio output to «%s»" (:description next-sink))])))))
         (println "[ERROR] No matching sinks found.")))
-    (println "Usage: switch-audio.bb <sink1> <sink2> ...")))
+    (println "Usage: switch-audio.bb <pattern>")))

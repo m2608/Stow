@@ -28,4 +28,4 @@ super + backslash
     latex2unicode
 
 super + s
-    switch-audio.bb "7 - vendor 0x0a12 B10" "1 - NVIDIA"
+    switch-audio.bb "(1 - NVIDIA|B10)"
