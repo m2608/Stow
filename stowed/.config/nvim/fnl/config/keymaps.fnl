@@ -116,6 +116,7 @@
    ["n" "<space>s" ":Telescope lsp_document_symbols<CR>"]
    ["n" "<space>r" ":Telescope lsp_references<CR>"]
    ["n" "<space>j" ":Telescope jumplist<CR>"]
+   ["n" "<space>m" ":Telescope marks<CR>"]
    ["n" "<space>u" ":Telescope undo<CR>"]
    ["n" "<space>a" ":Telescope ast_grep<CR>"]
 
