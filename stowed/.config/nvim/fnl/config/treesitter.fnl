@@ -1,24 +1,35 @@
-(local {: merge : first : map : filter : empty? : identity : reduce} (require "nfnl.core"))
+(local
+  {: assoc
+   : merge 
+   : first 
+   : second
+   : map 
+   : filter 
+   : kv-pairs 
+   : empty? 
+   : reduce
+   : keys
+   } (require "nfnl.core"))
 (local str  (require "nfnl.string"))
 
 (local parsers {
-  :clojure         "sogaiu/tree-sitter-clojure"
-  :cpp             "tree-sitter/tree-sitter-cpp"
-  :fennel          "alexmozaidze/tree-sitter-fennel"
-  :html            "tree-sitter/tree-sitter-html"
-  :hurl            "pfeiferj/tree-sitter-hurl"
-  :janet_simple    "sogaiu/tree-sitter-janet-simple"
-  :js              "tree-sitter/tree-sitter-javascript"
-  :jq              "flurie/tree-sitter-jq"
-  :json            "tree-sitter/tree-sitter-json"
-  :make            "tree-sitter-grammars/tree-sitter-make"
-  :markdown        "tree-sitter-grammars/tree-sitter-markdown"
-  :markdown_inline "tree-sitter-grammars/tree-sitter-markdown"
-  :python          "tree-sitter/tree-sitter-python"
-  :scheme          "6cdh/tree-sitter-scheme"
-  :sql             "derekstride/tree-sitter-sql"
-  :xml             "tree-sitter-grammars/tree-sitter-xml"
-  :yaml            "tree-sitter-grammars/tree-sitter-yaml"
+  :clojure         {:repo "sogaiu/tree-sitter-clojure"}
+  :cpp             {:repo "tree-sitter/tree-sitter-cpp"}
+  :fennel          {:repo "alexmozaidze/tree-sitter-fennel"}
+  :html            {:repo "tree-sitter/tree-sitter-html"}
+  :hurl            {:repo "pfeiferj/tree-sitter-hurl"}
+  :janet_simple    {:repo "sogaiu/tree-sitter-janet-simple"}
+  ; :js              {:repo "tree-sitter/tree-sitter-javascript"}
+  :jq              {:repo "flurie/tree-sitter-jq"}
+  :json            {:repo "tree-sitter/tree-sitter-json"}
+  :make            {:repo "tree-sitter-grammars/tree-sitter-make"}
+  ; :markdown        {:repo "tree-sitter-grammars/tree-sitter-markdown"}
+  ; :markdown_inline {:repo "tree-sitter-grammars/tree-sitter-markdown"}
+  :python          {:repo "tree-sitter/tree-sitter-python"}
+  :scheme          {:repo "6cdh/tree-sitter-scheme"}
+  ; :sql             {:repo "derekstride/tree-sitter-sql"}
+  ; :xml             {:repo "tree-sitter-grammars/tree-sitter-xml" :cmd "make -C xml"}
+  :yaml            {:repo "tree-sitter-grammars/tree-sitter-yaml"}
 })
 
 (local tsitter-path (vim.fs.joinpath (os.getenv "HOME") ".local/share/nvim/treesitter"))
@@ -34,6 +45,12 @@
   (if (= result.status :ok)
       (f result.val)
       result))
+
+(fn log [result ...]
+  "Выводит сообщение и возвращает первый аргумент."
+  (when (= result.status :ok)
+    (print (str.join [...])))
+  result)
 
 (fn run [cmd opts]
   (let [p (vim.system cmd (merge {:text true} opts))]
@@ -54,13 +71,11 @@
         (ok path)
         (err "Could not create folder: " path))))
 
-(fn create-temp-dir
-  [path]
+(fn create-temp-dir [path]
   "Создаёт временный каталог. В случае успеха возвращает путь к нему."
   (let [r (run ["mktemp" "-d"])]
-    (if (= 0 r.code)
-        (ok (first (str.split r.stdout "\n")))
-        (err "Could not create temporary folder."))))
+    (when (= 0 r.code)
+      (first (str.split r.stdout "\n")))))
 
 (fn remove-dir
   [path]
@@ -90,51 +105,59 @@
         (ok (vim.fs.joinpath path lib))
         (err "Could not find parser library at " path))))
 
-(fn copy-parser [lib-path dst]
+(fn copy-parser-lib [lib-path dst]
   (let [(_ e) (vim.uv.fs_copyfile lib-path dst)]
     (if (not e)
         (ok dst)
         (err "Could not copy " lib-path " into " dst "."))))
 
-; (fn build-grammar [parser]
-;   (let [repo (. parsers parser)]
-;     (if repo
-;         (let [temp-folder (-> (run ["mktemp" "-d"]) (str.split "\n") first)]
-;           (print (.. "Cloning parser \"" parser "\"..."))
-;           (run ["git" "clone" "--depth=1" (.. "https://github.com/" repo) temp-folder])
-;
-;           (print (.. "Building parser \"" parser "\"..."))
-;           (run ["tree-sitter" "build"] {:cwd temp-folder})
-;
-;           (let [parser-lib (first (vim.fn.readdir temp-folder
-;                                                   (fn [s]
-;                                                     (str.ends-with? s ".so"))))]
-;             (if parser-lib
-;                 (vim.uv.fs_copyfile (vim.fs.joinpath temp-folder parser-lib)
-;                                     (vim.fs.joinpath parsers-path (.. parser ".so")))
-;                 (error (.. "Could not find compile library for parser \"" parser "\"."))))
-;
-;           (vim.fs.rm temp-folder {:recursive true})
-;           (print (.. "Parser \"" parser "\" installed successfully.")))
-;         (error (.. "Could not find repository for parser \"" parser "\".")))))
+(fn add-parser [parsers-path parser repo force-rebuild]
+  (let [dst (vim.fs.joinpath parsers-path (.. parser ".so"))]
+    (if (and (not force-rebuild) (vim.uv.fs_stat dst))
+        (ok dst)
+        (let [temp-dir (create-temp-dir)]
+          (if temp-dir
+              (do
+                (print (.. "Cloning repo " repo "..."))
+                (-> (clone-repo repo temp-dir)
+                    (log "Building parser " parser "...")
+                    (bind (fn [_] (build-parser temp-dir)))
+                    (bind (fn [_] (find-parser-lib temp-dir)))
+                    (bind (fn [lib] (copy-parser-lib lib dst)))
+                    (log "Parser copied to " dst)
+                    (bind (fn [_] (remove-dir temp-dir)))))
+              (err "Could not create temporary folder."))))))
 
-(fn build [parser]
-  (let [repo (. parsers parser)
-        r (-> (create-temp-dir)
-              (bind (fn [r] (clone-repo repo r.val))))]
-    ))
+(fn build-all [parsers-path parsers force-rebuild]
+  (let [statuses (reduce (fn [acc [parser repo]]
+                           (let [result (add-parser parsers-path parser (. parsers parser :repo) force-rebuild)]
+                             (assoc acc parser (= result.status :ok))))
+                         {}
+                         (kv-pairs parsers))
+        fails (map first (filter (fn [[_ status]] (not status)) (kv-pairs statuses)))]
+    (if (empty? fails)
+        (ok (keys parsers))
+        (err "Some parsers weren't built: " (str.join ", " fails) "."))))
 
-;
-; (fn build-all [parsers]
-;   (let [fails (filter build parsers)]
-;     (if (empty? fails)
-;         (ok parsers)
-;         (err (.. "Some parsers weren't built: " (str.join ", " fails) ".")))))
+(fn setup [force-build]
+  (let [result (-> (check-requirements ["clang" "tree-sitter"])
+                   (bind (fn [_] (if force-build
+                                     (remove-dir parsers-path)
+                                     (ok parsers-path))))
+                   (bind (fn [_] (create-dir parsers-path)))
+                   (bind (fn [_]
+                           (do
+                             (vim.opt.runtimepath:append tsitter-path)
+                             (ok tsitter-path))))
+                   (bind (fn [_] (build-all parsers-path parsers false))))]
+    (if (= result.status :ok)
+        (vim.notify "All the parsers were build successfully"
+                    vim.log.levels.INFO)
+        (vim.notify result.msg vim.log.levels.ERROR))))
 
+(setup)
 
-; (-> (check-requirements ["clang" "tree-sitter"])
-;     (bind (fn [_] (create-dir parsers-path)))
-;     (bind (fn [_] (build-all parsers)))
-;     (bind (fn [_] (vim.opt.runtimepath:append tsitter-path))))
-
-
+(vim.api.nvim_create_autocmd
+  ["FileType"]
+  {:pattern ["fenne"]
+   :callback (fn [] (vim.treesitter.start))})

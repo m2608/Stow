@@ -7,3 +7,4 @@
 (require "config.keymaps")
 (require "config.filetypes")
 (require "config.pipe")
+(require "config.treesitter")
