@@ -5,10 +5,11 @@
    : second
    : map 
    : filter 
-   : kv-pairs 
-   : empty? 
    : reduce
    : keys
+   : kv-pairs 
+   : empty? 
+   : nil?
    } (require "nfnl.core"))
 (local str  (require "nfnl.string"))
 
@@ -32,8 +33,10 @@
   :yaml            {:repo "tree-sitter-grammars/tree-sitter-yaml"}
 })
 
+(local queries {:repo "nvim-treesitter/nvim-treesitter"
+                :subfolder "runtime/queries"})
+
 (local tsitter-path (vim.fs.joinpath (os.getenv "HOME") ".local/share/nvim/treesitter"))
-(local parsers-path (vim.fs.joinpath tsitter-path "parser"))
 
 (fn ok [val]
   {:status :ok :val val})
@@ -58,7 +61,6 @@
 
 (fn check-requirements [rs]
   (let [fails (filter (fn [r] (= 0 (vim.fn.executable r))) rs)]
-    (print (vim.inspect fails))
     (if (empty? fails)
         (ok rs)
         (err "Requirements not satisfied: " (str.join ", " fails) "."))))
@@ -77,12 +79,22 @@
     (when (= 0 r.code)
       (first (str.split r.stdout "\n")))))
 
-(fn remove-dir
-  [path]
-  (let [(_ e) (vim.fs.rm path {:recursive true})]
-    (if (not e)
-        (ok path)
-        (err "Could not remove folder: " path))))
+(fn remove-dir [path]
+  "Удаляет каталог."
+  (if (vim.uv.fs_stat path)
+      (let [(_ e) (vim.fs.rm path {:recursive true})]
+        (if (not e)
+            (ok path)
+            (err "Could not remove folder: " path)))
+      (ok path)))
+
+(fn copy-dir [src dst]
+  "Рекурсивно копирует каталог."
+  (print "Copying" src "to" dst)
+  (let [r (run ["cp" "-r" src dst])]
+    (if (= 0 r.code)
+      (ok dst)
+      (err "Could not copy folder " src " to " dst))))
 
 (fn clone-repo [repo path]
   "Клонирует репозиторий с github в указанный каталог."
@@ -117,15 +129,35 @@
         (ok dst)
         (let [temp-dir (create-temp-dir)]
           (if temp-dir
-              (do
-                (print (.. "Cloning repo " repo "..."))
-                (-> (clone-repo repo temp-dir)
-                    (log "Building parser " parser "...")
-                    (bind (fn [_] (build-parser temp-dir)))
-                    (bind (fn [_] (find-parser-lib temp-dir)))
-                    (bind (fn [lib] (copy-parser-lib lib dst)))
-                    (log "Parser copied to " dst)
-                    (bind (fn [_] (remove-dir temp-dir)))))
+              (let [result (-> {:status :ok}
+                               (log "Cloning repo " repo "...")
+                               (bind (fn [_] (clone-repo repo temp-dir)))
+                               (log "Building parser " parser "...")
+                               (bind (fn [_] (build-parser temp-dir)))
+                               (bind (fn [_] (find-parser-lib temp-dir)))
+                               (bind (fn [lib] (copy-parser-lib lib dst)))
+                               (log "Parser copied to " dst))]
+                (remove-dir temp-dir)
+                result)
+              (err "Could not create temporary folder."))))))
+
+(fn add-queries [tsitter-path queries force-rebuild]
+  (let [queries-path (vim.fs.joinpath tsitter-path "queries")]
+    (if (and (not force-rebuild) (vim.uv.fs_stat queries-path))
+        (ok queries-path)
+        (let [temp-dir (create-temp-dir)
+              repo (. queries :repo)]
+          (if temp-dir
+              (let [result (-> {:status :ok}
+                               (log "Cloning repo " repo "...")
+                               (bind (fn [_] (clone-repo repo temp-dir)))
+                               (bind (fn [_] (remove-dir queries-path)))
+                               (bind (fn [_]
+                                       (copy-dir (vim.fs.joinpath temp-dir (. queries :subfolder))
+                                                 tsitter-path)))
+                               (log "Queries copied to " queries-path))]
+                (remove-dir temp-dir)
+                result)
               (err "Could not create temporary folder."))))))
 
 (fn build-all [parsers-path parsers force-rebuild]
@@ -139,25 +171,27 @@
         (ok (keys parsers))
         (err "Some parsers weren't built: " (str.join ", " fails) "."))))
 
-(fn setup [force-build]
-  (let [result (-> (check-requirements ["clang" "tree-sitter"])
-                   (bind (fn [_] (if force-build
-                                     (remove-dir parsers-path)
-                                     (ok parsers-path))))
+(fn setup [tsitter-path parsers queries force-rebuild]
+  (let [parsers-path (vim.fs.joinpath tsitter-path "parser")
+        queries-path (vim.fs.joinpath tsitter-path "queries")
+        result (-> (check-requirements ["clang" "tree-sitter"])
+                   (bind (fn [_]
+                           (if force-rebuild
+                               (-> (remove-dir parsers-path)
+                                   (bind (fn [_] (remove-dir queries-path))))
+                               (ok))))
                    (bind (fn [_] (create-dir parsers-path)))
                    (bind (fn [_]
                            (do
                              (vim.opt.runtimepath:append tsitter-path)
                              (ok tsitter-path))))
-                   (bind (fn [_] (build-all parsers-path parsers false))))]
+                   (bind (fn [_]
+                           (build-all parsers-path parsers force-rebuild)))
+                   (bind (fn [_]
+                           (add-queries tsitter-path queries force-rebuild))))]
     (if (= result.status :ok)
         (vim.notify "All the parsers were build successfully"
                     vim.log.levels.INFO)
         (vim.notify result.msg vim.log.levels.ERROR))))
 
-(setup)
-
-(vim.api.nvim_create_autocmd
-  ["FileType"]
-  {:pattern ["fenne"]
-   :callback (fn [] (vim.treesitter.start))})
+(setup tsitter-path parsers queries true)
