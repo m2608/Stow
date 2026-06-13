@@ -228,10 +228,10 @@ local function setup(tsitter_path0, parsers0, queries0, force_rebuild)
     return add_queries(tsitter_path0, queries0, force_rebuild)
   end
   result = bind(bind(bind(bind(bind(check_requirements({"clang", "tree-sitter"}), _32_), _35_), _36_), _37_), _38_)
-  if (result.status == "ok") then
-    return vim.notify("All the parsers were build successfully", vim.log.levels.INFO)
-  else
+  if (result.status ~= "ok") then
     return vim.notify(result.msg, vim.log.levels.ERROR)
+  else
+    return nil
   end
 end
-return setup(tsitter_path, parsers, queries, true)
+return setup(tsitter_path, parsers, queries)

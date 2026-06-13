@@ -189,9 +189,7 @@
                            (build-all parsers-path parsers force-rebuild)))
                    (bind (fn [_]
                            (add-queries tsitter-path queries force-rebuild))))]
-    (if (= result.status :ok)
-        (vim.notify "All the parsers were build successfully"
-                    vim.log.levels.INFO)
+    (if (not= result.status :ok)
         (vim.notify result.msg vim.log.levels.ERROR))))
 
-(setup tsitter-path parsers queries true)
+(setup tsitter-path parsers queries)
