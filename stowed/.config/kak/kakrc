@@ -179,7 +179,8 @@ define-command sudo-write %{
 
 plug "andreyorst/plug.kak" noload
 plug "andreyorst/fzf.kak"
-plug "https://git.sr.ht/~nasmevka/repl.kak"
+plug "enricozb/popup.kak"
+# plug "https://git.sr.ht/~nasmevka/repl.kak"
 plug "https://codeberg.org/raiguard/kak-live-grep"
 
 map global normal <F2> ":w<ret>"
