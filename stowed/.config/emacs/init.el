@@ -18,7 +18,8 @@
 
 (straight-use-package 'evil)
 (straight-use-package 'evil-nerd-commenter)
-(straight-use-package 'evil-surround)
+(straight-use-package
+ '(evil-surround :ensure t :config (global-evil-surround-mode 1)))
 (straight-use-package 'evil-leader)
 (straight-use-package 'evil-org-mode)
 (straight-use-package 'telega)
@@ -27,12 +28,21 @@
 (straight-use-package 'vterm)
 (straight-use-package 'restclient)
 (straight-use-package 'magit)
-(straight-use-package 'cider)
-(straight-use-package 'clojure-mode)
 (straight-use-package
-  '(nano :type git :host github :repo "rougier/nano-emacs"))
+ '(cider   :type git :host github :repo "clojure-emacs/cider" :branch "master"))
+(straight-use-package
+ '(clomacs :type git :host gitlab :repo "kostafey/clomacs"    :branch "master"))
+(straight-use-package
+ '(ejc-sql :type git :host github :repo "kostafey/ejc-sql"    :branch "master")))
+(straight-use-package
+ '(nano    :type git :host github :repo "rougier/nano-emacs"))
 
 (require 'nano)
+(require 'clomacs)
+(require 'ejc-sql)
+
+(setq nrepl-sync-request-timeout 60)
+(setq clomacs-httpd-default-port 8090)
 
 (require 'dired-x)
 (setq dired-listing-switches "-alh --group-directories-first")
@@ -44,6 +54,7 @@
 (setq telega-emoji-use-images nil)
 
 (evil-mode 1)
+
 ;; перейти к определению функции
 (evil-define-key 'normal 'global "gd" 'lsp-find-definition)
 ;; :q не закрывает редактор, а закрывает только текущий буфер
@@ -65,6 +76,9 @@
 ;; включаем относительные номера строк
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
+
+;; вход в режим изменения размера шрифта (+/-)
+(global-set-key (kbd "C-=") #'global-text-scale-adjust)
 
 ;; включаем стандартное поведение C-w в минибуфере
 (define-key minibuffer-local-completion-map          (kbd "C-w") #'backward-kill-word)
