@@ -5,4 +5,4 @@
   {1 "kristijanhusak/vim-dadbod-completion"
    :ft ["sql" "mysql" "plsql"]
    :lazy true }]
- :cmd ["DBUI" "DBUIToggle" "DBUIAddConnection" "DBUIFindBuffer"]}
+ :cmd ["DB" "DBUI" "DBUIToggle" "DBUIAddConnection" "DBUIFindBuffer"]}
