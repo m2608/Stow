@@ -33,7 +33,7 @@
 (straight-use-package
  '(clomacs :type git :host gitlab :repo "kostafey/clomacs"    :branch "master"))
 (straight-use-package
- '(ejc-sql :type git :host github :repo "kostafey/ejc-sql"    :branch "master")))
+ '(ejc-sql :type git :host github :repo "kostafey/ejc-sql"    :branch "master"))
 (straight-use-package
  '(nano    :type git :host github :repo "rougier/nano-emacs"))
 
@@ -69,6 +69,15 @@
 ;(require 'evil-org-agenda)
 ;(evil-org-set-key-theme '(navigation insert textobjects additional calendar))
 ;(evil-org-agenda-set-keys)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sql . t)
+   (clojure . t)))
+
+(setq org-confirm-babel-evaluate
+      (lambda (lang body)
+        (not (or (equal lang "sql") (equal lang "clojure")))) )
 
 ;; отключаем строку меню
 (menu-bar-mode 0)
