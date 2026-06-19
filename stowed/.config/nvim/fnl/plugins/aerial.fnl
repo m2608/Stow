@@ -1,5 +1,6 @@
 {1 "stevearc/aerial.nvim"
- :opts {}
+ :opts {
+    :backends ["lsp" "markdown" "man"]
+ }
  :cmd ["AerialToggle"]
- :dependencies ["nvim-treesitter/nvim-treesitter"
-                "nvim-tree/nvim-web-devicons"]}
+ :dependencies ["nvim-tree/nvim-web-devicons"]}
