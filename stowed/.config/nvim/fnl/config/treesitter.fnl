@@ -33,7 +33,10 @@
   :yaml            {:repo "tree-sitter-grammars/tree-sitter-yaml"}
 })
 
-(local queries {:repo "nvim-treesitter/nvim-treesitter"
+; (local queries {:repo "nvim-treesitter/nvim-treesitter"
+;                 :subfolder "runtime/queries"})
+
+(local queries {:repo "helix-editor/helix"
                 :subfolder "runtime/queries"})
 
 (local tsitter-path (vim.fs.joinpath (os.getenv "HOME") ".local/share/nvim/treesitter"))
@@ -193,3 +196,8 @@
         (vim.notify result.msg vim.log.levels.ERROR))))
 
 (setup tsitter-path parsers queries)
+
+(vim.api.nvim_create_autocmd
+  ["FileType"]
+  {:pattern ["fennel"]
+   :callback (fn [] (vim.treesitter.start))})
