@@ -55,20 +55,15 @@ function fish_prompt --description 'Write out the prompt'
     set -l prefix ""
     set -l suffix ">"
 
-    set -l container ""
     set -l env_podman "/run/.containerenv"
     set -l env_docker "/.dockerenv"
 
     if test -f "$env_podman"
         # Podman has container name in the envfile.
-        set container (cat "$env_podman" | sed -n -r 's/^name="(.*)"$/\1/p')
+        set prefix (cat "$env_podman" | sed -n -r 's/^name="(.*)"$/⌈\1⌋/p')
     else if test -f "$env_docker"
         # Hostname is the only option for docker.
-        set container "$HOSTNAME"
-    end
-
-    if test -n "$container"
-        set prefix "⌈$container⌋"
+        set prefix " "
     end
 
     if functions -q fish_is_root_user; and fish_is_root_user
