@@ -46,4 +46,4 @@ do
     vim.api.nvim_set_hl(0, "TabLineSel", {ctermbg = 4, ctermfg = 15, bold = false})
   end
 end
-return vim.diagnostic.config({signs = true, float = {source = "always", border = "single"}, virtual_text = false})
+return vim.diagnostic.config({signs = true, jump = {float = true}, float = {source = "always", border = "single"}, virtual_text = false})
