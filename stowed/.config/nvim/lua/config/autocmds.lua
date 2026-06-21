@@ -65,4 +65,20 @@ local function _11_(args)
   end
   return vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, output)
 end
-return autocmd({"BufReadCmd"}, {group = "out", pattern = "out://*", callback = _11_})
+autocmd({"BufReadCmd"}, {group = "out", pattern = "out://*", callback = _11_})
+local lsp_mappings = {{"textDocument/declaration", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>"}, {"textDocument/definition", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>"}, {"textDocument/implementation", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>"}, {"textDocument/references", "gr", "<cmd>lua vim.lsp.buf.references()<CR>"}, {"textDocument/hover", "K", "<cmd>lua vim.lsp.buf.hover()<CR>"}, {"textDocument/signatureHelp", "<space>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>"}, {"textDocument/rename", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>"}, {"textDocument/codeAction", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>"}, {nil, "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"}, {nil, "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"}, {nil, "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"}, {nil, "[d", "<cmd>lua vim.diagnostic.jump({count=-1})<CR>"}, {nil, "]d", "<cmd>lua vim.diagnostic.jump({count=1})<CR>"}, {nil, "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>"}, {nil, "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>"}}
+augroup("mylsp", {clear = true})
+local function _12_(ev)
+  local client = vim.lsp.get_client_by_id(ev.data.client_id)
+  for _, mapping in ipairs(lsp_mappings) do
+    local condition = mapping[1]
+    local key = mapping[2]
+    local command = mapping[3]
+    if (core["nil?"](condition) or client:supports_method(condition)) then
+      vim.keymap.set("n", key, command, {silent = true, desc = "Link for quickfix"})
+    else
+    end
+  end
+  return nil
+end
+return autocmd({"LspAttach"}, {group = "mylsp", callback = _12_})
