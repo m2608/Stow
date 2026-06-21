@@ -3,8 +3,10 @@
 (require '[clojure.string :as str]
          '[babashka.process :refer [shell]])
 
+;; Название устройства.
 (def device "amdgpu_bl0")
 
+;; Пути к файлам, где можно прочитать текущее и максимальное значение яркости.
 (def br-file-val (format "/sys/class/backlight/%s/brightness" device))
 (def br-file-max (format "/sys/class/backlight/%s/max_brightness" device ))
 
@@ -22,11 +24,13 @@ Usage examples:
   (-> (slurp file) str/split-lines first Integer/parseInt))
 
 (defn set-br-value
+  "Устанавливает значение яркости. Напрямую в файл обычный пользователь писать не может,
+  поэтому устанавливаем через DBus."
   [value]
   (shell ["busctl" "call" "org.freedesktop.login1" "/org/freedesktop/login1/session/self" "org.freedesktop.login1.Session"
           "SetBrightness" "ssu" "backlight" device (str value)]))
 
-(def br-default 100000)
+;; Максимальное значение яркости из файла.
 (def br-max (get-br-value br-file-max))
 
 (defn ->percent
