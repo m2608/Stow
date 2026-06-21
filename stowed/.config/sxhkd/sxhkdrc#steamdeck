@@ -21,3 +21,12 @@ super + d
 
 super + s
     switch-audio.bb "(Rembrandt|B10)"
+
+KP_Add
+    brightness.bb +5%
+
+KP_Subtract
+    brightness.bb -5%
+
+KP_Multiply
+    brightness.bb 30%
