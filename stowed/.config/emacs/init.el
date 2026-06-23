@@ -129,3 +129,8 @@
 
 ;; fuzzy search в строке команд
 (setq completion-styles '(flex))
+
+;; load local init file if any
+(let ((local-init (expand-file-name (concat "init#" (system-name) ".el") user-emacs-directory)))
+  (when (file-exists-p local-init)
+    (load-file local-init)))
