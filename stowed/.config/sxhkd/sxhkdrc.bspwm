@@ -39,21 +39,23 @@ super + shift + r
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+super + {h,l}
+	bspc node -f {west,east}
 
-# focus next (previous) window in the current desktop
-super + {u,i}
-    bspc node -f {next,prev}.local.!sticky.!hidden.window
+super + j
+    if [ "$(bspc query -T -d | jq -r .layout)" = "monocle" ]; then bspc node -f next.local.!sticky.!hidden.window; else bspc node -f south; fi
+
+super + k
+    if [ "$(bspc query -T -d | jq -r .layout)" = "monocle" ]; then bspc node -f prev.local.!sticky.!hidden.window; else bspc node -f north; fi
+
+super + shift + {h,j,k,l}
+	bspc node -s {west,south,north,east}
 
 super + shift + {u,i}
     exec $HOME/.config/bspwm/deck cycle-{left,right}
 
 # focus the next/previous desktop in the current monitor
-super + {y,o}
-    exec $HOME/.config/bspwm/bspwm-prevnext.sh {prev,next}
-
-super + bracket{left,right}
+super + {u,i}
     exec $HOME/.config/bspwm/bspwm-prevnext.sh {prev,next}
 
 # focus the last desktop
