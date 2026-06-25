@@ -66,19 +66,49 @@ local function _11_(args)
   return vim.api.nvim_buf_set_lines(args.buf, 0, -1, false, output)
 end
 autocmd({"BufReadCmd"}, {group = "out", pattern = "out://*", callback = _11_})
-local lsp_mappings = {{"textDocument/declaration", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>"}, {"textDocument/definition", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>"}, {"textDocument/implementation", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>"}, {"textDocument/references", "gr", "<cmd>lua vim.lsp.buf.references()<CR>"}, {"textDocument/hover", "K", "<cmd>lua vim.lsp.buf.hover()<CR>"}, {"textDocument/signatureHelp", "<space>k", "<cmd>lua vim.lsp.buf.signature_help()<CR>"}, {"textDocument/rename", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>"}, {"textDocument/codeAction", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>"}, {nil, "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"}, {nil, "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"}, {nil, "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"}, {nil, "[d", "<cmd>lua vim.diagnostic.jump({count=-1})<CR>"}, {nil, "]d", "<cmd>lua vim.diagnostic.jump({count=1})<CR>"}, {nil, "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>"}, {nil, "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>"}}
+local lsp_mappings
+local function _12_()
+  return vim.lsp.buf.declaration()
+end
+local function _13_()
+  return vim.lsp.buf.definition()
+end
+local function _14_()
+  return vim.lsp.buf.implementation()
+end
+local function _15_()
+  return vim.lsp.buf.hover({border = "single"})
+end
+local function _16_()
+  return vim.lsp.buf.signature_help({border = "single"})
+end
+local function _17_()
+  return vim.diagnostic.jump({count = -1})
+end
+local function _18_()
+  return vim.diagnostic.jump({count = 1})
+end
+local function _19_()
+  return vim.diagnostic.open_float()
+end
+local function _20_()
+  return vim.diagnostic.setloclist()
+end
+lsp_mappings = {{"textDocument/declaration", "gD", "Go to declaration", _12_}, {"textDocument/definition", "gd", "Go to definition", _13_}, {"textDocument/implementation", "gi", "Go to implementation", _14_}, {"textDocument/references", "<space>r", "Show code references", ":Telescope lsp_references<CR>"}, {"textDocument/hover", "K", "Show docs", _15_}, {"textDocument/signatureHelp", "<space>k", "Signature help", _16_}, {nil, "[d", "Jump to previous diagnostic", _17_}, {nil, "]d", "Jump to next diagnostic", _18_}, {nil, "<space>e", "Show diagnostic message", _19_}, {nil, "<space>q", "Copy diagnostic to quickfix", _20_}}
 augroup("mylsp", {clear = true})
-local function _12_(ev)
+local function _21_(ev)
   local client = vim.lsp.get_client_by_id(ev.data.client_id)
+  vim.keymap.del("n", "K", {buffer = ev.buf})
   for _, mapping in ipairs(lsp_mappings) do
     local condition = mapping[1]
     local key = mapping[2]
-    local command = mapping[3]
+    local description = mapping[3]
+    local command = mapping[4]
     if (core["nil?"](condition) or client:supports_method(condition)) then
-      vim.keymap.set("n", key, command, {silent = true, desc = "Link for quickfix"})
+      vim.keymap.set("n", key, command, {buffer = ev.buf, silent = true, desc = description})
     else
     end
   end
   return nil
 end
-return autocmd({"LspAttach"}, {group = "mylsp", callback = _12_})
+return autocmd({"LspAttach"}, {group = "mylsp", callback = _21_})

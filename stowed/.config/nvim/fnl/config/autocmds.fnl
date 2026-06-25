@@ -119,21 +119,35 @@
 
 
 (local lsp-mappings
-       [["textDocument/declaration"    "gD"        "<cmd>lua vim.lsp.buf.declaration()<CR>"]
-        ["textDocument/definition"     "gd"        "<cmd>lua vim.lsp.buf.definition()<CR>"]
-        ["textDocument/implementation" "gi"        "<cmd>lua vim.lsp.buf.implementation()<CR>"]
-        ["textDocument/references"     "gr"        "<cmd>lua vim.lsp.buf.references()<CR>"]
-        ["textDocument/hover"          "K"         "<cmd>lua vim.lsp.buf.hover()<CR>"]
-        ["textDocument/signatureHelp"  "<space>k"  "<cmd>lua vim.lsp.buf.signature_help()<CR>"]
-        ["textDocument/rename"         "<space>rn" "<cmd>lua vim.lsp.buf.rename()<CR>"]
-        ["textDocument/codeAction"     "<space>ca" "<cmd>lua vim.lsp.buf.code_action()<CR>"]
-        [nil                           "<space>wa" "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>"]
-        [nil                           "<space>wr" "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>"]
-        [nil                           "<space>wl" "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"]
-        [nil                           "[d"        "<cmd>lua vim.diagnostic.jump({count=-1})<CR>"]
-        [nil                           "]d"        "<cmd>lua vim.diagnostic.jump({count=1})<CR>"]
-        [nil                           "<space>e"  "<cmd>lua vim.diagnostic.open_float()<CR>"]
-        [nil                           "<space>q"  "<cmd>lua vim.diagnostic.setloclist()<CR>"]])
+       [["textDocument/declaration"    "gD"        "Go to declaration"
+         (fn [] (vim.lsp.buf.declaration))]
+
+        ["textDocument/definition"     "gd"        "Go to definition"
+         (fn [] (vim.lsp.buf.definition))]
+
+        ["textDocument/implementation" "gi"        "Go to implementation"
+         (fn [] (vim.lsp.buf.implementation))]
+
+        ["textDocument/references"     "<space>r"  "Show code references"
+         ":Telescope lsp_references<CR>"]
+
+        ["textDocument/hover"          "K"         "Show docs"
+         (fn [] (vim.lsp.buf.hover {:border :single}))]
+
+        ["textDocument/signatureHelp"  "<space>k"  "Signature help"
+         (fn [] (vim.lsp.buf.signature_help {:border :single}))]
+
+        [nil                           "[d"        "Jump to previous diagnostic"
+         (fn [] (vim.diagnostic.jump {:count -1}))]
+
+        [nil                           "]d"        "Jump to next diagnostic"
+         (fn [] (vim.diagnostic.jump {:count 1}))]
+
+        [nil                           "<space>e"  "Show diagnostic message"
+         (fn [] (vim.diagnostic.open_float))]
+
+        [nil                           "<space>q"  "Copy diagnostic to quickfix"
+         (fn [] (vim.diagnostic.setloclist))]])
 
 (augroup "mylsp" {:clear true})
 (autocmd
@@ -141,8 +155,11 @@
   {:group "mylsp"
   :callback (fn [ev]
               (let [client (vim.lsp.get_client_by_id ev.data.client_id)]
+                ;; Убираем дефолтные сочетания.
+                (vim.keymap.del "n" "K" {:buffer ev.buf})
+                ;; Добавляем свои.
                 (each [_ mapping (ipairs lsp-mappings)]
-                  (let [[condition key command] mapping]
+                  (let [[condition key description command] mapping]
                     (when (or (core.nil? condition)
                               (client:supports_method condition))
-                      (vim.keymap.set "n" key command {:silent true :desc "Link for quickfix"}))))))})
+                      (vim.keymap.set "n" key command {:buffer ev.buf :silent true :desc description}))))))})
