@@ -24,12 +24,12 @@
   :jq              {:repo "flurie/tree-sitter-jq"}
   :json            {:repo "tree-sitter/tree-sitter-json"}
   :make            {:repo "tree-sitter-grammars/tree-sitter-make"}
-  ; :markdown        {:repo "tree-sitter-grammars/tree-sitter-markdown"}
-  ; :markdown_inline {:repo "tree-sitter-grammars/tree-sitter-markdown"}
+  :markdown        {:repo "tree-sitter-grammars/tree-sitter-markdown" :rel-path "tree-sitter-markdown"}
+  :markdown_inline {:repo "tree-sitter-grammars/tree-sitter-markdown" :rel-path "tree-sitter-markdown-inline"}
   :python          {:repo "tree-sitter/tree-sitter-python"}
   :scheme          {:repo "6cdh/tree-sitter-scheme"}
   ; :sql             {:repo "derekstride/tree-sitter-sql"}
-  ; :xml             {:repo "tree-sitter-grammars/tree-sitter-xml" :cmd "make -C xml"}
+  :xml             {:repo "tree-sitter-grammars/tree-sitter-xml" :rel-path "dtd"}
   :yaml            {:repo "tree-sitter-grammars/tree-sitter-yaml"}
 })
 
@@ -126,18 +126,21 @@
         (ok dst)
         (err "Could not copy " lib-path " into " dst "."))))
 
-(fn add-parser [parsers-path parser repo force-rebuild]
-  (let [dst (vim.fs.joinpath parsers-path (.. parser ".so"))]
+(fn add-parser [parsers-path parser-name parser-data force-rebuild]
+  (let [dst (vim.fs.joinpath parsers-path (.. parser-name ".so"))]
     (if (and (not force-rebuild) (vim.uv.fs_stat dst))
         (ok dst)
         (let [temp-dir (create-temp-dir)]
           (if temp-dir
-              (let [result (-> {:status :ok}
+              (let [repo (. parser-data :repo)
+                    relp (. parser-data :rel-path)
+                    build-dir (if relp (vim.fs.joinpath temp-dir relp) temp-dir)
+                    result (-> {:status :ok}
                                (log "Cloning repo " repo "...")
                                (bind (fn [_] (clone-repo repo temp-dir)))
-                               (log "Building parser " parser "...")
-                               (bind (fn [_] (build-parser temp-dir)))
-                               (bind (fn [_] (find-parser-lib temp-dir)))
+                               (log "Building parser " parser-name "...")
+                               (bind (fn [_] (build-parser build-dir)))
+                               (bind (fn [_] (find-parser-lib build-dir)))
                                (bind (fn [lib] (copy-parser-lib lib dst)))
                                (log "Parser copied to " dst))]
                 (remove-dir temp-dir)
@@ -164,9 +167,9 @@
               (err "Could not create temporary folder."))))))
 
 (fn build-all [parsers-path parsers force-rebuild]
-  (let [statuses (reduce (fn [acc [parser repo]]
-                           (let [result (add-parser parsers-path parser (. parsers parser :repo) force-rebuild)]
-                             (assoc acc parser (= result.status :ok))))
+  (let [statuses (reduce (fn [acc [parser-name parser-data]]
+                           (let [result (add-parser parsers-path parser-name parser-data force-rebuild)]
+                             (assoc acc parser-name (= result.status :ok))))
                          {}
                          (kv-pairs parsers))
         fails (map first (filter (fn [[_ status]] (not status)) (kv-pairs statuses)))]

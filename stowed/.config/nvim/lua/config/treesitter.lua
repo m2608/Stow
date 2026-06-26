@@ -12,7 +12,7 @@ local kv_pairs = _local_1_["kv-pairs"]
 local empty_3f = _local_1_["empty?"]
 local nil_3f = _local_1_["nil?"]
 local str = require("nfnl.string")
-local parsers = {clojure = {repo = "sogaiu/tree-sitter-clojure"}, cpp = {repo = "tree-sitter/tree-sitter-cpp"}, fennel = {repo = "alexmozaidze/tree-sitter-fennel"}, html = {repo = "tree-sitter/tree-sitter-html"}, hurl = {repo = "pfeiferj/tree-sitter-hurl"}, janet_simple = {repo = "sogaiu/tree-sitter-janet-simple"}, jq = {repo = "flurie/tree-sitter-jq"}, json = {repo = "tree-sitter/tree-sitter-json"}, make = {repo = "tree-sitter-grammars/tree-sitter-make"}, python = {repo = "tree-sitter/tree-sitter-python"}, scheme = {repo = "6cdh/tree-sitter-scheme"}, yaml = {repo = "tree-sitter-grammars/tree-sitter-yaml"}}
+local parsers = {clojure = {repo = "sogaiu/tree-sitter-clojure"}, cpp = {repo = "tree-sitter/tree-sitter-cpp"}, fennel = {repo = "alexmozaidze/tree-sitter-fennel"}, html = {repo = "tree-sitter/tree-sitter-html"}, hurl = {repo = "pfeiferj/tree-sitter-hurl"}, janet_simple = {repo = "sogaiu/tree-sitter-janet-simple"}, jq = {repo = "flurie/tree-sitter-jq"}, json = {repo = "tree-sitter/tree-sitter-json"}, make = {repo = "tree-sitter-grammars/tree-sitter-make"}, markdown = {repo = "tree-sitter-grammars/tree-sitter-markdown", ["rel-path"] = "tree-sitter-markdown"}, markdown_inline = {repo = "tree-sitter-grammars/tree-sitter-markdown", ["rel-path"] = "tree-sitter-markdown-inline"}, python = {repo = "tree-sitter/tree-sitter-python"}, scheme = {repo = "6cdh/tree-sitter-scheme"}, xml = {repo = "tree-sitter-grammars/tree-sitter-xml", ["rel-path"] = "dtd"}, yaml = {repo = "tree-sitter-grammars/tree-sitter-yaml"}}
 local queries = {repo = "helix-editor/helix", subfolder = "runtime/queries"}
 local tsitter_path = vim.fs.joinpath(os.getenv("HOME"), ".local/share/nvim/treesitter")
 local function ok(val)
@@ -124,27 +124,35 @@ local function copy_parser_lib(lib_path, dst)
     return err("Could not copy ", lib_path, " into ", dst, ".")
   end
 end
-local function add_parser(parsers_path, parser, repo, force_rebuild)
-  local dst = vim.fs.joinpath(parsers_path, (parser .. ".so"))
+local function add_parser(parsers_path, parser_name, parser_data, force_rebuild)
+  local dst = vim.fs.joinpath(parsers_path, (parser_name .. ".so"))
   if (not force_rebuild and vim.uv.fs_stat(dst)) then
     return ok(dst)
   else
     local temp_dir = create_temp_dir()
     if temp_dir then
+      local repo = parser_data.repo
+      local relp = parser_data["rel-path"]
+      local build_dir
+      if relp then
+        build_dir = vim.fs.joinpath(temp_dir, relp)
+      else
+        build_dir = temp_dir
+      end
       local result
-      local function _16_(_)
+      local function _17_(_)
         return clone_repo(repo, temp_dir)
       end
-      local function _17_(_)
-        return build_parser(temp_dir)
-      end
       local function _18_(_)
-        return find_parser_lib(temp_dir)
+        return build_parser(build_dir)
       end
-      local function _19_(lib)
+      local function _19_(_)
+        return find_parser_lib(build_dir)
+      end
+      local function _20_(lib)
         return copy_parser_lib(lib, dst)
       end
-      result = log(bind(bind(bind(log(bind(log({status = "ok"}, "Cloning repo ", repo, "..."), _16_), "Building parser ", parser, "..."), _17_), _18_), _19_), "Parser copied to ", dst)
+      result = log(bind(bind(bind(log(bind(log({status = "ok"}, "Cloning repo ", repo, "..."), _17_), "Building parser ", parser_name, "..."), _18_), _19_), _20_), "Parser copied to ", dst)
       remove_dir(temp_dir)
       return result
     else
@@ -161,16 +169,16 @@ local function add_queries(tsitter_path0, queries0, force_rebuild)
     local repo = queries0.repo
     if temp_dir then
       local result
-      local function _22_(_)
+      local function _23_(_)
         return clone_repo(repo, temp_dir)
       end
-      local function _23_(_)
+      local function _24_(_)
         return remove_dir(queries_path)
       end
-      local function _24_(_)
+      local function _25_(_)
         return copy_dir(vim.fs.joinpath(temp_dir, queries0.subfolder), tsitter_path0)
       end
-      result = log(bind(bind(bind(log({status = "ok"}, "Cloning repo ", repo, "..."), _22_), _23_), _24_), "Queries copied to ", queries_path)
+      result = log(bind(bind(bind(log({status = "ok"}, "Cloning repo ", repo, "..."), _23_), _24_), _25_), "Queries copied to ", queries_path)
       remove_dir(temp_dir)
       return result
     else
@@ -180,20 +188,20 @@ local function add_queries(tsitter_path0, queries0, force_rebuild)
 end
 local function build_all(parsers_path, parsers0, force_rebuild)
   local statuses
-  local function _28_(acc, _27_)
-    local parser = _27_[1]
-    local repo = _27_[2]
-    local result = add_parser(parsers_path, parser, parsers0[parser].repo, force_rebuild)
-    return assoc(acc, parser, (result.status == "ok"))
+  local function _29_(acc, _28_)
+    local parser_name = _28_[1]
+    local parser_data = _28_[2]
+    local result = add_parser(parsers_path, parser_name, parser_data, force_rebuild)
+    return assoc(acc, parser_name, (result.status == "ok"))
   end
-  statuses = reduce(_28_, {}, kv_pairs(parsers0))
+  statuses = reduce(_29_, {}, kv_pairs(parsers0))
   local fails
-  local function _30_(_29_)
-    local _ = _29_[1]
-    local status = _29_[2]
+  local function _31_(_30_)
+    local _ = _30_[1]
+    local status = _30_[2]
     return not status
   end
-  fails = map(first, filter(_30_, kv_pairs(statuses)))
+  fails = map(first, filter(_31_, kv_pairs(statuses)))
   if empty_3f(fails) then
     return ok(keys(parsers0))
   else
@@ -204,30 +212,30 @@ local function setup(tsitter_path0, parsers0, queries0, force_rebuild)
   local parsers_path = vim.fs.joinpath(tsitter_path0, "parser")
   local queries_path = vim.fs.joinpath(tsitter_path0, "queries")
   local result
-  local function _32_(_)
+  local function _33_(_)
     if force_rebuild then
-      local function _33_(_0)
+      local function _34_(_0)
         return remove_dir(queries_path)
       end
-      return bind(remove_dir(parsers_path), _33_)
+      return bind(remove_dir(parsers_path), _34_)
     else
       return ok()
     end
   end
-  local function _35_(_)
+  local function _36_(_)
     return create_dir(parsers_path)
   end
-  local function _36_(_)
+  local function _37_(_)
     vim.opt.runtimepath:append(tsitter_path0)
     return ok(tsitter_path0)
   end
-  local function _37_(_)
+  local function _38_(_)
     return build_all(parsers_path, parsers0, force_rebuild)
   end
-  local function _38_(_)
+  local function _39_(_)
     return add_queries(tsitter_path0, queries0, force_rebuild)
   end
-  result = bind(bind(bind(bind(bind(check_requirements({"clang", "tree-sitter"}), _32_), _35_), _36_), _37_), _38_)
+  result = bind(bind(bind(bind(bind(check_requirements({"clang", "tree-sitter"}), _33_), _36_), _37_), _38_), _39_)
   if (result.status ~= "ok") then
     return vim.notify(result.msg, vim.log.levels.ERROR)
   else
@@ -235,7 +243,7 @@ local function setup(tsitter_path0, parsers0, queries0, force_rebuild)
   end
 end
 setup(tsitter_path, parsers, queries)
-local function _40_()
+local function _41_()
   return vim.treesitter.start()
 end
-return vim.api.nvim_create_autocmd({"FileType"}, {pattern = {"fennel"}, callback = _40_})
+return vim.api.nvim_create_autocmd({"FileType"}, {pattern = {"fennel"}, callback = _41_})
