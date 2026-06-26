@@ -24,3 +24,5 @@ wmname LG3D
 
 # Загружаем ресурсы.
 xrdb -merge ~/.Xresources
+
+$HOME/.config/polybar/polybar-restart.sh &

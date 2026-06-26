@@ -48,4 +48,4 @@ clipmenud &
 # zeal
 $HOME/.local/bin/zeal &
 
-polybar &
+$HOME/.config/polybar/polybar-restart.sh &
