@@ -26,6 +26,8 @@
  (fn []
    (let [servers {"markdown_oxide" {}
                   "clojure_lsp"    {}
-                  "pyright"        {}}]
+                  "pyright"        {}
+                  "fennel-ls"      {}
+                  "clangd"         {}}]
      (each [name config (pairs servers)]
        (vim.lsp.enable name))))}
