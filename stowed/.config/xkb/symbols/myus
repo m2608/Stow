@@ -1,0 +1,10 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    include "us(basic)"
+
+    // replace key <AE02> { [ 2, quotedbl ] };
+    // replace key <AE04> { [ 4, semicolon ] };
+    // replace key <AE06> { [ 6, colon ] };
+    // replace key <AE07> { [ 7, question ] };
+};

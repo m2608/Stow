@@ -3,7 +3,5 @@ xkb_symbols "basic" {
 
     include "ru(winkeys)"
 
-    replace key <AE03> {
-        [ 3, numbersign ]
-    };
+    replace key <AE03> { [ 3, numbersign ] };
 };

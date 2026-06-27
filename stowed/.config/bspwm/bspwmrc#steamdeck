@@ -12,7 +12,7 @@ bspc monitor DisplayPort-0 -d 1 2 3 4 5
 # Загрузка кастомной раскладки только с помощью setxkbmap почему-то не всегда
 # работает, поэтому сначала генерируем раскладку, а потом загружаем с помощью
 # xkbcomp.
-setxkbmap -I"$HOME/.config/xkb" -layout us,myru -option "grp:caps_toggle" -option "compose:menu" -print \
+setxkbmap -I"$HOME/.config/xkb" -layout myus,myru -option "grp:caps_toggle" -option "compose:menu" -print \
     | xkbcomp -I"$HOME/.config/xkb" - "$DISPLAY"
 
 # Таймер отключения экрана в секундах.
