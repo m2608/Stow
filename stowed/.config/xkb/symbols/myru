@@ -1,0 +1,9 @@
+default partial alphanumeric_keys
+xkb_symbols "basic" {
+
+    include "ru(winkeys)"
+
+    replace key <AE03> {
+        [ 3, numbersign ]
+    };
+};

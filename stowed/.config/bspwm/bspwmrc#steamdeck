@@ -9,8 +9,11 @@ xrandr --output DisplayPort-0 --dpi 120
 # Рабочие столы.
 bspc monitor DisplayPort-0 -d 1 2 3 4 5
 
-# Раскладка.
-setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+# Загрузка кастомной раскладки только с помощью setxkbmap почему-то не всегда
+# работает, поэтому сначала генерируем раскладку, а потом загружаем с помощью
+# xkbcomp.
+setxkbmap -I"$HOME/.config/xkb" -layout us,myru -option "grp:caps_toggle" -option "compose:menu" -print \
+    | xkbcomp -I"$HOME/.config/xkb" - "$DISPLAY"
 
 # Таймер отключения экрана в секундах.
 xset dpms 2000 2000 2000
