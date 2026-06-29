@@ -18,14 +18,6 @@ super + n
 super + a
     exec $HOME/.config/bspwm/bspwm-scratchpad.sh --class "scratchpad-aichat" --command "st -c scratchpad-aichat -e fish -i -c aichat"
 
-# показать или скрыть системный трей
-super + t
-    exec $HOME/.config/bspwm/bspwm-showhide.sh "stalonetray"
-
-# вебка
-super + w
-    exec $HOME/.config/bspwm/bspwm-webcam.sh
-
 # вставить текст из буфера
 shift + Insert
     clipmenu && sleep 0.5 && xclip -o | xdotool type --clearmodifiers --file -

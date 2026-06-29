@@ -3,7 +3,7 @@
 #
 
 # quit bspwm
-super + shift + q
+super + alt + q
 	bspc quit
 
 # close
@@ -28,11 +28,8 @@ super + f
     | xargs -r bspc node -g
 
 # rotate
-super + r
+super + o
 	bspc node @parent -R 90
-
-super + shift + r
-    bspc node @parent -R -90
 
 #
 # focus/swap
@@ -65,6 +62,9 @@ super + Tab
 # focus or send to the given desktop
 super + {_, shift +}{1-5}
     $HOME/.config/bspwm/bspwm-desktop.sh {focus, send} {1-5} 5
+
+super + {_, shift +}{q,w,e,r,t}
+    $HOME/.config/bspwm/bspwm-desktop.sh {focus, send} {1,2,3,4,5} 5
 
 super + period
     bspc monitor -f last

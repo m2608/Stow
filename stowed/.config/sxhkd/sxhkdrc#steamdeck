@@ -10,6 +10,15 @@
 @XF86AudioMute
     $HOME/.config/bspwm/bspwm-volume.wpctl.sh mute
 
+super + @XF86AudioLowerVolume
+    brightness.bb -5%
+
+super + @XF86AudioRaiseVolume
+    brightness.bb +5%
+
+super + @XF86AudioMute
+    brightness.bb 20%
+
 super + Scroll_Lock
     lock
 
@@ -22,11 +31,3 @@ super + d
 super + s
     switch-audio.bb "(Rembrandt|B10)"
 
-KP_Add
-    brightness.bb +5%
-
-KP_Subtract
-    brightness.bb -5%
-
-KP_Multiply
-    brightness.bb 30%
