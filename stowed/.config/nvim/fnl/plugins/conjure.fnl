@@ -2,6 +2,7 @@
 
 (let [filetypes ["clojure" "fennel" "janet" "hy" "scheme" "lua" "lisp" "python" "joker"]]
   {1 "Olical/conjure"
+   :version "*"
    :ft filetypes
    :init
    (fn []

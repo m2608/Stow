@@ -14,4 +14,4 @@ local function _2_()
   end
   return nil
 end
-return {"Olical/conjure", ft = filetypes, init = _1_, config = _2_}
+return {"Olical/conjure", version = "*", ft = filetypes, init = _1_, config = _2_}
