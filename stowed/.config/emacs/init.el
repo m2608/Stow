@@ -27,6 +27,7 @@
 (straight-use-package 'w3m)
 (straight-use-package 'vterm)
 (straight-use-package 'restclient)
+(straight-use-package 'ob-restclient)
 (straight-use-package 'magit)
 (straight-use-package
  '(cider   :type git :host github :repo "clojure-emacs/cider" :branch "master"))
@@ -65,19 +66,27 @@
 ;; настройки evil-org-mode
 (require 'evil-org)
 
-;(add-hook 'org-mode-hook 'evil-org-mode)
-;(require 'evil-org-agenda)
-;(evil-org-set-key-theme '(navigation insert textobjects additional calendar))
-;(evil-org-agenda-set-keys)
+(add-hook 'org-mode-hook 'evil-org-mode)
+
+(with-eval-after-load 'org
+  ; на клавиатуре нет TAB, заменяем на C-i
+  (evil-define-key 'normal evil-org-mode-map (kbd "C-i") #'org-cycle)
+  ; "J" используется в org-mode, возвращаем стандартное поведение
+  (evil-define-key 'normal evil-org-mode-map (kbd "J")   #'evil-join))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((sql . t)
-   (clojure . t)))
+   (clojure . t)
+   (python . t)
+   (restclient .t)))
 
 (setq org-confirm-babel-evaluate
       (lambda (lang body)
-        (not (or (equal lang "sql") (equal lang "clojure")))) )
+        (not (member lang '("clojure" "python" "restclient" "sql")))))
+
+;; отключить дефолтный отступ для содержимого src-блоков в org-mode
+(setq org-edit-src-content-indentation 0)
 
 ;; отключаем строку меню
 (menu-bar-mode 0)
@@ -129,6 +138,12 @@
 
 ;; fuzzy search в строке команд
 (setq completion-styles '(flex))
+
+;; Отключаем nxml-mode, т.к. он виснет на billion loughs.
+(setq auto-mode-alist
+      (rassq-delete-all 'nxml-mode auto-mode-alist))
+
+(add-to-list 'auto-mode-alist '("\\.xml\\'" . sgml-mode))
 
 ;; load local init file if any
 (let ((local-init (expand-file-name (concat "init#" (system-name) ".el") user-emacs-directory)))
