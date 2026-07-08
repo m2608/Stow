@@ -29,7 +29,7 @@
   :python          {:repo "tree-sitter/tree-sitter-python"}
   :scheme          {:repo "6cdh/tree-sitter-scheme"}
   ; :sql             {:repo "derekstride/tree-sitter-sql"}
-  :xml             {:repo "tree-sitter-grammars/tree-sitter-xml" :rel-path "dtd"}
+  ; :xml             {:repo "tree-sitter-grammars/tree-sitter-xml" :rel-path "dtd"}
   :yaml            {:repo "tree-sitter-grammars/tree-sitter-yaml"}
 })
 
@@ -202,5 +202,5 @@
 
 (vim.api.nvim_create_autocmd
   ["FileType"]
-  {:pattern ["fennel"]
+  {:pattern ["fennel" "python"]
    :callback (fn [] (vim.treesitter.start))})
