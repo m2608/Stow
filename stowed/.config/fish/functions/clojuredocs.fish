@@ -18,15 +18,21 @@ function clojuredocs -d "View clojuredocs"
     # Файл должен существовать и быть ненулевого размера.
     if test -e "$filename" -a -s "$filename"
         # Определяем таймстамп файла на сервере из заголовка Last-Modified.
-        set timestamp_remote (xh head --print=h "$url" \
+        set time_remote (xh head --print=h "$url" \
             | jq -Rr -s 'split("\n") 
                 | map(capture("(?<key>[^:]+): (?<value>.*)"))
                 | from_entries
-                | .["last-modified"]
-            ' | LC_ALL=C xargs -I{} date -j -f "%a, %d %b %Y %H:%M:%S %Z" {} "+%s")
+                | .["last-modified"]'
+        )
 
-        # Определяем таймстамп локального файла.
-        set timestamp_local (stat -f "%m" "$filename")
+        if test (uname -o) = "FreeBSD"
+            set timestamp_remote (LC_ALL=C date -j -f "%a, %d %b %Y %H:%M:%S %Z" "$time_remote" "+%s")
+            set timestamp_local (stat -f "%m" "$filename")
+        else
+            set timestamp_remote (LC_ALL=C date -d "$time_remote" "+%s")
+            set timestamp_local (stat --format="%Y" "$filename")
+        end
+
 
         if test $timestamp_remote -le $timestamp_local
             set update 0
@@ -56,7 +62,7 @@ function clojuredocs -d "View clojuredocs"
     | jq -r '.vars | map("\(.ns)/\(.name)") | .[]' \
     | fzf \
         --ansi \
-        --color=base16 \
+        --color=16 \
         --preview "jq -r '$jq_command' '$filename' | pandoc -f markdown -t ansi -" \
         --preview-window "up:80%"            \
         --bind "up:preview-up"               \
