@@ -228,6 +228,23 @@ set-option global modelinefmt "%opt{lsp_modeline} %opt{modelinefmt}"
 map global goto d <esc>:lsp-definition<ret> -docstring 'LSP definition'
 map global goto r <esc>:lsp-references<ret> -docstring 'LSP references'
 
+remove-hooks global lsp-filetype-markdown
+hook -group lsp-filetype-markdown global BufSetOption filetype=markdown %{
+    set-option buffer lsp_servers %{
+        [markdown-oxide]
+        root_globs = [".git", ".obsidian"]
+    }
+}
+
+remove-hooks global lsp-filetype-python
+hook -group lsp-filetype-python global BufSetOption filetype=python %{
+    set-option buffer lsp_servers %{
+        [pyright-langserver]
+        root_globs = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json", ".git", ".hg"]
+        args = ["--stdio"]
+    }
+}
+
 hook global WinSetOption filetype=(clojure) %{
   set-option window formatcmd "cljfmt fix -"
 }
