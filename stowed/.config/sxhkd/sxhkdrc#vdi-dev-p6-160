@@ -1,0 +1,46 @@
+#
+# управление громкостью
+#
+
+# уменьшить громкость
+@XF86AudioLowerVolume
+    $HOME/.config/bspwm/bspwm-volume.pactl.sh down
+
+# увеличить громкость
+@XF86AudioRaiseVolume
+    $HOME/.config/bspwm/bspwm-volume.pactl.sh up
+
+# замьютить
+@XF86AudioMute
+    $HOME/.config/bspwm/bspwm-volume.pactl.sh mute
+
+#
+# управление плеером
+#
+
+@XF86HomePage
+    mpvipc.sh pause
+
+@XF86Back
+    mpvipc.sh previous
+
+@XF86Forward
+    mpvipc.sh next
+
+super + Scroll_Lock
+    xdg-screensaver lock
+
+super + backslash
+    latex2unicode
+
+super + shift + p
+    passmenu
+
+Print
+    shot
+
+super + b
+    bspc config top_padding 0 && polybar-msg cmd toggle
+
+super + alt + r
+    $HOME/.config/polybar/polybar-restart.sh

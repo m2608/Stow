@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Список подключенных мониторов.
+monitors=$(xrandr --query | grep "[ ]connected[ ]" | cut -d " " -f 1)
+
+if echo "$monitors" | grep -q "HDMI-1" && echo "$monitors" | grep -q "HDMI-2"; then
+    # Вариант с двумя мониторами.
+    xrandr --output HDMI-2 --right-of HDMI-1 &
+
+    bspc wm -O HDMI-1 HDMI-2 
+
+    bspc monitor HDMI-1 -d 1 2 3 4 5
+    bspc monitor HDMI-2 -d 6 7 8 9 10
+else
+    # Вариант с одним монитором.
+    bspc monitor -d 1 2 3 4 5
+fi
+
+bspc rule -a sbis status=floating
+bspc rule -a zeal status=floating
+
+# Раскладка.
+setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
+
+# xbmouse -b 8 xkev -u -e u &
+# xbmouse -b 9 xkev -u -e i &
+
+# Устанавливаем обои и курсор.
+xsetroot -solid black
+xsetroot -cursor_name left_ptr
+
+# Добавляем шрифты из домашней папки.
+xset fp+ $HOME/.fonts
+xset fp rehash
+
+# Чтобы приложения на java нормально отображались.
+wmname LG3D
+
+# Загружаем ресурсы.
+xrdb -merge ~/.Xresources
+
+# Управление мышью с клавиатуры.
+keynav
+
+# Управление буфером обмена.
+clipmenud &
+
+# zeal
+$HOME/.local/bin/zeal &
+
+$HOME/.config/polybar/polybar-restart.sh &
