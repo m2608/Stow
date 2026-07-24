@@ -110,6 +110,7 @@
   ; возвращаем стандартное поведение для некоторых сочетаний
   (evil-define-key 'normal evil-org-mode-map (kbd "J") #'evil-join)
   (evil-define-key 'normal evil-org-mode-map (kbd "t") #'evil-find-char-to)
+  (evil-define-key 'normal evil-org-mode-map (kbd "O") #'evil-open-above)
   ; Копирование ссылки.
   (define-key org-mode-map (kbd "C-c y") #'my/org-copy-link-url))
 
