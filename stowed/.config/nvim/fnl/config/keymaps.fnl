@@ -150,13 +150,13 @@
    ;; выход из режима вставки в терминале по Esc
    ["t" "<Esc>" "<C-\\><C-n>"]
 
-   ;; OSCYank
-   ["n" "<space>y" ":OSCYankOperator<CR>" {:noremap false :silent true}]
-   ["v" "<space>y" ":OSCYankVisual<CR>"   {:noremap false :silent true}]
+   ;; yank
+   ["n" "<space>y" "\"+y" {:noremap false :silent true}]
+   ["v" "<space>y" "\"+y" {:noremap false :silent true}]
 
    ;; copy as html
-   ["n" "<space>h" ":w !xclip -selection clipboard -t text/html<CR><CR>" {:noremap false :silent true}]
-   ["v" "<space>h" ":w !xclip -selection clipboard -t text/html<CR><CR>" {:noremap false :silent true}]
+   ["n" "<space>h" ":w !xclip -selection clipboard -t text/html<CR>" {:noremap false :silent true}]
+   ["v" "<space>h" ":w !xclip -selection clipboard -t text/html<CR>" {:noremap false :silent true}]
 
    ;; paste from system clipboard
    ["n" "<space>p" "\"+p"]

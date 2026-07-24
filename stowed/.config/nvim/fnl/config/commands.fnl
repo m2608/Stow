@@ -65,7 +65,7 @@
         "yank" (vim.system ["git" "browse" "-s" path line] {:text true}
                            (fn [o]
                              (let [output (string.gsub (. o :stdout) "[\n]+$" "")]
-                               (vim.schedule (fn [] (vim.call "OSCYank" output))))))
+                               (vim.schedule (fn [] (vim.fn.setreg "+" output))))))
         _ (print (.. "Unknown subcommand: " opts.args)))))
 
   {:nargs 1

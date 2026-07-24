@@ -28,7 +28,7 @@ local function _2_(opts)
     local function _5_(o)
       local output = string.gsub(o.stdout, "[\n]+$", "")
       local function _6_()
-        return vim.call("OSCYank", output)
+        return vim.fn.setreg("+", output)
       end
       return vim.schedule(_6_)
     end
