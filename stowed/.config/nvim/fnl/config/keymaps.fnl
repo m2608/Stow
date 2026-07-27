@@ -151,8 +151,8 @@
    ["t" "<Esc>" "<C-\\><C-n>"]
 
    ;; yank
-   ["n" "<space>y" "\"+y" {:noremap false :silent true}]
-   ["v" "<space>y" "\"+y" {:noremap false :silent true}]
+   ["n" "<space>y" "\"+y" {:noremap false :silent false}]
+   ["v" "<space>y" "\"+y" {:noremap false :silent false}]
 
    ;; copy as html
    ["n" "<space>h" ":w !xclip -selection clipboard -t text/html<CR>" {:noremap false :silent true}]

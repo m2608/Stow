@@ -66,7 +66,7 @@
   (let [fails (filter (fn [r] (= 0 (vim.fn.executable r))) rs)]
     (if (empty? fails)
         (ok rs)
-        (err "Requirements not satisfied: " (str.join ", " fails) "."))))
+        (err "TreeSitter requirements not satisfied: " (str.join ", " fails) "."))))
 
 (fn create-dir
   [path]
@@ -196,7 +196,7 @@
                    (bind (fn [_]
                            (add-queries tsitter-path queries force-rebuild))))]
     (if (not= result.status :ok)
-        (vim.notify result.msg vim.log.levels.ERROR))))
+        (vim.notify result.msg vim.log.levels.INFO))))
 
 (setup tsitter-path parsers queries)
 

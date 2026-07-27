@@ -48,7 +48,7 @@ local function check_requirements(rs)
   if empty_3f(fails) then
     return ok(rs)
   else
-    return err("Requirements not satisfied: ", str.join(", ", fails), ".")
+    return err("TreeSitter requirements not satisfied: ", str.join(", ", fails), ".")
   end
 end
 local function create_dir(path)
@@ -237,7 +237,7 @@ local function setup(tsitter_path0, parsers0, queries0, force_rebuild)
   end
   result = bind(bind(bind(bind(bind(check_requirements({"clang", "tree-sitter"}), _33_), _36_), _37_), _38_), _39_)
   if (result.status ~= "ok") then
-    return vim.notify(result.msg, vim.log.levels.ERROR)
+    return vim.notify(result.msg, vim.log.levels.INFO)
   else
     return nil
   end
