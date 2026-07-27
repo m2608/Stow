@@ -1,0 +1,45 @@
+#
+# ~/.bashrc
+#
+
+export PATH=$HOME/.local/bin/:$PATH
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME=$HOME/.cache
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+. "$HOME/.cargo/env"
+
+_fzf_select_net_iface() {
+    local dev
+    local ifaces
+    local lines
+    
+    ifaces=$(ip -j link show | jq -r 'map(.ifname) | .[]')
+
+    preview_lines=$(
+        echo "$ifaces" | xargs -I{} sh -c 'ip address show dev {} | wc -l' | sort -n | tail -n 1
+    )
+    preview_lines=$((preview_lines+1))
+
+    # List interfaces, exclude loopback, and pipe to fzf
+    dev=$(echo "$ifaces" | fzf \
+        --prompt "Iface>" \
+        --ansi \
+        --preview "ip address show dev {1}" \
+        --preview-window="bottom:$preview_lines:wrap"
+    )
+
+    if [[ -n $dev ]]; then
+        # Insert the device name at the current cursor position in the bash prompt
+        READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}${dev}${READLINE_LINE:$READLINE_POINT}"
+        READLINE_POINT=$(( READLINE_POINT + ${#dev} ))
+    fi
+}
+
+bind -x '"\e\C-e":"_fzf_select_net_iface"'
+
+eval "$(fzf --bash)"
+source /home/deck/.config/broot/launcher/bash/br
