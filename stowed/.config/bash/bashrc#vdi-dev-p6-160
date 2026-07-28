@@ -1,0 +1,12 @@
+# .bashrc
+
+NEWSHELL="$HOME/.local/bin/fish"
+
+# Only for interactive sessions:
+case $- in
+	*i*)
+		if test "$NEWSHELL" != "$SHELL"; then
+			export SHELL="$NEWSHELL"
+			exec "$NEWSHELL"
+		fi
+esac
