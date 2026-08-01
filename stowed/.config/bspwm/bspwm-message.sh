@@ -4,7 +4,11 @@ test -n "$1" || exit 0
 
 # check for required tools
 command -v dzen2 > /dev/null || exit 1
-magick=$(command -v magick || command -v convert) || exit 1
+magick=$(command -v magick || command -v convert || command -v gm) || exit 1
+
+if command -v gm > /dev/null; then
+    magick="gm convert"
+fi
 
 get_resource() {
     name="$1"
@@ -34,7 +38,7 @@ ry=$(echo $resolution | cut -d x -f 2)
 dpi=$(((rx+ry)/2))
 
 # message size
-size=$("$magick" -density $dpi -font "$fontfile" -pointsize $fontsize label:"$message" -format "%wx%h" info:)
+size=$($magick -density $dpi -font "$fontfile" -pointsize $fontsize label:"$message" -format "%wx%h" info:-)
 
 mw=$(echo $size | cut -d 'x' -f 1)
 mh=$(echo $size | cut -d 'x' -f 2)
