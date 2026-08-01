@@ -48,6 +48,12 @@
 (setq dired-omit-files "^[.].*")
 
 ;;
+;; FACE
+;;
+
+(set-frame-font "Agave-20" nil t)
+
+;;
 ;; EVIL MODE SETTINGS
 ;;
 
@@ -90,6 +96,7 @@
 ;;
 ;; ORG MODE SETTINGS
 ;;
+
 (require 'evil-org)
 
 (add-hook 'org-mode-hook 'evil-org-mode)
