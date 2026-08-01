@@ -1,5 +1,3 @@
-# .bashrc
-
 NEWSHELL="$HOME/.local/bin/fish"
 
 # Only for interactive sessions:
