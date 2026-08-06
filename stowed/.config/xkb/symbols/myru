@@ -3,5 +3,6 @@ xkb_symbols "basic" {
 
     include "ru(winkeys)"
 
+    replace key <AE02> { [ 2, quotedbl, at ] };
     replace key <AE03> { [ 3, numbersign ] };
 };

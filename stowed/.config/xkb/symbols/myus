@@ -3,8 +3,12 @@ xkb_symbols "basic" {
 
     include "us(basic)"
 
-    // replace key <AE02> { [ 2, quotedbl ] };
-    // replace key <AE04> { [ 4, semicolon ] };
+    replace key <AE02> { [ 2, quotedbl,  at ] };
+    replace key <AE04> { [ 4, semicolon, dollar ] };
+    replace key <AE06> { [ 6, colon,     asciicircum] };
+    replace key <AE07> { [ 7, question,  ampersand ] };
+    
+
     // replace key <AE06> { [ 6, colon ] };
     // replace key <AE07> { [ 7, question ] };
 };
