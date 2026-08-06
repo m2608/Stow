@@ -27,5 +27,5 @@ else
     message="Volume: $volume%"
 fi
 
-$(dirname $0)/bspwm-message.sh "$message"
+/bin/sh $(dirname $0)/bspwm-message.sh "$message"
 
