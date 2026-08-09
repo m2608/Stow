@@ -1,5 +1,3 @@
-(local core (require "nfnl.core"))
-
 {1 "jpalardy/vim-slime"
  :lazy true
  :config (fn []
@@ -7,10 +5,11 @@
                           ["slime_default_config" {:socket_name "default"
                                                    :target_pane "{last}"}]
                           ["slime_dont_ask_default" 1]]]
-                 (each [_ option (ipairs options)]
-                   (tset vim.g (unpack option)))))
+                 (each [_ [k v] (ipairs options)]
+                   (tset vim.g k v))))
  :cmd ["SlimeConfig"
        "SlimeSend"
        "SlimeSend0"
        "SlimeSend1"
-       "SlimeSendCurrentLine"]}
+       "SlimeSendCurrentLine"
+       "SlimeRegionSend"]}
