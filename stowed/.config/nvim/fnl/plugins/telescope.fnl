@@ -25,7 +25,8 @@
                                                      :n {"<C-y>" layout.toggle_preview}}}
                                :pickers {:buffers {:mappings {:n {"d"     actions.delete_buffer}}}
                                          :find_files {:follow true
-                                                      :disable_devicons true}}
+                                                      :disable_devicons true}
+                                         :live_grep {:additional_args ["--follow"]}}
                                :extensions {:file_browser {:hijack_netrw true
                                                            :grouped true
                                                            :respect_gitignore false
