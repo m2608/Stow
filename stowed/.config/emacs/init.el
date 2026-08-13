@@ -64,17 +64,27 @@
 (require 'evil-surround)
 (global-evil-surround-mode 1)
 
-(defun my/evil-shift-right-keep-visual (beg end count)
-  "Сдвигает выделенный текст вправо, сохраняя выделение."
-  (interactive "r\np")
-  (evil-shift-right beg end count)
-  (evil-visual-restore))
+(defun my/evil-shift-keep-visual (beg end count fn)
+  "Сдвигает текст, сохраняя визуальное выделение. В качестве аргумента передаётся
+  функция, которая выполняет сдвиг: evil-shift-left или evil-shift-right."
+  (let ((type (evil-visual-type))
+        (point (copy-marker (point) t))
+        (mark  (copy-marker (mark)  t)))
+    (funcall fn beg end count)
+    (when type
+      (evil-visual-make-selection (marker-position mark)
+                                  (marker-position point)
+                                  type))))
 
-(defun my/evil-shift-left-keep-visual (beg end count)
+(evil-define-operator my/evil-shift-right-keep-visual (beg end count)
+  "Сдвигает выделенный текст вправо, сохраняя выделение."
+  (interactive "<r><c>")
+  (my/evil-shift-keep-visual beg end count #'evil-shift-right))
+
+(evil-define-operator my/evil-shift-left-keep-visual (beg end count)
   "Сдвигает выделенный текст влево, сохраняя выделение."
-  (interactive "r\np")
-  (evil-shift-left beg end count)
-  (evil-visual-restore))
+  (interactive "<r><c>")
+  (my/evil-shift-keep-visual beg end count #'evil-shift-left))
 
 ;; перейти к определению функции
 (evil-define-key 'normal 'global "gd" 'lsp-find-definition)
@@ -91,6 +101,8 @@
   ; хоткеи для сдвигания выделенного текста
   (evil-define-key 'visual evil-org-mode-map (kbd "<") #'my/evil-shift-left-keep-visual)
   (evil-define-key 'visual evil-org-mode-map (kbd ">") #'my/evil-shift-right-keep-visual)
+  (evil-define-key 'normal evil-org-mode-map (kbd ">") #'my/evil-shift-right-keep-visual)
+  (evil-define-key 'normal evil-org-mode-map (kbd "<") #'my/evil-shift-left-keep-visual)
   (evil-define-key 'visual evil-org-mode-map (kbd "gc") #'comment-dwim))
 
 ;;
