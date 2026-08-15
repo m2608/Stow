@@ -27,5 +27,8 @@ shift+Insert
 Print
     flameshot gui 1> /dev/null 2> /dev/null
 
-super + r
+super + alt + o
     rotate.bb
+
+super + alt + r
+    $HOME/.config/polybar/polybar-restart.sh
