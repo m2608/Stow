@@ -15,7 +15,7 @@ pragmasevka:
 		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf'
 
 ioskeley:
-	$(call get-github-url,ahatem/IoskeleyMono,"^IoskeleyMono-TTF-Hinted.zip$$") \
+	$(call get-github-url,ahatem/IoskeleyMono,"^IoskeleyMono(-Term)?(-NerdFont)?.zip$$") \
 		| xargs -n 1 curl -s -L --fail \
 		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf'
 
