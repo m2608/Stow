@@ -5,6 +5,9 @@ xrandr --output eDP1 --auto
 # Рабочие столы.
 bspc monitor eDP1 -d 1 2 3 4 5
 
+# Отключаем тачпад.
+xinput set-prop "Elan Touchpad" "Device Enabled" 0
+
 # Раскладка.
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
 
