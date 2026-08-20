@@ -27,9 +27,6 @@
 @XF86Forward
     mpvipc.sh next
 
-super + Scroll_Lock
-    xdg-screensaver lock
-
 super + backslash
     latex2unicode
 
