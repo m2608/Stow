@@ -7,7 +7,7 @@
             [clojure.java.io :as io]
             [org.httpkit.server :as server]
             [hiccup2.core :as html])
-  (:import [java.net URLDecoder URLEncoder]))
+  (:import [java.net URI URLEncoder]))
 
 (def cli-options
   [["-p" "--port PORT" "Port for HTTP server" :default 8000 :parse-fn #(Integer/parseInt %)]
@@ -25,28 +25,30 @@
   (:help opts)
   (do (println "Web server for TiddlyWiki. Usage:\n" (:summary parsed-args))
       (System/exit 0))
-  
+
   (:errors parsed-args)
   (do (println "Invalid arguments:\n" (str/join "\n" (:errors parsed-args)))
       (System/exit 1))
-  
+
   :else
   :continue)
 
 
 (def port (:port opts))
 (def bind (:bind opts))
-(def dir (-> (:dir opts) fs/path fs/absolutize fs/normalize))
+(def dir (fs/canonicalize (:dir opts)))
 
-(def mime-types 
+(def mime-types
   {"html" "text/html"
    "jpg" "image/jpeg"
    "png" "image/png"})
 
-(assert (fs/directory? dir) (str "The given dir `" dir "` is not a directory."))
+(when (not (fs/directory? dir))
+  (println (format "The given dir \"%s\" is not a directory." dir))
+  (System/exit 1))
 
 (defn index [path]
-  (let [files (map #(str (.relativize dir %)) 
+  (let [files (map #(str (.relativize dir %))
                    (fs/list-dir path))
         rel-path (fs/relativize dir path)]
     (-> [:html
@@ -58,18 +60,13 @@
           [:ul
            (for [child files]
              [:li [:a {:href (URLEncoder/encode (str child))}
-                   child (when (fs/directory? (fs/path dir child)) "/")]])]
-          [:hr]
-          [:footer {:style {"text-align" "center"}} "Served by http-server.clj"]]]
+                   child (when (fs/directory? (fs/path dir child)) "/")]])]]]
         html/html
         str)))
 
 (defn get-absolute-path
   [uri]
-  (->> (str/replace-first (URLDecoder/decode uri) #"^/" "")
-       (fs/path dir)
-       fs/absolutize
-       fs/normalize))
+  (fs/canonicalize (.getPath (URI. uri))))
 
 (defn handle-get
   [uri]
@@ -107,18 +104,22 @@
       (do (io/copy data (fs/file path))
           {:status 200}))))
 
-(server/run-server
-  (fn [{:keys [uri remote-addr request-method body]
-        :or {body nil}}]
-    (println (format "[%s] %s %s" remote-addr (-> request-method name str/upper-case) uri))
-    (case request-method
-      :get     (handle-get uri)
-      :head    (handle-head uri)
-      :options (handle-options)
-      :put     (handle-put uri body)
-      
-      {:status 403 :body "Method not allowed"}))
-  {:port port :ip bind})
+(try
+  (server/run-server
+    (fn [{:keys [uri remote-addr request-method body]
+          :or {body nil}}]
+      (println (format "[%s] %s %s" remote-addr (-> request-method name str/upper-case) uri))
+      (case request-method
+        :get     (handle-get uri)
+        :head    (handle-head uri)
+        :options (handle-options)
+        :put     (handle-put uri body)
+
+        {:status 403 :body "Method not allowed"}))
+    {:port port :ip bind})
+  (catch java.net.BindException _
+    (println (format "Address already in use: %s:%d" bind port))
+    (System/exit 1)))
 
 (println (format "Starting http server at %s:%d\nServing files at: %s"
                  bind port dir))
