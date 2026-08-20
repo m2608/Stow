@@ -16,8 +16,14 @@ set PATH \
 set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/\1/')
 if test "$os_name" = "Red Hat Enterprise Linux"
     set PATH "$HOME/.local/bin.rh:$PATH"
+    setenv BABASHKA_PRELOADS '
+        (System/setProperty "javax.net.ssl.trustStore" "/etc/pki/java/cacerts")
+        (System/setProperty "javax.net.ssl.trustStorePassword" "changeit")'
 else if test "$os_name" = "Void"
     set PATH "$HOME/.local/bin.void:$PATH"
+    setenv BABASHKA_PRELOADS '
+        (System/setProperty "javax.net.ssl.trustStore" "/usr/lib/jvm/default-jdk/lib/security/cacerts")
+        (System/setProperty "javax.net.ssl.trustStorePassword" "changeit")'
 end
 
 setenv NNN_ARCHMNT ratarmount
