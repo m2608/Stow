@@ -19,6 +19,10 @@ ioskeley:
 		| xargs -n 1 curl -s -L --fail \
 		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf'
 
+agave:
+	$(call get-github-url,blobject/agave,"^Agave.*[.]ttf$$") \
+		| xargs -n 1 curl -s -L --fail --remote-name --output-dir $(OUTPUT_FOLDER) \
+
 victor:
 	curl -s -L --fail "https://rubjo.github.io/victor-mono/VictorMonoAll.zip" \
 		| bsdtar -C $(OUTPUT_FOLDER) -xf - -s '|.*/||' '*.ttf'
