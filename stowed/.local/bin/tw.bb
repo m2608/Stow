@@ -7,7 +7,9 @@
             [clojure.java.io :as io]
             [org.httpkit.server :as server]
             [hiccup2.core :as html])
-  (:import [java.net URI URLEncoder]))
+  (:import [java.net URI URLEncoder]
+           [java.time LocalDateTime]
+           [java.time.format DateTimeFormatter]))
 
 (def cli-options
   [["-p" "--port PORT" "Port for HTTP server" :default 8000 :parse-fn #(Integer/parseInt %)]
@@ -38,16 +40,24 @@
 (def bind (:bind opts))
 (def dir (fs/canonicalize (:dir opts)))
 
+(when (not (fs/directory? dir))
+  (println (format "The given dir \"%s\" is not a directory." dir))
+  (System/exit 1))
+
 (def mime-types
   {"html" "text/html"
    "jpg" "image/jpeg"
    "png" "image/png"})
 
-(when (not (fs/directory? dir))
-  (println (format "The given dir \"%s\" is not a directory." dir))
-  (System/exit 1))
+(defn now
+  "Возвращает текущее время."
+  []
+  (.format (LocalDateTime/now)
+           (DateTimeFormatter/ofPattern "yyyy-MM-dd HH:mm:ss")))
 
-(defn index [path]
+(defn index
+  "Возвращает индекс указанного каталога."
+  [path]
   (let [files (map #(str (.relativize dir %))
                    (fs/list-dir path))
         rel-path (fs/relativize dir path)]
@@ -65,10 +75,15 @@
         str)))
 
 (defn get-absolute-path
+  "Возвращает путь к файлу по запрошенному URI."
   [uri]
-  (fs/canonicalize (.getPath (URI. uri))))
+  (let [uri-path (.getPath (URI. uri))]
+    (->> (str/replace-first uri-path #"^[/]" "")
+         (fs/path dir)
+         (fs/canonicalize))))
 
 (defn handle-get
+  "Обработка GET-запросов."
   [uri]
   (let [path (get-absolute-path uri)]
     (cond
@@ -86,16 +101,21 @@
       {:status 404 :body (str "File not found: " (fs/relativize dir path))})))
 
 (defn handle-head
+  "Обработка HEAD запросов."
   [uri]
   (dissoc (handle-get uri) :body))
 
 (defn handle-options
+  "Обработка OPTIONS. Этот ответ взят из других примеров, поддерживающих
+  TiddlyWiki, вероятно, эти заголовки нужны для корректной работы."
   []
   {:headers {"allow" "GET,OPTIONS,PUT"
              "x-api-access-type" "file"
              "dav" "tw5/put"}})
 
-(defn handle-put [uri data]
+(defn handle-put
+  "Обработка PUT - запись файла на диск."
+  [uri data]
   (let [path (get-absolute-path uri)]
     (if (not (fs/starts-with? path dir))
 
@@ -108,7 +128,7 @@
   (server/run-server
     (fn [{:keys [uri remote-addr request-method body]
           :or {body nil}}]
-      (println (format "[%s] %s %s" remote-addr (-> request-method name str/upper-case) uri))
+      (println (format "%s [%s] %s %s" (now) remote-addr (-> request-method name str/upper-case) uri))
       (case request-method
         :get     (handle-get uri)
         :head    (handle-head uri)
