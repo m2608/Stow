@@ -47,11 +47,7 @@
 (setq dired-listing-switches "-alh --group-directories-first")
 (setq dired-omit-files "^[.].*")
 
-;;
-;; FACE
-;;
-
-(set-frame-font "Agave-20" nil t)
+(add-to-list 'default-frame-alist '(font . "Agave-16"))
 
 ;;
 ;; EVIL MODE SETTINGS
@@ -86,6 +82,9 @@
   (interactive "<r><c>")
   (my/evil-shift-keep-visual beg end count #'evil-shift-left))
 
+;; нужно выбрать систему для отмены правок: undo-redo, undo-tree
+(evil-set-undo-system 'undo-redo)
+
 ;; перейти к определению функции
 (evil-define-key 'normal 'global "gd" 'lsp-find-definition)
 ;; :q не закрывает редактор, а закрывает только текущий буфер
@@ -94,6 +93,9 @@
 (evil-ex-define-cmd "quit" 'evil-quit)
 
 (with-eval-after-load 'evil
+  (evil-define-key 'normal 'global (kbd "U")     #'evil-redo)
+  (evil-define-key 'normal 'global (kbd "<F2>")  #'evil-write)
+  (evil-define-key 'insert 'global (kbd "<F2>")  #'evil-write)
   (evil-define-key 'normal 'global (kbd "SPC b") #'helm-buffers-list)
   (evil-define-key 'normal 'global (kbd "SPC f") #'helm-find-files)
   (evil-define-key 'normal 'global (kbd "SPC g") #'helm-occur)
