@@ -21,6 +21,7 @@ message="$1"
 font=$(get_resource "bspwm-message[.]font")
 bg=$(  get_resource "bspwm-message[.]background")
 fg=$(  get_resource "bspwm-message[.]foreground")
+dpi=$( get_resource "Xft.dpi")
 
 # default settings
 : "${font:='Terminus:size=16'}"
@@ -32,10 +33,12 @@ fontfile=$(fc-match -f "%{file}" "$font")
 fontsize=$(fc-match -f "%{size}" "$font")
 
 # get screen dpi
-resolution=$(xdpyinfo | sed -n -r '/^[ ]*resolution:[ ]+[0-9]+x[0-9]+ dots/ s/^[ ]*resolution:[ ]+([0-9]+x[0-9]+) dots .*/\1/p')
-rx=$(echo $resolution | cut -d x -f 1)
-ry=$(echo $resolution | cut -d x -f 2)
-dpi=$(((rx+ry)/2))
+if test -z "$dpi"; then
+    resolution=$(xdpyinfo | sed -n -r '/^[ ]*resolution:[ ]+[0-9]+x[0-9]+ dots/ s/^[ ]*resolution:[ ]+([0-9]+x[0-9]+) dots .*/\1/p')
+    rx=$(echo $resolution | cut -d x -f 1)
+    ry=$(echo $resolution | cut -d x -f 2)
+    dpi=$(((rx+ry)/2))
+fi
 
 # message size
 size=$($magick -density $dpi -font "$fontfile" -pointsize $fontsize label:"$message" -format "%wx%h" info:-)
