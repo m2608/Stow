@@ -13,7 +13,7 @@ destination="$2"
 if test "$action" = "focus"; then
 
     bspc desktop -f "$destination"
-    $(dirname $0)/bspwm-message.sh "Workspace: $destination_n"
+    $(dirname $0)/bspwm-message.sh "Workspace: $destination"
 
 elif test "$action" = "send"; then
     bspc node -d "$destination"
