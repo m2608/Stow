@@ -1,10 +1,9 @@
 #!/bin/sh
 
-xrandr --output DisplayPort-0 --off
-xrandr --output eDP --mode 800x1280 --primary --right --right-of DisplayPort-0
+xrandr --output DisplayPort-0 --auto --primary --output eDP --off
 
 # Рабочие столы.
-bspc monitor eDP -d 1 2 3 4 5
+bspc monitor DisplayPort-0 -d 1 2 3 4 5
 
 # Загрузка кастомной раскладки только с помощью setxkbmap почему-то не всегда
 # работает, поэтому сначала генерируем раскладку, а потом загружаем с помощью
