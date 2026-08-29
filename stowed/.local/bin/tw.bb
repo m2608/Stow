@@ -15,6 +15,7 @@
   [["-p" "--port PORT" "Port for HTTP server" :default 8000 :parse-fn #(Integer/parseInt %)]
    ["-b" "--bind IP" "IP to bind to" :default "127.0.0.1"]
    ["-d" "--dir DIR" "Directory to serve files from" :default "."]
+   ["" "--backup DIR" "Save backups to this folder"]
    ["-h" "--help" "Print usage info"]])
 
 (def parsed-args
@@ -39,6 +40,7 @@
 (def port (:port opts))
 (def bind (:bind opts))
 (def dir (fs/canonicalize (:dir opts)))
+(def bak (:backup opts))
 
 (when (not (fs/directory? dir))
   (println (format "The given dir \"%s\" is not a directory." dir))
@@ -82,6 +84,14 @@
          (fs/path dir)
          (fs/canonicalize))))
 
+(defn save-backup
+  [filename]
+  (when (and bak (fs/directory? bak))
+    (let [[n ext] (fs/split-ext (fs/file-name filename))
+          newname (fs/path bak (str n "." (now) "." ext))]
+      (println (now) (format "Backing up %s to %s" filename newname))
+      (fs/copy filename newname))))
+
 (defn handle-get
   "Обработка GET-запросов."
   [uri]
@@ -121,7 +131,8 @@
 
       {:status 403 :body "Permission denied"}
 
-      (do (io/copy data (fs/file path))
+      (do (save-backup path)
+          (io/copy data (fs/file path))
           {:status 200}))))
 
 (try
@@ -143,5 +154,7 @@
 
 (println (format "Starting http server at %s:%d\nServing files at: %s"
                  bind port dir))
+(when bak
+  (println "Backup folder:" bak))
 
 @(promise)
