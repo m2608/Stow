@@ -1,8 +1,18 @@
 function sabyrpc -d "Converts sabyrpc object to json"
     jq '
-        def record_to_json:     [.d, .s]                  | transpose | map({(.[1].n): .[0]}) | add;
+        def value_of_type($d; $s):
+            if $s.t | type == "object" then
+                if $s.t.n == "Флаги" then
+                    {($s.n): ([$d, $s.t.s | to_entries | map(.value)] | transpose | map({(.[1]): .[0]}) | add)}
+                else {($s.n): $d}
+                end
+            else {($s.n): $d}
+            end
+        ;
 
-        def recordset_to_json: [[.d, [.s]] | combinations | transpose | map({(.[1].n): .[0]}) | add];
+        def record_to_json:     [.d, .s]                  | transpose | map(value_of_type(.[0]; .[1])) | add;
+
+        def recordset_to_json: [[.d, [.s]] | combinations | transpose | map(value_of_type(.[0]; .[1])) | add];
 
         def object_to_json:
             if type == "object" and ._type != null and .d != null and .s != null then
