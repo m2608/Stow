@@ -24,6 +24,7 @@
  :ft ["c" "clojure" "cpp" "edn" "python" "markdown"]
  :config
  (fn []
+   (vim.lsp.config :pyright {:settings {:python {:analysis {:typeCheckingMode "off"}}}})
    (let [servers {"markdown_oxide" {}
                   "clojure_lsp"    {}
                   "pyright"        {}
