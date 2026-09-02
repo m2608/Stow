@@ -36,7 +36,11 @@
  '(ejc-sql :type git :host github :repo "kostafey/ejc-sql"    :branch "master"))
 (straight-use-package
  '(nano    :type git :host github :repo "rougier/nano-emacs"))
+(straight-use-package
+ '(cljbang :type git :host github :repo "borkdude/cljbang.el"))
+
 (require 'nano)
+(require 'cljbang-mode)
 (require 'clomacs)
 (require 'ejc-sql)
 
