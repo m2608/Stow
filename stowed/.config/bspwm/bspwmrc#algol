@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Рабочие столы.
-bspc monitor DP-0 -d 1 2 3 4 5
+monitor=$(xrandr | grep " connected" | cut -d ' ' -f 1 | head -n 1)
+bspc monitor $monitor -d 1 2 3 4 5
 
 # Раскладка.
 setxkbmap -layout us,ru -option "grp:caps_toggle" -option "compose:menu"
