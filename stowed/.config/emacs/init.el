@@ -59,8 +59,6 @@
 (setq dired-listing-switches "-alh --group-directories-first")
 (setq dired-omit-files "^[.].*")
 
-; (add-to-list 'default-frame-alist '(font . "Agave-16"))
-
 ;;
 ;; EVIL MODE SETTINGS
 ;;
