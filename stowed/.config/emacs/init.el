@@ -39,7 +39,15 @@
 (straight-use-package
  '(cljbang :type git :host github :repo "borkdude/cljbang.el"))
 
+(setq nano-font-family-monospaced "Agave")
+(setq nano-font-size 15)
+
 (require 'nano)
+
+(nano-theme-set-dark)
+(nano-faces)
+(nano-theme)
+
 (require 'cljbang-mode)
 (require 'clomacs)
 (require 'ejc-sql)
@@ -51,7 +59,7 @@
 (setq dired-listing-switches "-alh --group-directories-first")
 (setq dired-omit-files "^[.].*")
 
-(add-to-list 'default-frame-alist '(font . "Agave-16"))
+; (add-to-list 'default-frame-alist '(font . "Agave-16"))
 
 ;;
 ;; EVIL MODE SETTINGS
