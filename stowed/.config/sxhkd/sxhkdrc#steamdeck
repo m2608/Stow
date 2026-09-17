@@ -26,8 +26,8 @@ Print
     shot
 
 super + d
-    sh $HOME/.config/bspwm/bspwm-display.sh
+    sh $HOME/.config/bspwm/bspwm-display.sh && brightness.bb 20
 
 super + s
-    switch-audio.bb "(Radeon|B10)"
+    switch-audio.bb "(Radeon|B10|Ear)"
 
