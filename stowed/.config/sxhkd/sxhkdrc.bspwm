@@ -14,18 +14,17 @@ super + shift + c
 super + m
 	bspc desktop -l next
 
-# set the window state
-# super + s
-#     printf "%s\n%s\n%s\n%s" "tiled" "pseudo_tiled" "floating" "fullscreen" \
-#     | dmenu \
-#     | xargs -r bspc node -t
-
-
 # set the node flags
 super + f
     printf "%s\n%s\n%s\n%s" "marked" "locked" "sticky" "private" \
     | dmenu \
     | xargs -r bspc node -g
+
+# set the window state
+super + shift + f
+    printf "%s\n%s\n%s\n%s" "tiled" "pseudo_tiled" "floating" "fullscreen" \
+    | dmenu \
+    | xargs -r bspc node -t
 
 # rotate
 super + o
