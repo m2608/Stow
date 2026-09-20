@@ -139,15 +139,17 @@ else
 	@echo "Unsupported arch: $(ARCH)"
 endif
 
-install-uv: ARCHNAME := $(subst amd64,x86_64,$(ARCH))
+install-uv: ARCHNAME := $(subst armv7l,armv7,$(subst amd64,x86_64,$(ARCH)))
 install-uv:
-ifeq ($(ARCH),$(filter $(ARCH),amd64 aarch64))
-	$(call get-from-github,astral-sh/uv,"^uv-$(ARCHNAME)-unknown-linux-gnu[.]tar[.]gz$$") \
-		| tar -C $(HOME)/.local/bin --strip-components=1 --gz -xf -
-else
-	@echo "Unsupported arch: $(ARCH)"
-endif
-
+	ifeq ($(ARCH),$(filter $(ARCH),amd64 aarch64))
+		$(call get-from-github,astral-sh/uv,"^uv-$(ARCHNAME)-unknown-linux-gnu[.]tar[.]gz$$") \
+			| tar -C $(HOME)/.local/bin --strip-components=1 --gz -xf -
+	else ifeq ($(ARCH),$(filter $(ARCH),armv7l))
+		$(call get-from-github,astral-sh/uv,"^uv-$(ARCHNAME)-unknown-linux-gnueabihf[.]tar[.]gz$$") \
+			| tar -C $(HOME)/.local/bin --strip-components=1 --gz -xf -
+	else
+		@echo "Unsupported arch: $(ARCH)"
+	endif
 
 install-docker-compose: DOCKER_COMPOSE := "$(HOME)/.local/bin/docker-compose"
 install-docker-compose: ARCHNAME := $(subst amd64,x86_64,$(ARCH))
