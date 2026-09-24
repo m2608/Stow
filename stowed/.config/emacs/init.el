@@ -20,7 +20,8 @@
  '(evil-surround :ensure t :config (global-evil-surround-mode 1)))
 (straight-use-package 'evil-leader)
 (straight-use-package 'evil-org-mode)
-(straight-use-package 'helm)
+(straight-use-package '(helm :type git :host github :repo "emacs-helm/helm" :branch "master"))
+; (straight-use-package 'fzf)
 (straight-use-package 'telega)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'w3m)
@@ -40,7 +41,7 @@
  '(cljbang :type git :host github :repo "borkdude/cljbang.el"))
 
 (setq nano-font-family-monospaced "Agave")
-(setq nano-font-size 15)
+(setq nano-font-size 18)
 
 (require 'nano)
 
@@ -125,6 +126,8 @@
 
 (add-hook 'org-mode-hook 'evil-org-mode)
 
+(defvar my-org-journal-directory "~/Work/OrgDocs/")
+
 (defun my/org-copy-raw-link ()
   "Копировать ссылку из Org Mode."
   (interactive)
@@ -134,6 +137,36 @@
           (kill-new href)
           (message "Copied link: %s" href))
       (message "No Org link at point."))))
+
+(defun my-org-journal-today ()
+  "Открывает запись дневника за сегодняшний день."
+  (interactive)
+  (let* ((date (format-time-string "%Y-%m-%d"))
+         (dir (file-name-as-directory my-org-journal-directory))
+         (pattern (concat "^" (regexp-quote date) " .+\\.org$"))
+         (existing
+          (seq-filter
+           (lambda (file)
+             (string-match-p pattern file))
+           (directory-files dir nil nil t))))
+    (cond
+     ((= (length existing) 1)
+      (find-file (expand-file-name (car existing) dir)))
+
+     ((> (length existing) 1)
+      (find-file
+       (completing-read "Journal: " existing nil t)))
+
+     (t
+      (let ((file (read-file-name
+                   "Create journal: "
+                   dir
+                   nil
+                   nil
+                   (concat date ".org"))))
+        (find-file file))))))
+
+(global-set-key (kbd "C-c j") #'my-org-journal-today)
 
 (with-eval-after-load 'org
   ; на клавиатуре нет TAB, заменяем на C-i
