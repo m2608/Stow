@@ -31,14 +31,8 @@ if test -n "$xfreerdp"
     alias xfreerdp "xfreerdp3 \
     +clipboard                \
     +auto-reconnect           \
-    -decorations              \
     +dynamic-resolution       \
-    /audio-mode:1             \
-    /bpp:15                   \
-    /cache:bitmap:on,glyph:on \
-    /compression-level:2      \
-    /monitors:1               \
-    /window-position:0x0      \
+    /gfx:thin-client          \
 "
 end
 
