@@ -77,26 +77,29 @@ local function _14_()
   return vim.lsp.buf.implementation()
 end
 local function _15_()
-  return vim.lsp.buf.hover({border = "single"})
+  return vim.lsp.buf.document_highlight()
 end
 local function _16_()
-  return vim.lsp.buf.signature_help({border = "single"})
+  return vim.lsp.buf.hover({border = "single"})
 end
 local function _17_()
-  return vim.diagnostic.jump({count = -1})
+  return vim.lsp.buf.signature_help({border = "single"})
 end
 local function _18_()
-  return vim.diagnostic.jump({count = 1})
+  return vim.diagnostic.jump({count = -1})
 end
 local function _19_()
-  return vim.diagnostic.open_float()
+  return vim.diagnostic.jump({count = 1})
 end
 local function _20_()
+  return vim.diagnostic.open_float()
+end
+local function _21_()
   return vim.diagnostic.setloclist()
 end
-lsp_mappings = {{"textDocument/declaration", "gD", "Go to declaration", _12_}, {"textDocument/definition", "gd", "Go to definition", _13_}, {"textDocument/implementation", "gi", "Go to implementation", _14_}, {"textDocument/references", "<space>r", "Show code references", ":Telescope lsp_references<CR>"}, {"textDocument/hover", "K", "Show docs", _15_}, {"textDocument/signatureHelp", "<space>k", "Signature help", _16_}, {nil, "[d", "Jump to previous diagnostic", _17_}, {nil, "]d", "Jump to next diagnostic", _18_}, {nil, "<space>e", "Show diagnostic message", _19_}, {nil, "<space>q", "Copy diagnostic to quickfix", _20_}}
+lsp_mappings = {{"textDocument/declaration", "gD", "Go to declaration", _12_}, {"textDocument/definition", "gd", "Go to definition", _13_}, {"textDocument/implementation", "gi", "Go to implementation", _14_}, {"textDocument/references", "<space>r", "Show code references", ":Telescope lsp_references<CR>"}, {"textDocument/documentHighlight", "grh", "Hightlight references", _15_}, {"textDocument/hover", "K", "Show docs", _16_}, {"textDocument/signatureHelp", "<space>k", "Signature help", _17_}, {nil, "[d", "Jump to previous diagnostic", _18_}, {nil, "]d", "Jump to next diagnostic", _19_}, {nil, "<space>e", "Show diagnostic message", _20_}, {nil, "<space>q", "Copy diagnostic to quickfix", _21_}}
 augroup("mylsp", {clear = true})
-local function _21_(ev)
+local function _22_(ev)
   local client = vim.lsp.get_client_by_id(ev.data.client_id)
   vim.keymap.del("n", "K", {buffer = ev.buf})
   for _, mapping in ipairs(lsp_mappings) do
@@ -111,4 +114,4 @@ local function _21_(ev)
   end
   return nil
 end
-return autocmd({"LspAttach"}, {group = "mylsp", callback = _21_})
+return autocmd({"LspAttach"}, {group = "mylsp", callback = _22_})

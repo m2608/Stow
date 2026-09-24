@@ -32,11 +32,11 @@
    ["n" "<F11>" ":ZenMode<CR>"]
    ["n" "<F11>" "<C-o>:ZenMode<CR>"]
 
-   ;; забой убирает подсветку найденных фраз
-   ["n" "<BS>" ":nohlsearch<CR>"]
-
-   ;; комбинация выключает предупреждения линтера
-   ["n" "<Leader><BS>" ":lua vim.diagnostic.hide()<CR>"]
+   ;; убрать подсветку поиска, переменных, диагностики
+   ["n" "<BS>" (fn []
+                 (tset vim.v "hlsearch" 0)
+                 (vim.diagnostic.hide)
+                 (vim.lsp.buf.clear_references))]
 
    ;; комбинация для открытия файла из текущего каталога
    ["n" "<Leader>e" ":e <C-R>=expand(\"%:p:h\") . \"/\"<CR>" {:noremap true}]

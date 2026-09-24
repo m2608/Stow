@@ -131,6 +131,9 @@
         ["textDocument/references"     "<space>r"  "Show code references"
          ":Telescope lsp_references<CR>"]
 
+        ["textDocument/documentHighlight" "grh"    "Hightlight references"
+         (fn [] (vim.lsp.buf.document_highlight))]
+
         ["textDocument/hover"          "K"         "Show docs"
          (fn [] (vim.lsp.buf.hover {:border :single}))]
 
