@@ -37,6 +37,8 @@
                                                            :dir_icon " "
                                                            :disable_devicons true
                                                            :sorting_strategy "ascending"
+                                                           ;; https://github.com/nvim-telescope/telescope.nvim/issues/2779
+                                                           :temp__scrolling_limit 1000
                                                            :mappings {:n {"." fb-actions.toggle_hidden
                                                                           "g" fb-actions.toggle_respect_gitignore
                                                                           "l" fb-actions.open_dir
