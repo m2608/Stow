@@ -4,8 +4,14 @@
 min_size=800000
 max_size=1000000
 
+# default fit value
+fit="auto"
+
+# default size for unknown terminal geometry
+fit_size="800 600"
+
 # number of colors
-colors=192
+colors=64
 self=`basename "$0"`
 help='Usage: '$self' <options> <file>
 
@@ -15,6 +21,7 @@ Options:
 -c --colors <number of colors> set number of colors in palette, default: '$colors'
 --min <min file size>          minimum file size, default: '$min_size' bytes
 --max <max file size>          maximum file size, default: '$max_size' bytes
+--fit <wxh | auto | none>      fit image into specified geometry
 -x --clear-screen              clear screen to show image, default: no
 '
 
@@ -27,6 +34,11 @@ while test $# -gt 0; do
             ;;
         --max)
             max_size="$2"
+            shift
+            shift
+            ;;
+        --fit)
+            fit="$2"
             shift
             shift
             ;;
@@ -104,9 +116,29 @@ get_value() {
 
 # Parse terminal size from `xwininfo output`.
 get_term_size() {
-    printf "%s" "$1" \
+    size=$(xwininfo -id $(xdotool getactivewindow) \
         | sed -n '/^[ ]*-geometry[ ]*/p' \
-        | sed -r 's/[ ]*-geometry[ ]*([0-9]+)x([0-9]+).*/\1 \2/'
+        | sed -r 's/[ ]*-geometry[ ]*([0-9]+)x([0-9]+).*/\1 \2/')
+
+    # For tmux trying to calculate current pane size in pixels.
+    if test -n "$TMUX"; then
+        term_w=$(printf "%s" "$size" | cut -d ' ' -f 1)
+        term_h=$(printf "%s" "$size" | cut -d ' ' -f 2)
+
+        win_cols=$(tmux display-message -p '#{window_width}')
+        win_rows=$(tmux display-message -p '#{window_height}')
+
+        pane_cols=$(tmux display-message -p '#{pane_width}')
+        pane_rows=$(tmux display-message -p '#{pane_height}')
+
+        # Substruct 2 from pane rows to reserve place for command prompt.
+        pane_w=$((pane_cols*term_w/win_cols))
+        pane_h=$(((pane_rows-2)*term_h/win_rows))
+
+        size="$pane_w $pane_h"
+    fi
+
+    echo "$size"
 }
 
 # Get image resolution.
@@ -114,42 +146,32 @@ get_image_size() {
     identify -format "%w %h" "$1"
 }
 
-wininfo=$(xwininfo -id $(xdotool getactivewindow))
-
-# terminal window graphic size (in pixels)
-term_gw=$(get_value "$wininfo" "Width")
-term_gh=$(get_value "$wininfo" "Height")
-
-# terinal window text size (in chars) 
-size=$(get_term_size "$wininfo")
-
-term_tw=$(printf "%s" "$size" | cut -d ' ' -f 1)
-term_th=$(printf "%s" "$size" | cut -d ' ' -f 2)
-
-# size of char in terminal (in pixels)
-char_gw=$((term_gw / term_tw))
-char_gh=$((term_gh / term_th))
-
-# pane size (in chars)
-pane_tw=$(tput cols)
-pane_th=$(tput lines)
-
-# pane size (in pixels)
-pane_gw=$((pane_tw * char_gw))
-pane_gh=$((pane_th * char_gh))
-
 size=$(get_image_size "$file")
 
-image_gw=$(printf "%s" "$size" | cut -d ' ' -f 1)
-image_gh=$(printf "%s" "$size" | cut -d ' ' -f 2)
+image_w=$(printf "%s" "$size" | cut -d ' ' -f 1)
+image_h=$(printf "%s" "$size" | cut -d ' ' -f 2)
 
-
-if test $pane_gw -lt $image_gw -o $pane_gh -lt $image_gh; then
-    w=$pane_gw
-    h=$pane_gh
+if test "$fit" = "auto"; then
+    if test -n "$DISPLAY"; then
+        size=$(get_term_size)
+    else
+        size="$fit_size"
+    fi
+elif test "$fit" = "none"; then
+    size="$size"
 else
-    w=$image_gw
-    h=$image_gh
+    size=$(echo "$fit" | tr 'x' ' ')
+fi
+
+term_w=$(printf "%s" "$size" | cut -d ' ' -f 1)
+term_h=$(printf "%s" "$size" | cut -d ' ' -f 2)
+
+if test $term_w -lt $image_w -o $term_h -lt $image_h; then
+    w=$term_w
+    h=$term_h
+else
+    w=$image_w
+    h=$image_h
 fi
 
 last_w=$w
@@ -161,7 +183,9 @@ iter=0
 
 if test -n "$verbose"; then
     printf "Image resolution: %dx%d\n" $image_gw $image_gh
-    printf "Pane resolution: %dx%d\n" $pane_gw $pane_gh
+    # printf "Terminal window size: %dx%d\n" $term_gw $term_gh
+    # printf "Pane size: %dx%d\n" $pane_tw $pane_th
+    # printf "Pane resolution: %dx%d\n" $pane_gw $pane_gh
     printf "Target file size: %d-%d bytes\n" $min_size $max_size
 fi
 
