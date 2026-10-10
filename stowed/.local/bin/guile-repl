@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Скрипт запускает guile, который слушает REPL через сокет. После завершения
+# процесса сокет удаляется.
+
+set -e
+
+socket="${1:?Usage: guile-repl SOCKET_PATH}"
+
+guile=$(command -v "guile3" || command -v "guile" || echo)
+test -n "$guile" || { echo "Guile binary not found."; exit 1; }
+
+mkdir -p "$(dirname "$socket")"
+
+# Функция очистки.
+cleanup() {
+    rm -f -- "$socket"
+}
+
+# При выходе удаляем сокет.
+trap cleanup EXIT
+
+# Перехватываем сигналы на случай, если процесс будет завершен принудительно.
+# Выставляем статус по конвенции: 128 + <номер сигнала>.
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+$guile --listen="$socket"
