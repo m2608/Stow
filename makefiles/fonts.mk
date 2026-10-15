@@ -3,7 +3,7 @@ include $(MAKEFILE_FOLDER)/functions.mk
 
 OUTPUT_FOLDER := "$(HOME)/.fonts"
 
-all: iosevka pragmasevka ioskeley victor sudo departure apl386
+all: iosevka pragmasevka ioskeley agave victor sudo departure apl386 julia jetbrains bqn nrk iosvmata glass_tty
 
 iosevka:
 	$(call get-github-url,be5invis/Iosevka,"^PkgTTF-Iosevka(Term(SS[0-9]+)?|SS[0-9]+|Aile|Etoile|Slab)?-[0-9.]+[.]zip$$") \
@@ -66,3 +66,7 @@ iosvmata:
 	$(call get-github-url,N-R-K/Iosvmata,"^Iosvmata-v[0-9.]+[.]tar[.]zst$$") \
 		| xargs -n 1 curl -s -L --fail \
 		| tar -C $(OUTPUT_FOLDER) --zstd --strip-components 2 -xf - '*.ttf'
+
+glass_tty:
+	curl -L -O --output-dir $(OUTPUT_FOLDER) \
+		https://github.com/svofski/glasstty/raw/refs/heads/master/Glass_TTY_VT220.ttf
