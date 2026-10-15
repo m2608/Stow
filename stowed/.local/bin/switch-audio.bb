@@ -35,11 +35,8 @@
   "Возвращает аудиовыход, на который мы будем преключаться. Это следующий аудиовыход
   после активного."
   [sinks current-sink-name]
-  (->> sinks
-       cycle
-       (drop-while #(not= current-sink-name (:name %)))
-       next
-       first))
+  (let [skipped-sinks (drop-while #(not= current-sink-name (:name %)) sinks)]
+    (-> (concat skipped-sinks sinks) rest first)))
 
 (defn switch-to-sink
   "Переключает аудиовыход, возвращает `true` в случае успеха."
