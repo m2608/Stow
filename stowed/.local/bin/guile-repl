@@ -7,7 +7,7 @@ set -e
 
 socket="${1:?Usage: guile-repl SOCKET_PATH}"
 
-guile=$(command -v "guile3" || command -v "guile" || echo)
+guile=$(command -v "guile3" || command -v "guile3.0" || command -v "guile" || echo)
 test -n "$guile" || { echo "Guile binary not found."; exit 1; }
 
 mkdir -p "$(dirname "$socket")"
