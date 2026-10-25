@@ -1,3 +1,5 @@
+export PASSWORD_STORE_DIR="$HOME/Work/PasswordStore"
+
 NEWSHELL="$HOME/.local/bin/fish"
 
 # Only for interactive sessions:
