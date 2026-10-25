@@ -17,15 +17,11 @@ set os_name (cat /etc/os-release | sed -n '/^NAME=/p' | sed -r 's/^NAME="(.*)"$/
 set xfreerdp (command -v xfreerdp3)
 if test -n "$xfreerdp"
     alias xfreerdp "xfreerdp3 \
+    +dynamic-resolution       \
     +clipboard                \
     +auto-reconnect           \
     +decorations              \
-    +dynamic-resolution       \
-    /audio-mode:1             \
-    /bpp:16                   \
-    /cache:bitmap:on,glyph:on \
-    /compression-level:2      \
-    /monitors:1               \
+    /gfx:thin-client          \
 "
 end
 
