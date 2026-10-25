@@ -39,6 +39,7 @@
  '(nano    :type git :host github :repo "rougier/nano-emacs"))
 (straight-use-package
  '(cljbang :type git :host github :repo "borkdude/cljbang.el"))
+(straight-use-package 'gptel)
 
 (setq nano-font-family-monospaced "Agave")
 (setq nano-font-size 18)
