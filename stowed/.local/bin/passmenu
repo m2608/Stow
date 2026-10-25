@@ -25,7 +25,7 @@ get_password() {
 }
 
 # Формируем список аккаунтов, сохранённых в `pass`.
-account=$(find "$prefix" -name '*.gpg' -printf '%P\n' | sed 's/[.]gpg$//' | sort | $dmenu)
+account=$(find -L "$prefix" -name '*.gpg' -printf '%P\n' | sed 's/[.]gpg$//' | sort | $dmenu)
 test -n "$account" || exit
 
 printf "%s" "$account" | xxd
