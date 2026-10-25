@@ -14,9 +14,9 @@ export HISTFILESIZE=-1
 shopt -s histappend
 PROMPT_COMMAND='history -a; history -n'
 
-hostname=$(echo $(command -v hostnamectl > /dev/null && hostnamectl hostname || hostname) | cut -d '.' -f 1)
-localrc="$XDG_CONFIG_HOME/bash/bashrc#$hostname"
+localrc="$HOME/.bashrc.local"
+test -f "$localrc" && source "$localrc"
 
-if [ -f "$localrc" ]; then
-    source "$localrc"
-fi
+hostname=$(echo $(command -v hostnamectl > /dev/null && hostnamectl hostname || hostname) | cut -d '.' -f 1)
+hostrc="$XDG_CONFIG_HOME/bash/bashrc#$hostname"
+test -f "$hostrc" && source "$hostrc"
