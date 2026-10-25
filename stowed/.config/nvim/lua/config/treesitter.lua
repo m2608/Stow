@@ -13,7 +13,7 @@ local empty_3f = _local_1_["empty?"]
 local nil_3f = _local_1_["nil?"]
 local str = require("nfnl.string")
 local parsers = {clojure = {repo = "sogaiu/tree-sitter-clojure"}, cpp = {repo = "tree-sitter/tree-sitter-cpp"}, fennel = {repo = "alexmozaidze/tree-sitter-fennel"}, html = {repo = "tree-sitter/tree-sitter-html"}, hurl = {repo = "pfeiferj/tree-sitter-hurl"}, janet_simple = {repo = "sogaiu/tree-sitter-janet-simple"}, jq = {repo = "flurie/tree-sitter-jq"}, json = {repo = "tree-sitter/tree-sitter-json"}, make = {repo = "tree-sitter-grammars/tree-sitter-make"}, markdown = {repo = "tree-sitter-grammars/tree-sitter-markdown", ["rel-path"] = "tree-sitter-markdown"}, markdown_inline = {repo = "tree-sitter-grammars/tree-sitter-markdown", ["rel-path"] = "tree-sitter-markdown-inline"}, python = {repo = "tree-sitter/tree-sitter-python"}, scheme = {repo = "6cdh/tree-sitter-scheme"}, yaml = {repo = "tree-sitter-grammars/tree-sitter-yaml"}}
-local queries = {repo = "helix-editor/helix", subfolder = "runtime/queries"}
+local queries = {repo = "nvim-treesitter/nvim-treesitter", subfolder = "runtime/queries"}
 local tsitter_path = vim.fs.joinpath(os.getenv("HOME"), ".local/share/nvim/treesitter")
 local function ok(val)
   return {status = "ok", val = val}

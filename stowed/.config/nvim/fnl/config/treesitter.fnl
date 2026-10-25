@@ -34,11 +34,11 @@
   :yaml            {:repo "tree-sitter-grammars/tree-sitter-yaml"}
 })
 
-; (local queries {:repo "nvim-treesitter/nvim-treesitter"
-;                 :subfolder "runtime/queries"})
-
-(local queries {:repo "helix-editor/helix"
+(local queries {:repo "nvim-treesitter/nvim-treesitter"
                 :subfolder "runtime/queries"})
+
+; (local queries {:repo "helix-editor/helix"
+;                 :subfolder "runtime/queries"})
 
 (local tsitter-path (vim.fs.joinpath (os.getenv "HOME") ".local/share/nvim/treesitter"))
 
