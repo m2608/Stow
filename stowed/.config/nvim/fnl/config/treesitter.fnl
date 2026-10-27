@@ -6,6 +6,7 @@
    : map 
    : filter 
    : reduce
+   : concat
    : keys
    : kv-pairs 
    : empty? 
@@ -27,7 +28,7 @@
   :make            {:repo "tree-sitter-grammars/tree-sitter-make"}
   :markdown        {:repo "tree-sitter-grammars/tree-sitter-markdown" :rel-path "tree-sitter-markdown"}
   :markdown_inline {:repo "tree-sitter-grammars/tree-sitter-markdown" :rel-path "tree-sitter-markdown-inline"}
-  :python          {:repo "tree-sitter/tree-sitter-python"}
+  :python          {:repo "tree-sitter/tree-sitter-python" :checkout "v0.25.0"}
   :scheme          {:repo "6cdh/tree-sitter-scheme"}
   ; :sql             {:repo "derekstride/tree-sitter-sql"}
   ; :xml             {:repo "tree-sitter-grammars/tree-sitter-xml" :rel-path "dtd"}
@@ -35,6 +36,7 @@
 })
 
 (local queries {:repo "nvim-treesitter/nvim-treesitter"
+                :branch "main"
                 :subfolder "runtime/queries"})
 
 ; (local queries {:repo "helix-editor/helix"
@@ -100,12 +102,23 @@
       (ok dst)
       (err "Could not copy folder " src " to " dst))))
 
-(fn clone-repo [repo path]
+(fn clone-repo [repo branch path]
   "Клонирует репозиторий с github в указанный каталог."
-  (let [r (run ["git" "clone" "--depth=1" (.. "https://github.com/" repo) path])]
+  (let [r (run (concat ["git" "clone" "--depth=1"]
+                       (if (nil? branch) [] [(.. "--branch=" branch)])
+                       [(.. "https://github.com/" repo) path]))]
     (if (= 0 r.code)
         (ok path)
         (err "Could not clone repository: " repo))))
+
+(fn checkout [checkout path]
+  "Переключает репозторий на указанный коммит."
+  (if (nil? checkout)
+      (let [r (run ["git" "checkout" checkout] {:cwd path})]
+        (if (= 0 r.code)
+            (ok path)
+            (err "Couldn't checkout to " checkout)))
+      (ok path)))
 
 (fn build-parser [path]
   (let [r (run ["tree-sitter" "build"] {:cwd path})]
@@ -138,7 +151,8 @@
                     build-dir (if relp (vim.fs.joinpath temp-dir relp) temp-dir)
                     result (-> {:status :ok}
                                (log "Cloning repo " repo "...")
-                               (bind (fn [_] (clone-repo repo temp-dir)))
+                               (bind (fn [_] (clone-repo repo (. parser-data :branch) temp-dir)))
+                               (bind (fn [_] (checkout (. parser-data :checkout) temp-dir)))
                                (log "Building parser " parser-name "...")
                                (bind (fn [_] (build-parser build-dir)))
                                (bind (fn [_] (find-parser-lib build-dir)))
@@ -157,7 +171,7 @@
           (if temp-dir
               (let [result (-> {:status :ok}
                                (log "Cloning repo " repo "...")
-                               (bind (fn [_] (clone-repo repo temp-dir)))
+                               (bind (fn [_] (clone-repo repo (. queries :branch) temp-dir)))
                                (bind (fn [_] (remove-dir queries-path)))
                                (bind (fn [_]
                                        (copy-dir (vim.fs.joinpath temp-dir (. queries :subfolder))
