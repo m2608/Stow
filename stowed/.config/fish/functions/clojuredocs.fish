@@ -47,7 +47,7 @@ function clojuredocs -d "View clojuredocs"
     set style (background)
 
     set jq_command '.vars
-        | map(select("\(.ns)/\(.name)" == "{}"))
+        | map(select("\(.ns)/\(.name)" == $search_string))
         | first
         | .name as $name
         | [
@@ -63,7 +63,7 @@ function clojuredocs -d "View clojuredocs"
     | fzf \
         --ansi \
         --color=16 \
-        --preview "jq -r '$jq_command' '$filename' | pandoc -f markdown -t ansi -" \
+        --preview "jq -r --arg search_string {} '$jq_command' '$filename' | pandoc -f markdown -t ansi -" \
         --preview-window "up:80%"            \
         --bind "up:preview-up"               \
         --bind "down:preview-down"           \
