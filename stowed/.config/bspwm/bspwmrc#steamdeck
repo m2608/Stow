@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Список подключенных мониторов можно получить без xrandr:
+# find /sys/class/drm/ -name "card*-*" | xargs -I {} sh -c 'printf "%s,%s\n" $(basename {} | cut -d '-' -f 2-) $(cat {}/status)' | column -t -s,
+
 display_int="eDP"
 display_ext="DisplayPort-0"
 
