@@ -59,7 +59,7 @@ magick:
 install-nvim: NVIM := "$(HOME)/.local/bin/nvim"
 install-nvim:
 ifeq ($(ARCH),$(filter $(ARCH),amd64))
-	$(call get-from-github,neovim/neovim-releases,"^nvim-linux-x86_64[.]appimage$$") > $(NVIM);
+	$(call get-from-github,neovim/neovim,"^nvim-linux-x86_64[.]appimage$$") > $(NVIM);
 	chmod +x $(NVIM)
 else
 	@echo "Unsupported arch: $(ARCH)"
