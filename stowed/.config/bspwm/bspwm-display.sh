@@ -2,6 +2,9 @@
 
 hostname=$(hostnamectl hostname || hostname | cut -d '.' -f 1)
 
+display_int="eDP"
+display_ext="DisplayPort-0"
+
 # Функция переключает мониторы и переносит все окна со старого монитора,
 # сохраняя при этом рабочие столы.
 swap_monitors() {
@@ -27,8 +30,8 @@ swap_monitors() {
 if test "$hostname" = "steamdeck"; then
     if xrandr --listmonitors | grep -q eDP; then
 
-        src_mon="eDP"
-        dst_mon="DisplayPort-0"
+        src_mon="$display_int"
+        dst_mon="$display_ext"
 
         xrandr \
             --output "$dst_mon" --auto --primary \
@@ -36,8 +39,8 @@ if test "$hostname" = "steamdeck"; then
 
         swap_monitors "$src_mon" "$dst_mon"
     else
-        src_mon="DisplayPort-0"
-        dst_mon="eDP"
+        src_mon="$display_ext"
+        dst_mon="$display_int"
 
         xrandr \
             --output "$src_mon" --off \

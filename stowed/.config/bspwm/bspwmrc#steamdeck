@@ -6,6 +6,7 @@
 display_int="eDP"
 display_ext="DisplayPort-0"
 
+# Настройка дисплеев.
 xrandr --output $display_ext --auto --primary --output $display_int --off
 
 # Рабочие столы.
