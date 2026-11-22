@@ -74,6 +74,13 @@
           value (. option 2)]
       (core.assoc vim.o name value))))
 
+(let [options [[:guifont "Victor Mono:h15"]]]
+  (when vim.g.neovide
+    (each [_ option (ipairs options)]
+      (let [name (. option 1)
+            value (. option 2)]
+        (tset vim.o name value)))))
+
 ;; отключаем netrw
 (core.assoc vim.g :loaded_netrwPlugin 1)
 
